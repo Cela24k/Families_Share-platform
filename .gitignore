@@ -1,6 +1,5 @@
 node_modules/
 build/
-.env
 .nyc_output
 images/announcements/*
 *.csv
