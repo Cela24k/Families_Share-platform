@@ -19,7 +19,7 @@ const ProfileNavbar = ({ language, history }) => {
   return (
     <div id="profileNavbarContainer">
       <div className="row no-gutters">
-        <div className="col-1-2">
+        <div className="col-1-3">
           <h1
             id="info"
             className={activeTab === "info" ? "profileTabActive" : ""}
@@ -28,13 +28,22 @@ const ProfileNavbar = ({ language, history }) => {
             {texts.info}
           </h1>
         </div>
-        <div className="col-1-2">
+        <div className="col-1-3">
           <h1
             id="children"
             className={activeTab === "children" ? "profileTabActive" : ""}
             onClick={handleActiveTab}
           >
             {texts.children}
+          </h1>
+        </div>
+        <div className="col-1-3">
+          <h1
+            id="health"
+            className={activeTab === "health" ? "profileTabActive" : ""}
+            onClick={handleActiveTab}
+          >
+            {texts.health}
           </h1>
         </div>
       </div>

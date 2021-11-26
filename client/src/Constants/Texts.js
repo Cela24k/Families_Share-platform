@@ -183,6 +183,10 @@ const en = {
     addChildPrompt:
       "You haven't added any children yet. Click the child icon to add a new child"
   },
+  profileHealth:{
+    addHealthPrompt:
+      "You haven't configured your Health profile yet. Click the icon down below to start now!"
+  },
   myCalendarScreen: {
     backNavTitle: "My Calendar"
   },
@@ -979,7 +983,8 @@ const en = {
   profileNavbar: {
     framily: "FRAMILY",
     info: "INFO",
-    children: "CHILDREN"
+    children: "CHILDREN",
+    health:"HEALTH"
   },
   profileInfo: {
     adress: "Address",
@@ -1503,6 +1508,10 @@ const nl = {
   profileChildren: {
     addChildPrompt:
       "Je hebt nog geen kinderen toegevoegd. Klik op het kindpictogram om een ​​nieuw kind toe te voegen"
+  },
+  profileHealth:{
+    addChildPrompt:
+      "Calling the best translators.... boop boop boop :^/"
   },
   myCalendarScreen: {
     backNavTitle: "Mijn Kalender"
@@ -2782,6 +2791,10 @@ const it = {
   profileChildren: {
     addChildPrompt:
       "Non hai ancora aggiunto figli. Fare clic sull'icona figlio per aggiungere un nuovo figlio"
+  },
+  profileHealth:{
+    addChildPrompt:
+      "Non hai ancora compilato la sezione profilo, comincia ora qua sotto!"
   },
   myCalendarScreen: {
     backNavTitle: "Il mio calendario"
@@ -4083,6 +4096,10 @@ const el = {
     addChildPrompt:
       "Δεν έχετε προσθέσει ακόμη παιδιά. Κάντε κλικ στο εικονίδιο για να προσθέσετε ένα νέο παιδί"
   },
+  profileHealth:{
+    addChildPrompt:
+      "Calling the best translators.... boop boop boop :^/"
+  },
   myCalendarScreen: {
     backNavTitle: "Το ημερολόγιο μου"
   },
@@ -5377,6 +5394,10 @@ const hu = {
   profileChildren: {
     addChildPrompt:
       "Még nem adott meg gyermeket. Kattintson a gyermek ikonra új gyermek hozzáadásáért"
+  },
+  profileHealth:{
+    addChildPrompt:
+      "Calling the best translators.... boop boop boop :^/"
   },
   myCalendarScreen: {
     backNavTitle: "Eseménynaptáram"
@@ -6695,6 +6716,10 @@ const fr = {
   },
   "profileChildren": {
     "addChildPrompt": "Vous n'avez pas encore ajouté d'enfants. Cliquez sur l'icône enfant pour ajouter un nouvel enfant"
+  },
+  "profileHealth":{
+    "addChildPrompt":
+      "Calling the best translators.... boop boop boop :^/"
   },
   "myCalendarScreen": {
     "backNavTitle": "Mon calendrier"

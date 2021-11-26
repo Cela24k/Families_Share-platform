@@ -17,6 +17,10 @@ const ProfileChildren = Loadable({
   loader: () => import("./ProfileChildren"),
   loading: () => <div />
 });
+const ProfileHealth = Loadable({
+  loader: () => import("./ProfileHealth"),
+  loading: () => <div />
+});
 
 const getMyChildren = userId => {
   return axios
@@ -99,6 +103,16 @@ class ProfileScreen extends React.Component {
                   {...props}
                   profileId={profileId}
                   usersChildren={children}
+                />
+              )}
+            />
+            <Route
+              exact
+              path = {`${currentPath}/health`}
+              render = {props => (
+                <ProfileHealth
+                {...props}
+                profileId={profileId}
                 />
               )}
             />
