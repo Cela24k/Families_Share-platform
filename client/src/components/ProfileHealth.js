@@ -6,7 +6,6 @@ import ChildListItem from "./ChildListItem";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 
-
 const styles = () => ({
   add: {
     position: "fixed",
@@ -34,10 +33,24 @@ class ProfileHealth extends React.Component {
     };
   }
 
+  addDocument = () => {
+    alert("porco diooooo");
+  };
+
   render() {
+    const { classes, language } = this.props;
+    const texts = Texts[language].profileHealth;
     return (
       <React.Fragment>
-        <div> CIAO SONO MIMMO</div>
+        <div className="addHealthPrompt">CIAO SONO MIMOMOMOMO</div>
+        <Fab
+          color="primary"
+          aria-label="Add"
+          className={classes.add}
+          onClick={this.addDocument}
+        >
+          <i className="fas fa-regular fa-plus"/>
+        </Fab>
       </React.Fragment>
     );
   }
