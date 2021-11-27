@@ -1510,7 +1510,7 @@ const nl = {
       "Je hebt nog geen kinderen toegevoegd. Klik op het kindpictogram om een ​​nieuw kind toe te voegen"
   },
   profileHealth:{
-    addChildPrompt:
+    addHealthPrompt:
       "Calling the best translators.... boop boop boop :^/"
   },
   myCalendarScreen: {
@@ -4097,7 +4097,7 @@ const el = {
       "Δεν έχετε προσθέσει ακόμη παιδιά. Κάντε κλικ στο εικονίδιο για να προσθέσετε ένα νέο παιδί"
   },
   profileHealth:{
-    addChildPrompt:
+    addHealthPrompt:
       "Calling the best translators.... boop boop boop :^/"
   },
   myCalendarScreen: {
@@ -5396,7 +5396,7 @@ const hu = {
       "Még nem adott meg gyermeket. Kattintson a gyermek ikonra új gyermek hozzáadásáért"
   },
   profileHealth:{
-    addChildPrompt:
+    addHealthPrompt:
       "Calling the best translators.... boop boop boop :^/"
   },
   myCalendarScreen: {
@@ -6718,7 +6718,7 @@ const fr = {
     "addChildPrompt": "Vous n'avez pas encore ajouté d'enfants. Cliquez sur l'icône enfant pour ajouter un nouvel enfant"
   },
   "profileHealth":{
-    "addChildPrompt":
+    "addHealthPrompt":
       "Calling the best translators.... boop boop boop :^/"
   },
   "myCalendarScreen": {

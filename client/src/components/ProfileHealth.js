@@ -34,7 +34,7 @@ class ProfileHealth extends React.Component {
   }
 
   addDocument = () => {
-    alert("porco diooooo");
+    alert("alert test");
   };
 
   render() {
@@ -42,7 +42,7 @@ class ProfileHealth extends React.Component {
     const texts = Texts[language].profileHealth;
     return (
       <React.Fragment>
-        <div className="addHealthPrompt">CIAO SONO MIMOMOMOMO</div>
+        <div className="addHealthPrompt">{texts.addHealthPrompt}</div>
         <Fab
           color="primary"
           aria-label="Add"
