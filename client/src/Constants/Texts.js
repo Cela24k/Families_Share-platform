@@ -2793,7 +2793,7 @@ const it = {
       "Non hai ancora aggiunto figli. Fare clic sull'icona figlio per aggiungere un nuovo figlio"
   },
   profileHealth:{
-    addChildPrompt:
+    addHealthPrompt:
       "Non hai ancora compilato la sezione profilo, comincia ora qua sotto!"
   },
   myCalendarScreen: {
@@ -3568,7 +3568,8 @@ const it = {
   profileNavbar: {
     framily: "AMICI",
     info: "INFO",
-    children: "BAMBINI"
+    children: "BAMBINI",
+    health: "SALUTE"
   },
   profileInfo: {
     adress: "Indirizzo",

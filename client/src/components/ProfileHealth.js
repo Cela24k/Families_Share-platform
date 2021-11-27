@@ -25,16 +25,17 @@ class ProfileHealth extends React.Component {
   constructor(props) {
     super(props);
     const userId = JSON.parse(localStorage.getItem("user")).id;
-    const { profileId } = this.props;
+    const { profileId, userDocuments } = this.props;
     const myProfile = userId === profileId;
     this.state = {
       myProfile,
+      documents: userDocuments,
       profileId
     };
   }
 
   addDocument = () => {
-    alert("porco diooooo");
+    alert("test");
   };
 
   render() {
@@ -42,7 +43,7 @@ class ProfileHealth extends React.Component {
     const texts = Texts[language].profileHealth;
     return (
       <React.Fragment>
-        <div className="addHealthPrompt">CIAO SONO MIMOMOMOMO</div>
+        <div className="addChildPrompt">{texts.addHealthPrompt}</div>
         <Fab
           color="primary"
           aria-label="Add"
@@ -57,3 +58,11 @@ class ProfileHealth extends React.Component {
 }
 
 export default withStyles(styles)(withLanguage(ProfileHealth));
+
+ProfileHealth.propTypes = {
+  userDocuments: PropTypes.array,
+  profileId: PropTypes.string,
+  history: PropTypes.object,
+  classes: PropTypes.object,
+  language: PropTypes.string
+};
