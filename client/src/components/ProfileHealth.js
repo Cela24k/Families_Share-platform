@@ -36,13 +36,13 @@ class ProfileHealth extends React.Component {
   addDocument = () => {
     alert("alert test");
   };
-
+  //TODO: if profile has already been compiled show profile
   render() {
     const { classes, language } = this.props;
     const texts = Texts[language].profileHealth;
     return (
       <React.Fragment>
-        <div className="addHealthPrompt">{texts.addHealthPrompt}</div>
+        <div className="addHealthPrompt">{texts.addHealthPrompt}</div> 
         <Fab
           color="primary"
           aria-label="Add"
