@@ -1,8 +1,9 @@
-import React from "react"
+import React from "react";
 import PropTypes from "prop-types";
 import Fab from "@material-ui/core/Fab";
 import { withStyles } from "@material-ui/core/styles";
 import ChildListItem from "./ChildListItem";
+import ProfileDocuments from "./ProfileDocuments";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 
@@ -17,8 +18,8 @@ const styles = () => ({
     border: "solid 0.5px #999",
     backgroundColor: "#ff6f00",
     zIndex: 100,
-    fontSize: "2rem"
-  }
+    fontSize: "2rem",
+  },
 });
 
 class ProfileHealth extends React.Component {
@@ -29,31 +30,75 @@ class ProfileHealth extends React.Component {
     const myProfile = userId === profileId;
     this.state = {
       myProfile,
-      profileId
+      profileId,
     };
   }
 
   addDocument = () => {
     alert("alert test");
   };
-  //TODO: if profile has already been compiled show profile
+
   render() {
-    const { classes, language } = this.props;
+    const { history, language } = this.props;
+    const { pathname } = history.location; // current location
     const texts = Texts[language].profileHealth;
     return (
-      <React.Fragment>
-        <div className="addHealthPrompt">{texts.addHealthPrompt}</div> 
-        <Fab
-          color="primary"
-          aria-label="Add"
-          className={classes.add}
-          onClick={this.addDocument}
-        >
-          <i className="fas fa-regular fa-plus"/>
-        </Fab>
-      </React.Fragment>
+      <div>
+        <div className="row no-gutters profileInfoContainer">
+          <div className="col-2-10">
+            <i className="fas fa-solid fa-file center" />
+          </div>
+          <div className="col-8-10">
+            <div
+              role="button"
+              className="verticalCenter"
+              onClick={() => history.push(`${pathname}/ProfileDocuments`)}
+            >
+              <h1>Documenti</h1>
+              <h2>Visualizza/Modifica documenti</h2>
+            </div>
+          </div>
+        </div>
+        <div className="row no-gutters  profileInfoContainer">
+          <div className="col-2-10">
+            <i className="fas fa-solid fa-capsules center" />
+          </div>
+          <div className="col-8-10">
+            <div
+              role="button"
+              className="verticalCenter"
+              onClick={() => history.push(`${pathname}`)}
+            >
+              <h1>Medicine</h1>
+              <h2>Visualizza/Modifica medicine</h2>
+            </div>
+          </div>
+        </div>
+        <div className="row no-gutters  profileInfoContainer">
+          <div className="col-2-10">
+            <i className="fas fa-solid fa-user center" />
+          </div>
+          <div className="col-8-10">
+            <div
+              role="button"
+              className="verticalCenter"
+              onClick={() => history.push(`${pathname}`)}
+            >
+              <h1>Profilo salute</h1>
+              <h2>Visualizza profilo salute</h2>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 }
 
 export default withStyles(styles)(withLanguage(ProfileHealth));
+
+ProfileHealth.propTypes = {
+  profileId: PropTypes.string,
+  history: PropTypes.object,
+  classes: PropTypes.object,
+  language: PropTypes.string,
+};
