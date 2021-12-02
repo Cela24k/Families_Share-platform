@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Fab from "@material-ui/core/Fab";
 import { withStyles } from "@material-ui/core/styles";
 import ChildListItem from "./ChildListItem";
-import ProfileDocuments from "./ProfileDocuments";
+import ProfileDocuments from "./DocumentProfileList";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 
@@ -33,11 +33,7 @@ class ProfileHealth extends React.Component {
       profileId,
     };
   }
-
-  addDocument = () => {
-    alert("alert test");
-  };
-
+  
   render() {
     const { history, language } = this.props;
     const { pathname } = history.location; // current location
@@ -52,7 +48,7 @@ class ProfileHealth extends React.Component {
             <div
               role="button"
               className="verticalCenter"
-              onClick={() => history.push(`${pathname}/ProfileDocuments`)}
+              onClick={() => history.push(`${pathname}/documents`)}
             >
               <h1>Documenti</h1>
               <h2>Visualizza/Modifica documenti</h2>

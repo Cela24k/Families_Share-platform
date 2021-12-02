@@ -7,7 +7,7 @@ import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
 import Log from "./Log";
 
-class ProfileDocumentsHeader extends React.Component {
+class DocumentProfileHeader extends React.Component {
 
     // da aggiungere...
 
@@ -62,11 +62,12 @@ class ProfileDocumentsHeader extends React.Component {
                             <div />
                         )}
                     </div>
-                    <i className="fas fa-solid fa-file center" />
+                    <i className="fas fa-file fa-10x center" />
+                    <h1 className="horizontalCenter">Your documents</h1>
                 </div>
             </React.Fragment>
         )
     }
 }
 
-export default withRouter(withLanguage(ProfileDocumentsHeader));
+export default withRouter(withLanguage(DocumentProfileHeader));
