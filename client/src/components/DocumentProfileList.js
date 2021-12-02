@@ -33,9 +33,17 @@ class DocumentProfileList extends React.Component {
 		};
 	}
 
-	addDocument = () => {
-		alert("alert test");
-	};
+	addDocument(input) {
+		let file = input.files[0];
+
+  		let reader = new FileReader();
+
+  		reader.readAsText(file);
+
+  		reader.onload = function() {
+    		console.log(reader.result);
+  		};
+	} 
 
 	render() {
 		const { classes, language } = this.props;
@@ -49,9 +57,10 @@ class DocumentProfileList extends React.Component {
 						color="primary"
 						aria-label="Add"
 						className={classes.add}
-						onClick={this.addDocument}
+						
 					>
 						<i className="fas fa-regular fa-plus" />
+						<input type="file" onclick="addDocument(this)"></input>
 					</Fab>
 				)}
 			</React.Fragment>
