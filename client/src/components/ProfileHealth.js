@@ -63,7 +63,7 @@ class ProfileHealth extends React.Component {
             <div
               role="button"
               className="verticalCenter"
-              onClick={() => history.push(`${pathname}`)}
+              onClick={() => history.push(`${pathname}/medicines`)}
             >
               <h1>Medicine</h1>
               <h2>Visualizza/Modifica medicine</h2>

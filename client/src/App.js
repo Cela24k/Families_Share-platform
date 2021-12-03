@@ -73,8 +73,13 @@ const ChildProfileScreen = Loadable({
   loader: () => import("./components/ChildProfileScreen"),
   loading: () => Loading
 });
+//qui bisogna loaddarle(vedere cosa significa)
 const DocumentProfileScreen = Loadable({
   loader: () => import("./components/DocumentProfileScreen"),
+  loading: () => Loading
+});
+const MedicinesProfileScreen = Loadable({
+  loader: () => import("./components/MedicinesProfileScreen"),
   loading: () => Loading
 });
 const CreateChildScreen = Loadable({
@@ -280,9 +285,14 @@ class App extends React.Component {
                 path="/profiles/:profileId/children/:childId"
                 component={ChildProfileScreen}
               />
+              {/* cosi si possono scrivere i commenti, comunque qui si aggiunge la private route che mi renderizzerà il component corrente al path corrente, vedersi REACT-ROUTING se si vuol capire di più  */}
               <PrivateRoute
                 path="/profiles/:profileId/health/documents"
                 component={DocumentProfileScreen}
+              />
+              <PrivateRoute
+                path="/profiles/:profileId/health/medicines"
+                component={MedicinesProfileScreen}
               />
               <PrivateRoute
                 path="/profiles/:profileId/edit"
