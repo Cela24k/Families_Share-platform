@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import Fab from "@material-ui/core/Fab";
 import { withStyles } from "@material-ui/core/styles";
-import ChildListItem from "./ChildListItem";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 
@@ -33,17 +32,12 @@ class DocumentProfileList extends React.Component {
 		};
 	}
 
-	addDocument(input) {
-		let file = input.files[0];
-
-  		let reader = new FileReader();
-
-  		reader.readAsText(file);
-
-  		reader.onload = function() {
-    		console.log(reader.result);
-  		};
-	} 
+	addDocument = () => {
+		const reader = new FileReader();
+		reader.addEventListener(() => {
+			
+		});
+	}
 
 	render() {
 		const { classes, language } = this.props;
@@ -57,10 +51,9 @@ class DocumentProfileList extends React.Component {
 						color="primary"
 						aria-label="Add"
 						className={classes.add}
-						
+						onClick={this.addDocument}
 					>
 						<i className="fas fa-regular fa-plus" />
-						<input type="file" onclick="addDocument(this)"></input>
 					</Fab>
 				)}
 			</React.Fragment>
