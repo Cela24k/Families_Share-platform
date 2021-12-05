@@ -32,15 +32,8 @@ class DocumentProfileList extends React.Component {
 		};
 	}
 
-	addDocument = event => {
-		const input = event.target; // riferimento all'oggetto che ha triggerato l'evento
-		const reader = new FileReader();
-		reader.onload = () => {
-			img = reader.result;
-			container = document.getElementById('immagine-scelta');
-			container.src = img;
-		}
-		reader.readAsDataURL(input.files[0]);
+	readFile(input) {
+		
 	}
 
 	render() {
@@ -50,19 +43,15 @@ class DocumentProfileList extends React.Component {
 		return (
 			<React.Fragment>
 				<div className="addChildPrompt">Non sono stati aggiunti documenti!</div>
-				<img id="immagine-scelta" /> 
+				<img id="output" /> 
 				{myProfile && (
 					<Fab
 						color="primary"
 						aria-label="Add"
 						className={classes.add}
-						onClick={this.addDocument}
 					>
 						<i className="fas fa-regular fa-plus" />
-						<input 
-							type="file"
-							onClick={this.addDocument} 
-						/>
+						<input type="file" onchange="readFile(this)"></input>
 					</Fab>
 				)}
 			</React.Fragment>
