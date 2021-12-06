@@ -1,17 +1,55 @@
 import React from "react";
+import axios from "axios";
+import Log from "./Log";
 import DocumentProfileHeader from "./DocumentProfileHeader";
-import DocumentProfileList from "./DocumentProfileList";
+import DocumentProfileInfo from "./DocumentProfileInfo";
+import LoadingSpinner from "./LoadingSpinner";
+
+/* richiede i documenti al server */
+const getMyDocuments = (userId) => {
+    return axios
+        .get(`/api/users/${userId}/health/documents`)
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            Log.error(error);
+            return [];
+        })
+};
 
 class DocumentProfileScreen extends React.Component {
 
+    state = {
+        fetchedProfile: false,
+        documents: []
+    };
+
+    async componentDidMount() {
+        const { match } = this.props;
+        const { profileId } = match.params;
+        const userDocuments = await getMyDocuments(profileId);
+        this.setState({
+            fetchedProfile: true,
+            documents: userDocuments
+        });
+    }
+
     render() {
-        return (
+        const { match } = this.props;
+        const { profileId } = match.params;
+        const { fetchedProfile, documents } = this.state;
+        // const texts = Texts[language].ProfileDocumentHeader;
+        return fetchedProfile ? (
             <React.Fragment>
                 <DocumentProfileHeader />
-                <DocumentProfileList
-                    profileId={JSON.parse(localStorage.getItem("user")).id}
+                <DocumentProfileInfo
+                    profileId={profileId}
+                    userDocuments={documents}
                 />
             </React.Fragment>
+        ) : (
+            <LoadingSpinner />
         );
     }
 }

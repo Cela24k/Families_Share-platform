@@ -1,26 +1,20 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
-import axios from "axios";
-import { disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
-import Log from "./Log";
 
 class DocumentProfileHeader extends React.Component {
 
-    // da aggiungere...
-
     handleEdit = () => {
-
+        alert('da implementare');
     }
 
     handleOptions = () => {
-
+        alert('da implementare');
     }
 
     render() {
-        const { language, history, match } = this.props;
+        const { history, match } = this.props;
         const { profileId } = match.params;
         // const texts = Texts[language].ProfileDocumentHeader;
         return (

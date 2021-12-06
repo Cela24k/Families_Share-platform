@@ -36,28 +36,25 @@ const getMyChildren = (userId) => {
     });
 };
 
-const getMyDocuments = (userId) => {};
-
-const getMyProfile = (userId) => {
-  return axios
-    .get(`/api/users/${userId}/profile`)
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      Log.error(error);
-      return {
-        given_name: "",
-        family_name: "",
-        image: { path: "/images/profiles/user_default_photo.png" },
-        address: { street: "", number: "" },
-        email: "",
-        phone: "",
-        phone_type: "",
-        visible: false,
-        user_id: "",
-      };
-    });
+const getMyProfile = async (userId) => {
+  try {
+    const response = await axios
+      .get(`/api/users/${userId}/profile`);
+    return response.data;
+  } catch (error) {
+    Log.error(error);
+    return {
+      given_name: "",
+      family_name: "",
+      image: { path: "/images/profiles/user_default_photo.png" },
+      address: { street: "", number: "" },
+      email: "",
+      phone: "",
+      phone_type: "",
+      visible: false,
+      user_id: "",
+    };
+  }
 };
 
 class ProfileScreen extends React.Component {
@@ -71,7 +68,6 @@ class ProfileScreen extends React.Component {
     const { match } = this.props;
     const { profileId } = match.params;
     const children = await getMyChildren(profileId);
-    const documents = await getMyDocuments(profileId);
     const profile = await getMyProfile(profileId);
     this.setState({
       fetchedProfile: true,
@@ -126,9 +122,5 @@ class ProfileScreen extends React.Component {
     );
   }
 }
-
-ProfileScreen.propTypes = {
-  match: PropTypes.object,
-};
 
 export default ProfileScreen;
