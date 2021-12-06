@@ -17,11 +17,11 @@ class ChildListItem extends React.Component {
     const { userId, childId } = this.props;
     axios
       .get(`/api/users/${userId}/children/${childId}`)
-      .then(response => {
+      .then((response) => {
         const child = response.data;
         this.setState({ fetchedChild: true, child });
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
         this.setState({
           fetchedChild: true,
@@ -31,8 +31,8 @@ class ChildListItem extends React.Component {
             gender: "unspecified",
             given_name: "",
             family_name: "",
-            child_id: ""
-          }
+            child_id: "",
+          },
         });
       });
   }
@@ -88,5 +88,5 @@ ChildListItem.propTypes = {
   childId: PropTypes.string,
   userId: PropTypes.string,
   language: PropTypes.string,
-  history: PropTypes.object
+  history: PropTypes.object,
 };

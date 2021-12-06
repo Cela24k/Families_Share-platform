@@ -17,8 +17,8 @@ const styles = () => ({
     border: "solid 0.5px #999",
     backgroundColor: "#ff6f00",
     zIndex: 100,
-    fontSize: "2rem"
-  }
+    fontSize: "2rem",
+  },
 });
 
 class ProfileChildren extends React.Component {
@@ -30,7 +30,7 @@ class ProfileChildren extends React.Component {
     this.state = {
       myProfile,
       children: usersChildren,
-      profileId
+      profileId,
     };
   }
 
@@ -77,7 +77,7 @@ ProfileChildren.propTypes = {
   profileId: PropTypes.string,
   history: PropTypes.object,
   classes: PropTypes.object,
-  language: PropTypes.string
+  language: PropTypes.string,
 };
 
 export default withStyles(styles)(withLanguage(ProfileChildren));
