@@ -6,9 +6,9 @@ import DocumentProfileInfo from "./DocumentProfileInfo";
 import LoadingSpinner from "./LoadingSpinner";
 
 /* richiede i documenti al server */
-const getMyDocuments = (userId) => {
+const getMyDocuments = () => {
     return axios
-        .get(`/api/users/${userId}/health/documents`)
+        .get(`/api/health/documents`)
         .then((response) => {
             return response.data;
         })
@@ -28,7 +28,7 @@ class DocumentProfileScreen extends React.Component {
     async componentDidMount() {
         const { match } = this.props;
         const { profileId } = match.params;
-        const userDocuments = await getMyDocuments(profileId);
+        const userDocuments = await getMyDocuments();
         this.setState({
             fetchedProfile: true,
             documents: userDocuments
