@@ -51,7 +51,7 @@ class MedicinesProfileScreen extends React.Component {
             <React.Fragment>
                 <MedicinesHeader
                     photo={path(profile, ["image", "path"])}
-                /> {/*L'unica cosa da vedere è come mandargli la foto da props */}
+                /> 
                 <MedicinesInfo
                     profileId={profileId}
                 />
