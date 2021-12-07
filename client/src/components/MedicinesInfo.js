@@ -27,7 +27,7 @@ class MedicinesInfo extends React.Component {
         // const texts = Texts[language].profileDocuments;
         return (
             <React.Fragment>
-                <div className="row no-gutters profileInfoContainer">
+                <div className="row no-gutters medicinesInfoContainer">
                     <div className="col-2-10">
                         <i className="fas fa-solid fa-flask center" />
                     </div>
@@ -44,7 +44,7 @@ class MedicinesInfo extends React.Component {
                     </div>
 
                 </div>
-                {/*addare qui il calendario */}
+                {/*addare qui il calendario, la parte di sopra è da migliorare in caso */}
 
             </React.Fragment>
         );
@@ -52,9 +52,9 @@ class MedicinesInfo extends React.Component {
 }
 
 const divStyle = {
-    "justify-content":"center",
+    "justifyContent":"center",
     "display" : "flex",
-    "margin-top" : "2.5em"
+    "marginTop" : "1.3em"
 }
 
 const fileInput = {

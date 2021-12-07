@@ -2803,6 +2803,12 @@ a:active {
   min-height: 8.5rem;
   border-bottom: 1px solid rgba(01, 01, 01, 0.1);
 }
+/* questa parte si puà trovare in MedicinesInfo*/
+.medicinesInfoContainer {
+  min-height: 5.5rem;
+  border-bottom: 1px solid rgba(01, 01, 01, 0.1);
+  border-right: 1px solid rgba(01, 01, 01, 0.1);
+}
 #profileNavbarContainer {
   height: 5rem;
   background-color: #0a848f;
@@ -2935,6 +2941,25 @@ a:active {
   color: #010101;
 }
 .profileInfoContainer h1 {
+  display: block;
+  opacity: 0.87;
+  font-family: "Roboto";
+  font-size: 1.6rem;
+  text-align: left;
+  color: #010101;
+}
+.medicinesInfoContainer i {
+  font-size: 1.8rem;
+}
+.medicinesInfoContainer h2 {
+  display: block;
+  opacity: 0.54;
+  font-family: "Roboto";
+  font-size: 1.4rem;
+  text-align: left;
+  color: #010101;
+}
+.medicinesInfoContainer h1 {
   display: block;
   opacity: 0.87;
   font-family: "Roboto";
