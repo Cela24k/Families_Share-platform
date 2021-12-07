@@ -5,6 +5,7 @@ import * as path from "lodash.get";
 import LoadingSpinner from "./LoadingSpinner";
 import Log from "./Log";
 import axios from "axios";
+import { Calendar } from "antd";
 
 const getMyProfile = async (userId) => {
     try {
@@ -50,10 +51,14 @@ class MedicinesProfileScreen extends React.Component {
             <React.Fragment>
                 <MedicinesHeader
                     photo={path(profile, ["image", "path"])}
-                /> {/*L'unica cosa da vedere è come mandargli laa foto da props */}
+                /> {/*L'unica cosa da vedere è come mandargli la foto da props */}
                 <MedicinesInfo
                     profileId={profileId}
                 />
+                <div >
+                    {/*<Calendar fullscreen={true}
+                    />*/}
+                </div>
             </React.Fragment>
         ) : (
             <LoadingSpinner />

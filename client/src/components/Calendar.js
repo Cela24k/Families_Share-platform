@@ -12,6 +12,11 @@ import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
 import Log from "./Log";
 
+//TODO da aggiungere la get per il database 
+const getMedicines = userdId => {
+
+}
+
 const getGroupEvents = groupId => {
   return axios
     .get(`/api/groups/${groupId}/events`)

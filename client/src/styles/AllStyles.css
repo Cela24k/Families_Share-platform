@@ -2807,6 +2807,7 @@ a:active {
 .medicinesInfoContainer {
   min-height: 5.5rem;
   border-bottom: 1px solid rgba(01, 01, 01, 0.1);
+  opacity: 55%;
 }
 #profileNavbarContainer {
   height: 5rem;
@@ -2984,15 +2985,15 @@ a:active {
   border-radius: 50%;
   top: 15%;
 }
-#profileHeaderContainer h1 {
+#profileHeaderContainer h1,h2 {
   color: #ffffff;
   font-size: 3.4rem;
-
   position: absolute;
   bottom: 0;
   width: 90%;
   text-align: center;
 }
+
 /*PROFILE SCREEN END*/
 
 /*RATING MODAL*/

@@ -27,7 +27,7 @@ class MedicinesInfo extends React.Component {
         // const texts = Texts[language].profileDocuments;
         return (
             <React.Fragment>
-                <div className="row no-gutters medicinesInfoContainer">
+                <div className="row no-gutters medicinesInfoContainer" style={{height:"30%"}}>
                     <div className="col-2-10">
                         <i className="fas fa-solid fa-flask center" />
                     </div>
