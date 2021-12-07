@@ -3,8 +3,6 @@ import { withRouter } from "react-router-dom";
 import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
 import { disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
-import OptionsModal from "./OptionsModal";
-import ConfirmDialog from "./ConfirmDialog";
 import ExpandedImageModal from "./ExpandedImageModal";
 
 class DocumentProfileHeader extends React.Component {
