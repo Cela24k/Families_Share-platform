@@ -2985,13 +2985,25 @@ a:active {
   border-radius: 50%;
   top: 15%;
 }
-#profileHeaderContainer h1,h2 {
+
+#profileHeaderContainer h1 {
   color: #ffffff;
   font-size: 3.4rem;
   position: absolute;
   bottom: 0;
   width: 90%;
   text-align: center;
+}
+.medicinesHeader h2{
+  color: #ffffff;
+  font-size: 3.4rem;
+  position: absolute;
+  bottom: 0;
+  width: 90%;
+  text-align: center;
+  font-size: 24px;
+  position: absolute;
+  margin-bottom: 3.2rem;
 }
 
 /*PROFILE SCREEN END*/

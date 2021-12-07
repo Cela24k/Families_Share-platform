@@ -75,7 +75,7 @@ class MedicinesHeader extends React.Component {
     var tempo = new Date().getSeconds();
 
     return (
-      <div id="profileHeaderContainer">
+      <div id="profileHeaderContainer" className = "medicinesHeader">
         <div className="row no-gutters" id="profileHeaderOptions">
           <div className="col-2-10">
             <button
@@ -119,8 +119,9 @@ class MedicinesHeader extends React.Component {
           onClick={this.handleImageModalOpen}
         />
         <div>
+        {/*change design sopratutto il margin */}
           <h1 className="horizontalCenter" style={{ "font-size": "16px" }}>Prossima Medicina da prendere:</h1>
-          <h2 className="horizontalCenter" style={{ "font-size": "20px", position:"absolute", "margin-bottom":"3.2rem" }}> {currentTime} </h2>
+          <h2 className="horizontalCenter" > {currentTime} </h2>
         </div>
         
       </div>
