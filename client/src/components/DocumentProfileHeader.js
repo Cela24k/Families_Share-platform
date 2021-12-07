@@ -26,10 +26,6 @@ class DocumentProfileHeader extends React.Component {
         this.setState({ imageModalIsOpen: false });
     };
 
-    handleClose = () => {
-        this.setState({ optionsModalIsOpen: false });
-    };
-
     handleEdit = () => {
         alert("da implementare");
     };
@@ -46,9 +42,8 @@ class DocumentProfileHeader extends React.Component {
     render() {
         const { language, match, history, photo, name } = this.props;
         const { profileId } = match.params;
-        const texts = Texts[language].profileHeader;
-        const { optionsModalIsOpen, confirmDialogIsOpen, imageModalIsOpen } =
-            this.state;
+        // const texts = Texts[language].profileHeader;
+        const { imageModalIsOpen } = this.state;
         return (
             <div id="profileHeaderContainer">
                 <div className="row no-gutters" id="profileHeaderOptions">
