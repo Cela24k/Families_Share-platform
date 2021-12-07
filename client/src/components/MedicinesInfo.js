@@ -31,7 +31,7 @@ class MedicinesInfo extends React.Component {
                     <div className="col-2-10">
                         <i className="fas fa-solid fa-flask center" />
                     </div>
-                    <div className="col-6-10 " style={divStyle}>
+                    <div className="col-6-10 ">
                         <div className="verticalCenter" >
                             <h1>Panoramica Farmaci</h1>
 
@@ -51,19 +51,6 @@ class MedicinesInfo extends React.Component {
     }
 }
 
-const divStyle = {
-    "justifyContent":"center",
-    "display" : "flex",
-    "marginTop" : "1.3em"
-}
 
-const fileInput = {
-    opacity: 0.5,
-    "padding-left": "50px"
-}
-
-const labelStyle = {
-    opacity: 0.4
-}
 
 export default withLanguage(MedicinesInfo);

@@ -2807,7 +2807,6 @@ a:active {
 .medicinesInfoContainer {
   min-height: 5.5rem;
   border-bottom: 1px solid rgba(01, 01, 01, 0.1);
-  border-right: 1px solid rgba(01, 01, 01, 0.1);
 }
 #profileNavbarContainer {
   height: 5rem;
@@ -2948,6 +2947,7 @@ a:active {
   text-align: left;
   color: #010101;
 }
+/*aggiunti qui i css per il container degli info*/
 .medicinesInfoContainer i {
   font-size: 1.8rem;
 }
@@ -2964,7 +2964,7 @@ a:active {
   opacity: 0.87;
   font-family: "Roboto";
   font-size: 1.6rem;
-  text-align: left;
+  text-align: center;
   color: #010101;
 }
 .profileTabActive {
