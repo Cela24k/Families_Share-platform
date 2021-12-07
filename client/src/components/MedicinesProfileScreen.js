@@ -1,5 +1,6 @@
 import React from "react";
 import MedicinesHeader from "./MedicinesHeader";
+import MedicinesInfo from "./MedicinesInfo"
 import * as path from "lodash.get";
 import LoadingSpinner from "./LoadingSpinner";
 import Log from "./Log";
@@ -28,8 +29,8 @@ const getMyProfile = async (userId) => {
 class MedicinesProfileScreen extends React.Component {
 
     state = {
-        profile : {},
-        fetchedProfile : false,
+        profile: {},
+        fetchedProfile: false,
     };
 
     async componentDidMount() {
@@ -50,9 +51,12 @@ class MedicinesProfileScreen extends React.Component {
                 <MedicinesHeader
                     photo={path(profile, ["image", "path"])}
                 /> {/*L'unica cosa da vedere è come mandargli laa foto da props */}
+                <MedicinesInfo
+                    profileId={profileId}
+                />
             </React.Fragment>
-        ) : ( 
-            <LoadingSpinner/>
+        ) : (
+            <LoadingSpinner />
         );
     }
 }
