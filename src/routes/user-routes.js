@@ -40,10 +40,10 @@ const transporter = nodemailer.createTransport({
 })
 
 const profileStorage = multer.diskStorage({
-  destination (req, file, cb) {
+  destination(req, file, cb) {
     cb(null, path.join(__dirname, '../../images/profiles'))
   },
-  filename (req, file, cb) {
+  filename(req, file, cb) {
     fr(path.join(__dirname, '../../images/profiles'), { prefix: req.params.id })
     cb(null, `${req.params.id}-${Date.now()}.${file.mimetype.slice(file.mimetype.indexOf('/') + 1, file.mimetype.length)}`)
   }
@@ -51,10 +51,10 @@ const profileStorage = multer.diskStorage({
 const profileUpload = multer({ storage: profileStorage, limits: { fieldSize: 52428800 } })
 
 const childProfileStorage = multer.diskStorage({
-  destination (req, file, cb) {
+  destination(req, file, cb) {
     cb(null, path.join(__dirname, '../../images/profiles'))
   },
-  filename (req, file, cb) {
+  filename(req, file, cb) {
     fr(path.join(__dirname, '../../images/profiles'), { prefix: req.params.childId })
     cb(null, `${req.params.childId}-${Date.now()}.${file.mimetype.slice(file.mimetype.indexOf('/') + 1, file.mimetype.length)}`)
   }
@@ -1076,17 +1076,22 @@ router.get('/:id/health/documents', (req, res, next) => {
       res.json(documents)
     }).catch(next)
 })
-
-router.post('/:id/health/documents', (req, res, next) => {
+// provato a mettrolo async ma niente, l'errore è perchè dice che MongoError: E11000 duplicate key error collection, solo che è da vedre quale è il big problema se nello user_id
+router.post('/:id/health/documents', async (req, res, next) => {
   const { user_id } = req
   if (!user_id) { return res.status(401).send('Unauthorized') }
-  Document.create({
-    user_id,
-    file_name: req.body.file_name,
-    file_data: req.body.file_data
-  }).then(() => {
-    return res.status(200).send('Document added')
-  }).catch(next)
+  try {
+    await Document.create({
+      user_id,
+      file_name: req.body.file_name,
+      file_data: req.body.file_data
+    }).then(() => {
+      console.log(res.body)
+      return res.status(200).send('Document added')
+    }).catch(next)
+  } catch (err) {
+    next(err)
+  }
 })
 
 module.exports = router

@@ -120,7 +120,7 @@ class MedicinesHeader extends React.Component {
         />
         <div>
         {/*change design sopratutto il margin */}
-          <h1 className="horizontalCenter" style={{ "font-size": "16px" }}>Prossima Medicina da prendere:</h1>
+          <h1 className="horizontalCenter" style={{ "fontSize": "16px" }}>Prossima Medicina da prendere:</h1>
           <h2 className="horizontalCenter" > {currentTime} </h2>
         </div>
         

@@ -32,6 +32,7 @@ class DocumentProfileInfo extends React.Component {
 				})
 				.then((response) => {
 					Log.info(response);
+					console.log(response)
 				})
 				.catch((error) => {
 					Log.error(error);
@@ -83,16 +84,16 @@ class DocumentProfileInfo extends React.Component {
 }
 
 const divStyle = {
-	"margin-top": "100px",
+	"marginTop": "100px",
 	height: "100%",
 	display: "flex",
-	"justify-content": "center",
-	"align-items": "center"
+	"justifyContent": "center",
+	"alignItems": "center"
 }
 
 const fileInput = {
 	opacity: 0.5,
-	"padding-left": "50px"
+	"paddingLeft": "50px"
 }
 
 const labelStyle = {
