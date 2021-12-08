@@ -40,10 +40,10 @@ const transporter = nodemailer.createTransport({
 })
 
 const profileStorage = multer.diskStorage({
-  destination(req, file, cb) {
+  destination (req, file, cb) {
     cb(null, path.join(__dirname, '../../images/profiles'))
   },
-  filename(req, file, cb) {
+  filename (req, file, cb) {
     fr(path.join(__dirname, '../../images/profiles'), { prefix: req.params.id })
     cb(null, `${req.params.id}-${Date.now()}.${file.mimetype.slice(file.mimetype.indexOf('/') + 1, file.mimetype.length)}`)
   }
@@ -51,10 +51,10 @@ const profileStorage = multer.diskStorage({
 const profileUpload = multer({ storage: profileStorage, limits: { fieldSize: 52428800 } })
 
 const childProfileStorage = multer.diskStorage({
-  destination(req, file, cb) {
+  destination (req, file, cb) {
     cb(null, path.join(__dirname, '../../images/profiles'))
   },
-  filename(req, file, cb) {
+  filename (req, file, cb) {
     fr(path.join(__dirname, '../../images/profiles'), { prefix: req.params.childId })
     cb(null, `${req.params.childId}-${Date.now()}.${file.mimetype.slice(file.mimetype.indexOf('/') + 1, file.mimetype.length)}`)
   }
@@ -77,6 +77,7 @@ const Password_Reset = require('../models/password-reset')
 const Device = require('../models/device')
 const Rating = require('../models/rating')
 const Community = require('../models/community')
+const Document = require('../models/document')
 
 router.post('/', async (req, res, next) => {
   const {
@@ -1060,6 +1061,31 @@ router.delete('/:userId/children/:childId/parents/:parentId', (req, res, next) =
   const child_id = req.params.childId
   Parent.deleteOne({ child_id, parent_id: parentId }).then(() => {
     res.status(200).send('Parent deleted')
+  }).catch(next)
+})
+
+/*  */
+router.get('/:id/health/documents', (req, res, next) => {
+  const { user_id } = req
+  if (!user_id) { return res.status(401).send('Unauthorized') }
+  Document.find({ user_id: user_id })
+    .then(documents => {
+      if (documents.length === 0) {
+        return res.status(404).send('User has no documents')
+      }
+      res.json(documents)
+    }).catch(next)
+})
+
+router.post('/:id/health/documents', (req, res, next) => {
+  const { user_id } = req
+  if (!user_id) { return res.status(401).send('Unauthorized') }
+  Document.create({
+    user_id,
+    file_name: req.body.file_name,
+    file_data: req.body.file_data
+  }).then(() => {
+    return res.status(200).send('Document added')
   }).catch(next)
 })
 

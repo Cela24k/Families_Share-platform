@@ -7,10 +7,8 @@ const documentSchema = new mongoose.Schema(
       required: true,
       unique: true
     },
-    file: {
-      file_name: { type: String },
-      file_data: { type: Buffer }
-    }
+    file_name: String,
+    file_data: Buffer
   }
 )
 

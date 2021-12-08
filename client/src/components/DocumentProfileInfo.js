@@ -1,17 +1,19 @@
 import React from "react";
+import axios from "axios";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
+import Log from "./Log";
 
 class DocumentProfileInfo extends React.Component {
 
 	constructor(props) {
 		super(props);
 		const userId = JSON.parse(localStorage.getItem("user")).id;
-		const { profileId, usersDocuments } = this.props;
+		const { profileId, userDocuments } = this.props;
 		const myProfile = userId === profileId;
 		this.state = {
 			myProfile,
-			documents: usersDocuments,
+			documents: userDocuments,
 			profileId,
 		};
 	}
@@ -19,11 +21,24 @@ class DocumentProfileInfo extends React.Component {
 	readFile = () => {
 		const file = document.getElementById("get-document").files[0];
 		const reader = new FileReader();
-		reader.onload = (event) => {
-			/* qui bisognerà salvare il file dentro il db */
-			console.log(event.target.result);
-			const container = document.getElementById("document-data");
-			container.innerHTML = event.target.result;
+		const bodyFormData = new FormData();
+		bodyFormData.append('file_name', file.name);
+		bodyFormData.append('file_data', file);
+		reader.onload = () => {
+			const { profileId } = this.state;
+			axios
+				.post(`/api/users/${profileId}/health/documents`, bodyFormData, {
+					headers: { "Content-Type": "multipart/form-data" }
+				})
+				.then((response) => {
+					Log.info(response);
+				})
+				.catch((error) => {
+					Log.error(error);
+				})
+			// console.log(event.target.result);
+			// const container = document.getElementById("document-data");
+			// container.innerHTML = event.target.result;
 		};
 		reader.readAsArrayBuffer(file);
 	};
@@ -45,11 +60,10 @@ class DocumentProfileInfo extends React.Component {
 		// const texts = Texts[language].profileDocuments;
 		return (
 			<React.Fragment>
+
 				<div style={divStyle} >
 					{myProfile && (
-						<i class="fas fa-file-upload fa-10x"
-							style={labelStyle}>
-						</i>
+						<i className="fas fa-file-upload fa-10x" style={labelStyle} />
 					)}
 				</div>
 				<div className="addChildPrompt">
@@ -69,7 +83,7 @@ class DocumentProfileInfo extends React.Component {
 }
 
 const divStyle = {
-	"margin-top":"100px",
+	"margin-top": "100px",
 	height: "100%",
 	display: "flex",
 	"justify-content": "center",
@@ -86,3 +100,4 @@ const labelStyle = {
 }
 
 export default withLanguage(DocumentProfileInfo);
+
