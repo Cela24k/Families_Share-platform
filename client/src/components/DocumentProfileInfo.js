@@ -19,13 +19,13 @@ class DocumentProfileInfo extends React.Component {
 	}
 
 	readFile = () => {
+		const { profileId } = this.state;
 		const file = document.getElementById("get-document").files[0];
 		const reader = new FileReader();
-		const bodyFormData = new FormData();
-		bodyFormData.append('file_name', file.name);
-		bodyFormData.append('file_data', file);
 		reader.onload = () => {
-			const { profileId } = this.state;
+			const bodyFormData = new FormData();
+			bodyFormData.append('file_name', file.name);
+			bodyFormData.append('file_data', reader.result);
 			axios
 				.post(`/api/users/${profileId}/health/documents`, bodyFormData, {
 					headers: { "Content-Type": "multipart/form-data" }
@@ -37,10 +37,7 @@ class DocumentProfileInfo extends React.Component {
 				.catch((error) => {
 					Log.error(error);
 				})
-			// console.log(event.target.result);
-			// const container = document.getElementById("document-data");
-			// container.innerHTML = event.target.result;
-		};
+		}
 		reader.readAsArrayBuffer(file);
 	};
 
@@ -62,6 +59,17 @@ class DocumentProfileInfo extends React.Component {
 		return (
 			<React.Fragment>
 
+				{documents.length > 0 ? (
+					<ul>
+						{documents.map((_document, index) => (
+							<li key={index}>
+								<h1>{_document.file_name}</h1>
+							</li>
+						))}
+					</ul>
+				) : (
+					<div className="addChildPrompt">ciao</div>
+				)}
 				<div style={divStyle} >
 					{myProfile && (
 						<i className="fas fa-file-upload fa-10x" style={labelStyle} />

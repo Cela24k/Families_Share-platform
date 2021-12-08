@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Log from "./Log";
+import PropTypes from "prop-types";
 import * as path from "lodash.get";
 import DocumentProfileHeader from "./DocumentProfileHeader";
 import DocumentProfileInfo from "./DocumentProfileInfo";
@@ -76,5 +77,9 @@ class DocumentProfileScreen extends React.Component {
         );
     }
 }
+
+DocumentProfileScreen.propTypes = {
+    documents: PropTypes.array
+};
 
 export default DocumentProfileScreen;
