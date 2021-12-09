@@ -1,0 +1,56 @@
+const mongoose = require('mongoose')
+
+const medSchema = new mongoose.Schema(
+  {
+    id:{
+      type: String, 
+      unique: true,
+      required: true
+    },
+    med_name:{
+      type: String, 
+      required: true
+    }, 
+    user_id: {
+      type: String,
+      required: true,
+    },
+    assumption: {  // Buffer of full dates (month + day + time) o str 
+      type: Buffer
+      // EX 'December 17, 1995 03:24:00' o '1995-12-17T03:24:00'
+    }
+  }
+)
+
+function get_date_nd_time(date_time) {
+  if (!(localeCompare(typeof date_time, "string"))) 
+      _date_time = new Date(date_time)
+  else 
+      _date_time = date_time
+
+  return {
+    getMonth: function() {
+      return _date_time.getMonth(); // 0 = gennaio
+    },
+
+    getDay: function() {
+        return _date_time.getDay(); // 0 = domenica
+    }, 
+
+    getHours: function() {
+      return _date_time.getHours();
+    },
+
+    getMinutes: function() {
+      return _date_time.getMinutes();
+    },
+
+    toString: function() {
+      return _date_time.toLocaleTimeString();
+    }
+  };
+}
+
+const model = mongoose.model('Medicine', medSchema)
+
+module.exports = model

@@ -78,6 +78,7 @@ const Device = require('../models/device')
 const Rating = require('../models/rating')
 const Community = require('../models/community')
 const Document = require('../models/document')
+const Med = require('../models/medicine')
 
 router.post('/', async (req, res, next) => {
   const {
@@ -1077,6 +1078,27 @@ router.get('/:id/health/documents', (req, res, next) => {
     }).catch(next)
 })
 
+// to check
+router.get('/:Id/health/medicines', (req, res, next) => {
+  const { id } = rec.params.profileId 
+  if (!id) { return res.status(401).send('Unauthorized') }
+  Med.find({ user_id: id}).then(meds => { 
+    if (meds.length === 0) {return res.status(404).send('User has no meds') }
+    res.json(meds)
+  }).catch(next)
+})
+
+// to check
+router.get('/:Id/health/medicines/:id', (req, res, next) => {
+  const { id_user } = rec.params[0]
+  const { id } = rec.params[1]
+  if (!(id_user && id)) {return res.status(401).send('Unauthorized')}
+  Med.findOne({ id: id}).then(med => {
+    if (med.length === 0) {return res.status(404).send('Med doesnt found')}
+    res.json(med)
+  }).catch(next)
+})
+
 router.get('/:id/health/documents/:id', (req, res, next) => {
   const { id } = req.params
   if (!id) { return res.status(401).send('Unauthorized') }
@@ -1088,6 +1110,41 @@ router.get('/:id/health/documents/:id', (req, res, next) => {
       res.json(documents)
     }).catch(next)
 })
+
+// to check
+router.post('/:Id/health/medicines', async (req, res, next) => {
+  const {
+    name, user_id, assumption
+  } = req.body
+  if (!(med_name && user_id && assumption )) {
+    return res.status(400).send('Bad Request')
+  }
+  try {
+    const med = await Med.findOne({ user_id: user_id })
+    if (!(localeCompare(med.med_name, name))) {
+      return res.status(409).send('User med with that name already exists')
+    }
+
+    new_id = objectid()
+    const newMed = {
+      id: new_id, 
+      med_name: name, 
+      user_id: user_id,
+      assumption: assumption
+    }
+  
+    await Med.create(newMed)
+    const response = {
+      id: user_id,
+      name: name,
+    }
+    res.json(response)
+  } catch (err) {
+    next(err)
+  }
+})
+  
+module.exports = router
 
 router.post('/:id/health/documents', async (req, res, next) => {
   const { user_id } = req
