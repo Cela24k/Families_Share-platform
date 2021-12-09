@@ -1089,7 +1089,7 @@ router.get('/:Id/health/medicines', (req, res, next) => {
 })
 
 // to check
-router.get('/:Id/health/medicines/:id', (req, res, next) => {
+router.get('/:Id/health/medicines/edit/:id', (req, res, next) => {
   const { id_user } = rec.params[0]
   const { id } = rec.params[1]
   if (!(id_user && id)) {return res.status(401).send('Unauthorized')}
@@ -1112,7 +1112,7 @@ router.get('/:id/health/documents/:id', (req, res, next) => {
 })
 
 // to check
-router.post('/:Id/health/medicines', async (req, res, next) => {
+router.post('/:Id/health/medicines/edit', async (req, res, next) => {
   const {
     name, user_id, assumption
   } = req.body
