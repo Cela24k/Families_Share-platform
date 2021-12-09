@@ -1133,12 +1133,9 @@ router.post('/:Id/health/medicines', async (req, res, next) => {
       assumption: assumption
     }
   
-    await Med.create(newMed)
-    const response = {
-      id: user_id,
-      name: name,
-    }
-    res.json(response)
+    await Med.create(newMed).then(() => {
+      res.status(200).send('Medicine added')
+    })
   } catch (err) {
     next(err)
   }
