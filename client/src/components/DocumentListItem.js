@@ -22,6 +22,7 @@ class DocumentListItem extends React.Component {
         axios
             .get(`/api/users/${userId}/health/documents`)
             .then((response) => {
+                console.log(response.data)
                 this.setState({
                     fetchedDocument: true,
                     _document: response.data
@@ -52,10 +53,9 @@ class DocumentListItem extends React.Component {
                             <div
                                 role="button"
                                 tabIndex={-42}
-                                onClick={{/* TODO */}}
                                 id="childInfoContainer"
                                 className="verticalCenter"
-                            >
+                            > {/*TODO OnClick */}
                                 <h1>{`${_document.file_name}`}</h1>
                                 <h2>Documento</h2>
                             </div>

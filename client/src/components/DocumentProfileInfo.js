@@ -4,6 +4,7 @@ import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 import Log from "./Log";
 import DocumentListItem from "./DocumentListItem";
+import { resolve } from "path";
 
 class DocumentProfileInfo extends React.Component {
 
@@ -32,7 +33,8 @@ class DocumentProfileInfo extends React.Component {
 					headers: { "Content-Type": "multipart/form-data" }
 				})
 				.then((response) => {
-					Log.info(response);
+					console.log(response)
+					Log.info(response); 
 				})
 				.catch((error) => {
 					Log.error(error);

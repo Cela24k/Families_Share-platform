@@ -1143,7 +1143,7 @@ router.post('/:id/health/documents', async (req, res, next) => {
   const { user_id } = req
   if (!user_id) { return res.status(401).send('Unauthorized') }
   try {
-    console.log(req.body.file_name)
+    console.log(req.body) // non ci sta na sega more
     console.log('post mimmo')
     await Document.create({
       user_id,
