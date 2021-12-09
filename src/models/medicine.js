@@ -15,38 +15,39 @@ const medSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    assumption: {  // Buffer of full dates (month + day + time) o str 
+    assumption: {  
+      // Buffer of full dates (month + day + time) o str 
       type: Buffer
       // EX 'December 17, 1995 03:24:00' o '1995-12-17T03:24:00'
     }
   }
 )
 
-function get_date_nd_time(date_time) {
-  if (!(localeCompare(typeof date_time, "string"))) 
-      _date_time = new Date(date_time)
+function get_date_nd_time(datetime) {
+  if (!(localeCompare(typeof datetime, "string"))) 
+      var date_time = new Date(datetime)
   else 
-      _date_time = date_time
+      var date_time = datetime
 
   return {
     getMonth: function() {
-      return _date_time.getMonth(); // 0 = gennaio
+      return date_time.getMonth(); // 0 = gennaio
     },
 
     getDay: function() {
-        return _date_time.getDay(); // 0 = domenica
+        return date_time.getDay(); // 0 = domenica
     }, 
 
     getHours: function() {
-      return _date_time.getHours();
+      return date_time.getHours();
     },
 
     getMinutes: function() {
-      return _date_time.getMinutes();
+      return date_time.getMinutes();
     },
 
     toString: function() {
-      return _date_time.toLocaleTimeString();
+      return date_time.toLocaleTimeString();
     }
   };
 }
