@@ -12,10 +12,12 @@ const getMyDocuments = (userId) => {
     return axios
         .get(`/api/users/${userId}/health/documents`)
         .then((response) => {
+            console.log(response.data)
             return response.data;
         })
         .catch((error) => {
             Log.error(error);
+            // console.log('errore nella getMyDocuments');
             return [];
         });
 };
@@ -54,7 +56,7 @@ class DocumentProfileScreen extends React.Component {
         const profile = await getMyProfile(profileId);
         this.setState({
             profile,
-            userDocuments,
+            documents: userDocuments,
             fetchedProfile: true,
         });
     }

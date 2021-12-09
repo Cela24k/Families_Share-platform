@@ -3,6 +3,7 @@ import axios from "axios";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 import Log from "./Log";
+import DocumentListItem from "./DocumentListItem";
 
 class DocumentProfileInfo extends React.Component {
 
@@ -58,23 +59,23 @@ class DocumentProfileInfo extends React.Component {
 		// const texts = Texts[language].profileDocuments;
 		return (
 			<React.Fragment>
-
+				{console.log(documents)}
 				{documents.length > 0 ? (
 					<ul>
 						{documents.map((_document, index) => (
 							<li key={index}>
-								<h1>{_document.file_name}</h1>
+								<DocumentListItem userId={profileId} />
 							</li>
 						))}
 					</ul>
 				) : (
-					<div className="addChildPrompt">ciao</div>
+					<div style={divStyle} >
+						{myProfile && (
+							<i className="fas fa-file-upload fa-10x" style={labelStyle} />
+						)}
+					</div>
 				)}
-				<div style={divStyle} >
-					{myProfile && (
-						<i className="fas fa-file-upload fa-10x" style={labelStyle} />
-					)}
-				</div>
+
 				<div className="addChildPrompt">
 					{myProfile && (
 						<input
