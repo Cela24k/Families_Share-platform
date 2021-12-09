@@ -56,7 +56,7 @@ class DocumentListItem extends React.Component {
                                 id="childInfoContainer"
                                 className="verticalCenter"
                             >
-                                <h1>{`${_document}`}</h1>
+                                <h1>{`${_document.file_name}`}</h1>
                                 <h2>Documento</h2>
                             </div>
                         </div>

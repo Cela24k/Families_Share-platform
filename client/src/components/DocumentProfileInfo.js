@@ -18,7 +18,7 @@ class DocumentProfileInfo extends React.Component {
 			profileId,
 		};
 	}
-
+	//il problema inizia da qui, vedere bodyformdata se viene restituito giusto
 	readFile = () => {
 		const { profileId } = this.state;
 		const file = document.getElementById("get-document").files[0];
@@ -33,7 +33,6 @@ class DocumentProfileInfo extends React.Component {
 				})
 				.then((response) => {
 					Log.info(response);
-					console.log(response)
 				})
 				.catch((error) => {
 					Log.error(error);
@@ -59,7 +58,6 @@ class DocumentProfileInfo extends React.Component {
 		// const texts = Texts[language].profileDocuments;
 		return (
 			<React.Fragment>
-				{console.log(documents)}
 				{documents.length > 0 ? (
 					<ul>
 						{documents.map((_document, index) => (
@@ -67,7 +65,7 @@ class DocumentProfileInfo extends React.Component {
 								<DocumentListItem userId={profileId} />
 							</li>
 						))}
-					</ul>
+					</ul> 
 				) : (
 					<div style={divStyle} >
 						{myProfile && (
