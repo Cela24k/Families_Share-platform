@@ -1080,21 +1080,21 @@ router.get('/:id/health/documents', (req, res, next) => {
 
 // to check
 router.get('/:Id/health/medicines', (req, res, next) => {
-  const { id } = rec.params.profileId 
+  const { id } = req.params.Id
   if (!id) { return res.status(401).send('Unauthorized') }
-  Med.find({ user_id: id}).then(meds => { 
-    if (meds.length === 0) {return res.status(404).send('User has no meds') }
+  Med.find({ user_id: id }).then(meds => {
+    if (meds.length === 0) { return res.status(404).send('User has no meds') }
     res.json(meds)
   }).catch(next)
 })
 
 // to check
 router.get('/:Id/health/medicines/edit/:id', (req, res, next) => {
-  const { id_user } = rec.params[0]
-  const { id } = rec.params[1]
-  if (!(id_user && id)) {return res.status(401).send('Unauthorized')}
-  Med.findOne({ id: id}).then(med => {
-    if (med.length === 0) {return res.status(404).send('Med doesnt found')}
+  const { id_user } = req.params[0]
+  const { id } = req.params[1]
+  if (!(id_user && id)) { return res.status(401).send('Unauthorized') }
+  Med.findOne({ id: id }).then(med => {
+    if (med.length === 0) { return res.status(404).send('Med doesnt found') }
     res.json(med)
   }).catch(next)
 })
@@ -1116,31 +1116,27 @@ router.post('/:Id/health/medicines/edit', async (req, res, next) => {
   const {
     name, user_id, assumption
   } = req.body
-  if (!(med_name && user_id && assumption )) {
+  if (!(name && user_id && assumption)) {
     return res.status(400).send('Bad Request')
   }
   try {
-    const med = await Med.findOne({ user_id: user_id })
-    if (!(localeCompare(med.med_name, name))) {
-      return res.status(409).send('User med with that name already exists')
-    }
-
-    new_id = objectid()
-    const newMed = {
-      id: new_id, 
-      med_name: name, 
-      user_id: user_id,
-      assumption: assumption
-    }
-  
-    await Med.create(newMed).then(() => {
-      res.status(200).send('Medicine added')
+    await Med.findOne({ name: name, user_id: user_id }).then(med => {
+      if (med.length !== 0) { res.status(409).send('There is already a medicine for this user with the same name') } else {
+        var new_id = objectid()
+        const newMed = {
+          id: new_id,
+          med_name: name,
+          user_id: user_id,
+          assumption: assumption
+        }
+        Med.create(newMed).then(() => { res.status(200).send('Medicine added') })
+      }
     })
   } catch (err) {
     next(err)
   }
 })
-  
+
 module.exports = router
 
 router.post('/:id/health/documents', async (req, res, next) => {
