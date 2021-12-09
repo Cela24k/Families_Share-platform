@@ -257,7 +257,7 @@ class Calendar extends React.Component {
   state = { events: [], swipe: "none", filter: "all", filteredEvents: [] };
 
   async componentDidMount() {
-    const { ownerType, ownerId } = this.props;
+    const { ownerType, ownerId} = this.props;
     const { filter } = this.state;
     switch (ownerType) {
       case "user":
@@ -373,7 +373,7 @@ class Calendar extends React.Component {
   };
 
   render() {
-    const { language, ownerType } = this.props;
+    const { language, ownerType, week  } = this.props;
     const { swipe, activeView, filteredEvents, filter } = this.state;
     const texts = Texts[language].calendar;
     const calendarTitle =
@@ -401,6 +401,7 @@ class Calendar extends React.Component {
       style.paddingBottom = "6rem";
     }
     return (
+      week ? 
       <Swipeable
         delta={100}
         onSwipingLeft={this.swipingLeft}
@@ -414,6 +415,28 @@ class Calendar extends React.Component {
             events={filteredEvents}
             views={{ month: true, agenda: MyAgenda, day: true }}
             defaultView={BigCalendar.Views.MONTH}
+            startAccessor="start"
+            endAccessor="end"
+            components={components}
+            eventPropGetter={this.eventStyleGetter}
+            dayPropGetter={this.dayStyleGetter}
+          />
+        </div>
+      </Swipeable>
+      :
+      <Swipeable
+        delta={100}
+        onSwipingLeft={this.swipingLeft}
+        onSwipingRight={this.swipingRight}
+      >
+        <div style={style}>
+          <BigCalendar
+            popup
+            style={{ minHeight: "40rem" }}
+            localizer={localizer}
+            events={filteredEvents}
+            //views={{ month: true, agenda: MyAgenda, day: true }}
+            defaultView={BigCalendar.Views.WEEK}
             startAccessor="start"
             endAccessor="end"
             components={components}

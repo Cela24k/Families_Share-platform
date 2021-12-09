@@ -10,12 +10,13 @@ const MyCalendarScreen = ({ history, language }) => {
   const handleBackNav = () => {
     history.goBack();
   };
+  const weekly = false
   const texts = Texts[language].myCalendarScreen;
   const userId = JSON.parse(localStorage.getItem("user")).id; 
   return (
     <React.Fragment>
       <BackNavigation title={texts.backNavTitle} onClick={handleBackNav} />
-      <Calendar ownerType="user" ownerId={userId} />
+      <Calendar ownerType="user" ownerId={userId} week={weekly} />
     </React.Fragment>
   );
 };

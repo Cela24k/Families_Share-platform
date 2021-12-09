@@ -82,6 +82,10 @@ const MedicinesProfileScreen = Loadable({
   loader: () => import("./components/MedicinesProfileScreen"),
   loading: () => Loading
 });
+const EditMedicinesProfileScreen = Loadable({
+  loader: () => import("./components/EditMedicinesProfileScreen"),
+  loading: () => Loading
+});
 const CreateChildScreen = Loadable({
   loader: () => import("./components/CreateChildScreen"),
   loading: () => Loading
@@ -293,6 +297,10 @@ class App extends React.Component {
               <PrivateRoute
                 path="/profiles/:profileId/health/medicines"
                 component={MedicinesProfileScreen}
+              />
+              <PrivateRoute
+                path="/profiles/:profileId/health/medicines/edit"
+                component={EditMedicinesProfileScreen}
               />
               <PrivateRoute
                 path="/profiles/:profileId/edit"

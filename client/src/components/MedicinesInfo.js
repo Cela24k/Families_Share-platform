@@ -17,8 +17,12 @@ class MedicinesInfo extends React.Component {
             profileId,
         };
     }
+    // TODO: scoprire perchè history non funziona 
     handleMedicinesOption = () => {
-        alert("da implementare");
+        const { history } = this.props;
+        const { pathname } = history.location;
+        const newPath = `${pathname}/edit`;
+        history.push(newPath);
     }
 
     render() {
@@ -80,6 +84,8 @@ class MedicinesInfo extends React.Component {
         );
     }
 }
+
+//riga a scopo illustratiuvo
 
 //mettere questo in css
 const medicinesContentBox = {
