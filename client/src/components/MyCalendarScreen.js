@@ -11,7 +11,7 @@ const MyCalendarScreen = ({ history, language }) => {
     history.goBack();
   };
   const texts = Texts[language].myCalendarScreen;
-  const userId = JSON.parse(localStorage.getItem("user")).id;
+  const userId = JSON.parse(localStorage.getItem("user")).id; 
   return (
     <React.Fragment>
       <BackNavigation title={texts.backNavTitle} onClick={handleBackNav} />
