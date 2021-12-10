@@ -1141,11 +1141,9 @@ router.post('/:id/health/documents', async (req, res, next) => {
   const { user_id } = req
   if (!user_id) { return res.status(401).send('Unauthorized') }
   try {
-    console.log(req.body) // non ci sta na sega more
-    console.log('post mimmo')
     await Document.create({
       user_id,
-      file_name: req.body.file_name, // qui req.body.cazzi.in.culo è undefined quindi non gli arriva una sega
+      file_name: req.body.file_name,
       file_data: req.body.file_data
     }).then(() => {
       return res.status(200).send('Document added')

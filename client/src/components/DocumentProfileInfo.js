@@ -33,7 +33,7 @@ class DocumentProfileInfo extends React.Component {
 			form.append('file_data', reader.result);
 			axios
 				.post(`/api/users/${profileId}/health/documents`, form, {
-					headers: { "Content-Type": "application/json" }
+					headers: { "Content-Type": "multipart/form-data" }
 				})
 				.then((response) => {
 					Log.info(response);
@@ -42,7 +42,7 @@ class DocumentProfileInfo extends React.Component {
 					Log.error(error);
 				})
 		}
-		reader.readAsBinaryString(file);
+		reader.readAsDataURL(file);
 	};
 
 	//implementare il size massimo di 256MB o quello che era
