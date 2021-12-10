@@ -101,4 +101,3 @@ const dayBannerStyle = {
     "backgroundColor": "#00838f",
 }
 export default withRouter(withLanguage(MedicinesInfo));
-// prima export default withLanguage(MedicinesInfo);
