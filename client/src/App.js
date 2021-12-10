@@ -263,7 +263,6 @@ class App extends React.Component {
                 path="/myfamiliesshare"
                 component={MyFamiliesShareScreen}
               />
-              {/* test di routing alla pagina EditMedicinesProfileScreen, funziona da qua, ma da sotto no */}
               <PrivateRoute
                 exact
                 path="/comp"
@@ -305,15 +304,14 @@ class App extends React.Component {
                 path="/profiles/:profileId/health/documents"
                 component={DocumentProfileScreen}
               />
+              {/* Risolto, bisogna metterli in ordine, prima quello /medicines/edit , poi /medicines */}
+              <PrivateRoute
+                path="/profiles/:profileId/health/medicines/edit"
+                component={EditMedicinesProfileScreen}
+              />
               <PrivateRoute
                 path="/profiles/:profileId/health/medicines"
                 component={MedicinesProfileScreen}
-              />
-              {/* Quando inserisci questo path non vieni reindirizzato a nessuna componente, ne a EditMedicinesProfileScreen, ma neanche a qualche altra componente come MyComp */}
-              <PrivateRoute
-                path="/profiles/:profileId/health/medicines/edit"
-                //component={EditMedicinesProfileScreen}
-                component={MyComp}
               />
               <PrivateRoute
                 path="/profiles/:profileId/edit"
