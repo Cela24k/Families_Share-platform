@@ -82,8 +82,14 @@ const MedicinesProfileScreen = Loadable({
   loader: () => import("./components/MedicinesProfileScreen"),
   loading: () => Loading
 });
+//vedere cosa non funziona
 const EditMedicinesProfileScreen = Loadable({
   loader: () => import("./components/EditMedicinesProfileScreen"),
+  loading: () => Loading
+});
+// boh
+const MyComp = Loadable({
+  loader: () => import("./components/MyComp"),
   loading: () => Loading
 });
 const CreateChildScreen = Loadable({
@@ -257,6 +263,12 @@ class App extends React.Component {
                 path="/myfamiliesshare"
                 component={MyFamiliesShareScreen}
               />
+              {/* test di routing alla pagina EditMedicinesProfileScreen, funziona da qua, ma da sotto no */}
+              <PrivateRoute
+                exact
+                path="/comp"
+                component={EditMedicinesProfileScreen}
+              />
               <PrivateRoute
                 path="/myfamiliesshare/invites"
                 component={PendingRequestsScreen}
@@ -289,7 +301,6 @@ class App extends React.Component {
                 path="/profiles/:profileId/children/:childId"
                 component={ChildProfileScreen}
               />
-              {/* cosi si possono scrivere i commenti, comunque qui si aggiunge la private route che mi renderizzerà il component corrente al path corrente, vedersi REACT-ROUTING se si vuol capire di più  */}
               <PrivateRoute
                 path="/profiles/:profileId/health/documents"
                 component={DocumentProfileScreen}
@@ -298,9 +309,11 @@ class App extends React.Component {
                 path="/profiles/:profileId/health/medicines"
                 component={MedicinesProfileScreen}
               />
+              {/* Quando inserisci questo path non vieni reindirizzato a nessuna componente, ne a EditMedicinesProfileScreen, ma neanche a qualche altra componente come MyComp */}
               <PrivateRoute
                 path="/profiles/:profileId/health/medicines/edit"
-                component={EditMedicinesProfileScreen}
+                //component={EditMedicinesProfileScreen}
+                component={MyComp}
               />
               <PrivateRoute
                 path="/profiles/:profileId/edit"

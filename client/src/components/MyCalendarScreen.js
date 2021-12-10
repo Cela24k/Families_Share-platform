@@ -10,7 +10,7 @@ const MyCalendarScreen = ({ history, language }) => {
   const handleBackNav = () => {
     history.goBack();
   };
-  const weekly = false
+  const weekly = true
   const texts = Texts[language].myCalendarScreen;
   const userId = JSON.parse(localStorage.getItem("user")).id; 
   return (

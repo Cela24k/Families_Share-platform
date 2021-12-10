@@ -1,8 +1,5 @@
-import { colors } from "@material-ui/core";
-import { Calendar } from "antd";
-import autosize from "autosize";
 import React, { Component } from "react";
-import Texts from "../Constants/Texts";
+import { withRouter } from "react-router-dom";
 import withLanguage from "./LanguageContext";
 
 class MedicinesInfo extends React.Component {
@@ -40,15 +37,15 @@ class MedicinesInfo extends React.Component {
                         </div>
                     </div>
                     <div className="col-2-10">
-                        <i className="fas fa-pencil-alt  center"
+                        <i className="fas fa-pencil-alt center"
                             role="button"
                             onClick={this.handleMedicinesOption} />
                     </div>
                 </div>
-                <div style={{ height: "8rem", "margin-bottom": "10px", "border-bottom": "1px ridge", justifyContent: "center" }}>
+                <div style={{ height: "8rem", "marginBottom": "10px", "borderBottom": "1px ridge", justifyContent: "center" }}>
                     <div className="row no-gutters medicinesInfoContainer" style={{
-                        "margin-top": "2rem",
-                        height: "40%", opacity: 0.8, height: "2rem", justifyContent: "center", "border-bottom": "none"
+                        "marginTop": "2rem",
+                        height: "40%", opacity: 0.8, height: "2rem", justifyContent: "center", "borderBottom": "none"
                     }}>
                         <div className="col-1-10" style={boxBorders}>
                             <div style={dayBannerStyle}>LUN</div>
@@ -77,33 +74,31 @@ class MedicinesInfo extends React.Component {
                 <div className="row no-gutters medicinesInfoContainer" style={{justifyContent:"center"}}>
                     <div className="col-10-10">
                         <h1>Ulteriori informazioni</h1>
-                        <i style={{"font-size":"16px", justifyContent:"center"}}>Premi su un giorno per visualizzare</i>
+                        <i style={{"fontSize":"16px", justifyContent:"center"}}>Premi su un giorno per visualizzare</i>
                     </div>
                 </div>
             </React.Fragment>
         );
     }
 }
-
-//riga a scopo illustratiuvo
-
 //mettere questo in css
 const medicinesContentBox = {
     height: "8rem",
-    "marginTop": "10px",
-    "marginBottom": "10px",
-    "border-bottom": "1px ridge",
+    marginTop: "10px",
+    marginBottom: "10px",
+    borderBottom: "1px ridge",
     justifyContent: "center"
 }
 
 const boxBorders = {
-    "border-width": "1px",
-    "border-style": "ridge",
-    "border-color": "#bab8b7",
+    borderWidth: "1px",
+    borderStyle: "ridge",
+    borderColor: "#bab8b7",
 }
 const dayBannerStyle = {
-    "text-align": "center",
+    "textAlign": "center",
     color: "white",
-    "background-color": "#00838f",
+    "backgroundColor": "#00838f",
 }
-export default withLanguage(MedicinesInfo);
+export default withRouter(withLanguage(MedicinesInfo));
+// prima export default withLanguage(MedicinesInfo);
