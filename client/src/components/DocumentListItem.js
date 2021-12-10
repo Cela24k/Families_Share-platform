@@ -30,7 +30,6 @@ class DocumentListItem extends React.Component {
             })
             .catch((error) => {
                 Log.error(error);
-                //
             })
     }
 
@@ -55,8 +54,9 @@ class DocumentListItem extends React.Component {
                                 tabIndex={-42}
                                 id="childInfoContainer"
                                 className="verticalCenter"
-                            > {/*TODO OnClick */}
-                                <h1>{`${_document.file_name}`}</h1>
+                            >   
+                                {/*TODO OnClick */}
+                                <h1>{`${_document[0].file_name}`}</h1>
                                 <h2>Documento</h2>
                             </div>
                         </div>

@@ -1065,7 +1065,7 @@ router.delete('/:userId/children/:childId/parents/:parentId', (req, res, next) =
   }).catch(next)
 })
 
-/*  */
+/* DOCUMENTS */
 router.get('/:id/health/documents', (req, res, next) => {
   const { id } = req.params
   if (!id) { return res.status(401).send('Unauthorized') }
@@ -1076,6 +1076,18 @@ router.get('/:id/health/documents', (req, res, next) => {
       }
       res.json(documents)
     }).catch(next)
+})
+
+router.post('/:id/health/documents', (req, res, next) => {
+  const { user_id } = req
+  if (!user_id) { return res.status(401).send('Unauthorized') }
+  Document.create({
+    user_id,
+    file_name: req.body.filename,
+    file_data: req.body.filedata
+  }).then(() => {
+    return res.status(200).send('Document added')
+  }).catch(next)
 })
 
 // to check
@@ -1132,22 +1144,6 @@ router.post('/:Id/health/medicines/edit', async (req, res, next) => {
         Med.create(newMed).then(() => { res.status(200).send('Medicine added') })
       }
     })
-  } catch (err) {
-    next(err)
-  }
-})
-
-router.post('/:id/health/documents', async (req, res, next) => {
-  const { user_id } = req
-  if (!user_id) { return res.status(401).send('Unauthorized') }
-  try {
-    await Document.create({
-      user_id,
-      file_name: req.body.file_name,
-      file_data: req.body.file_data
-    }).then(() => {
-      return res.status(200).send('Document added')
-    }).catch(next)
   } catch (err) {
     next(err)
   }

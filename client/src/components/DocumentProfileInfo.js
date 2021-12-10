@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import Texts from "../Constants/Texts";
+// import Texts from "../Constants/Texts";
 import Fab from "@material-ui/core/Fab";
 import { withStyles } from "@material-ui/core/styles";
 import withLanguage from "./LanguageContext";
@@ -26,14 +26,10 @@ class DocumentProfileInfo extends React.Component {
 		const file = document.getElementById("input").files[0];
 		const reader = new FileReader();
 		reader.onload = () => {
-			console.log(file.name);
-			console.log(reader.result);
-			const form = new FormData();
-			form.append('file_name', file.name);
-			form.append('file_data', reader.result);
 			axios
-				.post(`/api/users/${profileId}/health/documents`, form, {
-					headers: { "Content-Type": "multipart/form-data" }
+				.post(`/api/users/${profileId}/health/documents`, { 
+					"filename": file.name, 
+					"filedata": reader.result 
 				})
 				.then((response) => {
 					Log.info(response);

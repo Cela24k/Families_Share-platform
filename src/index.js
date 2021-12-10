@@ -52,6 +52,7 @@ app.use(async (req) => {
 })
 app.use(compression())
 
+app.use(bodyParser({ limit: '50mb' }))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/images', express.static(path.join(__dirname, '../images')))

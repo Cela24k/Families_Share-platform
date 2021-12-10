@@ -10,7 +10,7 @@ const documentSchema = new mongoose.Schema({
     required: true
   },
   file_data: {
-    type: Buffer,
+    type: String,
     required: true
   }
 }, { timestamps: true })

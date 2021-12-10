@@ -43,6 +43,7 @@ const getMyProfile = async (userId) => {
 };
 
 class DocumentProfileScreen extends React.Component {
+    
     state = {
         profile: {},
         documents: [],
