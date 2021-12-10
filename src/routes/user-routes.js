@@ -1137,8 +1137,6 @@ router.post('/:Id/health/medicines/edit', async (req, res, next) => {
   }
 })
 
-module.exports = router
-
 router.post('/:id/health/documents', async (req, res, next) => {
   const { user_id } = req
   if (!user_id) { return res.status(401).send('Unauthorized') }

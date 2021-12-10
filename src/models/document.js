@@ -5,8 +5,14 @@ const documentSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  file_name: String,
-  file_data: Buffer
+  file_name: {
+    type: String,
+    required: true
+  },
+  file_data: {
+    type: Buffer,
+    required: true
+  }
 }, { timestamps: true })
 
 const model = mongoose.model('Document', documentSchema)
