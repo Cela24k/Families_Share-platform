@@ -35,7 +35,7 @@ class DocumentListItem extends React.Component {
 
     render() {
         const { fetchedDocument, _document } = this.state;
-        const { userId, history, language } = this.props;
+        const { userId, keyId } = this.props; //aggiunto keyId al prop per sapere cosa usare come indice per stampare
         // const texts = Texts[language].documentListItem;
         return (
             <div
@@ -55,8 +55,9 @@ class DocumentListItem extends React.Component {
                                 id="childInfoContainer"
                                 className="verticalCenter"
                             >   
-                                {/*TODO OnClick */}
-                                <h1>{`${_document[0].file_name}`}</h1>
+                                {/*TODO OnClick */
+                                console.log(keyId)}
+                                <h1>{`${_document[keyId].file_name}`}</h1>
                                 <h2>Documento</h2>
                             </div>
                         </div>

@@ -32,6 +32,8 @@ class DocumentProfileInfo extends React.Component {
 					"filedata": reader.result 
 				})
 				.then((response) => {
+					//aggiunto il metodo per reloadare la pagina quando viene caricato un documento accettato
+					window.location.reload(false);
 					Log.info(response);
 				})
 				.catch((error) => {
@@ -63,7 +65,8 @@ class DocumentProfileInfo extends React.Component {
 					<ul>
 						{documents.map((_document, index) => (
 							<li key={index}>
-								<DocumentListItem userId={profileId} />
+								{/* passato l'index della document map per usarlo come prop*/}
+								<DocumentListItem userId={profileId} keyId={index} />
 							</li>
 						))}
 					</ul>
@@ -81,7 +84,7 @@ class DocumentProfileInfo extends React.Component {
 					/>
 					{myProfile && (
 						<Fab
-							color="primary"
+							color="primary"	
 							aria-label="Add"
 							className={classes.add}
 							onClick={() => { document.getElementById('input').click() }}
@@ -95,6 +98,8 @@ class DocumentProfileInfo extends React.Component {
 		);
 	}
 }
+
+
 
 const styles = () => ({
 	add: {
@@ -120,7 +125,7 @@ const divStyle = {
 }
 
 const fileInput = {
-	// opacity: 0.5,
+	opacity: 0.6,
 	// "paddingLeft": "50px"
 	display: "none"
 }
