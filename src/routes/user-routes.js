@@ -1090,6 +1090,16 @@ router.post('/:id/health/documents', (req, res, next) => {
   }).catch(next)
 })
 
+router.delete('/:id/health/documents', (req, res, next) => {
+  const { user_id } = req
+  if (!user_id) { return res.status(401).send('Unauthorized') }
+  Document.deleteOne({ _id: req.body._id })
+    .then(() => {
+      return res.status(200).send('Document deleted')
+    })
+    .catch(next)
+})
+
 // to check
 router.get('/:Id/health/medicines', (req, res, next) => {
   const { id } = req.params.Id

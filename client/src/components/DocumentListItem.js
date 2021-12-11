@@ -1,4 +1,5 @@
 import React from "react";
+import ConfirmDialog from "./ConfirmDialog";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { Skeleton } from "antd";
@@ -14,7 +15,6 @@ import Log from "./Log";
 class DocumentListItem extends React.Component {
 
     state = {
-        // optionsModalIsOpen: false,
         confirmDialogIsOpen: false,
         fetchedDocument: false,
         _document: {},
@@ -38,16 +38,22 @@ class DocumentListItem extends React.Component {
             })
     }
 
-    handleOptions = () => {
-        this.setState({ optionsModalIsOpen: true, });
-    }
-
-    handleClose = () => {
-        this.setState({ optionsModalIsOpen: false });
-    };
-
     handleDelete = () => {
-
+        const { _document } = this.state;
+        const { keyId, userId } = this.props;
+        console.log(typeof _document[keyId]._id)
+        axios
+            .delete(`/api/users/${userId}/health/documents/`, { data: {
+                _id: _document[keyId]._id }
+            })
+            .then(response => {
+                Log.info(response);
+                // history.goBack();
+            })
+            .catch(error => {
+                Log.error(error);
+                // history.goBack();
+            });
     }
 
     handleConfirmDialogOpen = () => {
@@ -62,17 +68,9 @@ class DocumentListItem extends React.Component {
     };
 
     render() {
-        const { handleConfirmDialogOpen, fetchedDocument, _document, pos } = this.state;
+        const { confirmDialogIsOpen, fetchedDocument, _document, pos } = this.state;
         const { userId, keyId } = this.props; //aggiunto keyId al prop per sapere cosa usare come indice per stampare
         // const texts = Texts[language].documentListItem;
-
-        const options = [
-            {
-                label: "Elimina documento",
-                style: "optionsModalButton",
-                handle: this.handleConfirmDialogOpen
-            }
-        ];
         return (
             <div
                 id="childContainer"
@@ -81,6 +79,11 @@ class DocumentListItem extends React.Component {
             >
                 {fetchedDocument ? (
                     <React.Fragment>
+                        <ConfirmDialog
+                            title="TTERMINATOR"
+                            handleClose={this.handleConfirmDialogClose}
+                            isOpen={confirmDialogIsOpen}
+                        />
                         <div className="col-3-10">
 
                         </div>
@@ -101,16 +104,11 @@ class DocumentListItem extends React.Component {
                             <button
                                 type="button"
                                 className="transparentButton center"
-                                onClick={this.handleOptions}
+                                onClick={this.handleConfirmDialogOpen}
                             >
-                                <i className="fas fa-ellipsis-v" />
+                                <i className="fas fa-trash" />
                             </button>
                         </div>
-                        <OptionsModal
-                            isOpen={this.handleConfirmDialogOpen}
-                            handleClose={this.handleConfirmDialogClose}
-                            options={options}
-                        />
                     </React.Fragment>
                 ) : (
                     <Skeleton avatar active paragraph={{ rows: 1 }} />
