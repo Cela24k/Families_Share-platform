@@ -73,7 +73,6 @@ const ChildProfileScreen = Loadable({
   loader: () => import("./components/ChildProfileScreen"),
   loading: () => Loading
 });
-//qui bisogna loaddarle(vedere cosa significa)
 const DocumentProfileScreen = Loadable({
   loader: () => import("./components/DocumentProfileScreen"),
   loading: () => Loading
@@ -82,14 +81,8 @@ const MedicinesProfileScreen = Loadable({
   loader: () => import("./components/MedicinesProfileScreen"),
   loading: () => Loading
 });
-//vedere cosa non funziona
 const EditMedicinesProfileScreen = Loadable({
   loader: () => import("./components/EditMedicinesProfileScreen"),
-  loading: () => Loading
-});
-// boh
-const MyComp = Loadable({
-  loader: () => import("./components/MyComp"),
   loading: () => Loading
 });
 const CreateChildScreen = Loadable({

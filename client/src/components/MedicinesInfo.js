@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import withLanguage from "./LanguageContext";
-
 class MedicinesInfo extends React.Component {
 
     constructor(props) {
@@ -14,7 +13,6 @@ class MedicinesInfo extends React.Component {
             profileId,
         };
     }
-    // TODO: scoprire perchè history non funziona 
     handleMedicinesOption = () => {
         const { history } = this.props;
         const { pathname } = history.location;

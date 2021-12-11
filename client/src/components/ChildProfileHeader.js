@@ -34,7 +34,6 @@ class ChildProfileHeader extends React.Component {
 
   handleEdit = () => {
     const { history } = this.props;
-    console.log(this.props)
     const { pathname } = history.location;
     const newPath = `${pathname}/edit`;
     history.push(newPath);

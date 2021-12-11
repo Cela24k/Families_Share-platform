@@ -55,10 +55,6 @@ class MedicinesProfileScreen extends React.Component {
                 <MedicinesInfo
                     profileId={profileId}
                 />
-                <div >
-                    {/*<Calendar fullscreen={true}
-                    />*/}
-                </div>
             </React.Fragment>
         ) : (
             <LoadingSpinner />
