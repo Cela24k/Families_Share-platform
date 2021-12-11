@@ -55,30 +55,7 @@ class DocumentProfileHeader extends React.Component {
                         </button>
                     </div>
                     <div className="col-6-10" />
-                    {profileId === JSON.parse(localStorage.getItem("user")).id ? (
-                        <React.Fragment>
-                            <div className="col-1-10">
-                                <button
-                                    type="button"
-                                    className="transparentButton center"
-                                    onClick={this.handleEdit}
-                                >
-                                    <i className="fas fa-pencil-alt" />
-                                </button>
-                            </div>
-                            <div className="col-1-10">
-                                <button
-                                    type="button"
-                                    className="transparentButton center"
-                                    onClick={this.handleOptions}
-                                >
-                                    <i className="fas fa-ellipsis-v" />
-                                </button>
-                            </div>
-                        </React.Fragment>
-                    ) : (
-                        <div />
-                    )}
+
                 </div>
                 <img
                     className="profilePhoto horizontalCenter"
