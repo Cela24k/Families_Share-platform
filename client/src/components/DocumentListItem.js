@@ -16,9 +16,6 @@ class DocumentListItem extends React.Component {
         fetchedDocument: false,
         _document: {}
     }
-    handleDeleteDoc = () => {
-        alert("implementare cancellazione e discuterne assieme") //bisogna ben vedere in che modo "puntare" al documento cancellabile
-    }
 
     componentDidMount() {
         const { userId } = this.props;
@@ -51,7 +48,7 @@ class DocumentListItem extends React.Component {
                         <div className="col-3-10">
 
                         </div>
-                        <div className="col-5-10">
+                        <div className="col-7-10">
                             <div
                                 role="button"
                                 tabIndex={-42}
@@ -63,15 +60,6 @@ class DocumentListItem extends React.Component {
                                 <h1>{`${_document[keyId].file_name}`}</h1>
                                 <h2>Documento</h2>
                             </div>
-                        </div>
-                        <div className="col-2-10">
-                            <button
-                                type="button"
-                                className="transparentButton center"
-                                onClick={this.handleDeleteDoc}
-                            >
-                                <i className="fas fa-trash" />
-                            </button>
                         </div>
                     </React.Fragment>
                 ) : (
