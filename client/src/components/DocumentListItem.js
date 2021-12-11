@@ -22,15 +22,12 @@ class DocumentListItem extends React.Component {
 
     componentDidMount() {
         const { userId } = this.props;
-        const pos = document.querySelector("button").getBoundingClientRect();
-        console.log(pos)
         axios
             .get(`/api/users/${userId}/health/documents`)
             .then((response) => {
                 this.setState({
                     fetchedDocument: true,
-                    _document: response.data,
-                    pos
+                    _document: response.data
                 });
             })
             .catch((error) => {
@@ -41,12 +38,15 @@ class DocumentListItem extends React.Component {
     handleDelete = () => {
         const { _document } = this.state;
         const { keyId, userId } = this.props;
-        console.log(typeof _document[keyId]._id)
         axios
             .delete(`/api/users/${userId}/health/documents/`, { data: {
                 _id: _document[keyId]._id }
             })
             .then(response => {
+                /*trovare un metodo più elegante, spoiler: esiste ed è quello di aggiornare lo state della component genitore \
+					in questo caso suppongo bisogni aggiornare lo state sia della singola componente DocumentList, sia lo stato di \
+					DocumentProfileInfo */
+				window.location.reload(false);
                 Log.info(response);
                 // history.goBack();
             })

@@ -32,6 +32,9 @@ class DocumentProfileInfo extends React.Component {
 					"filedata": reader.result 
 				})
 				.then((response) => {
+					/*trovare un metodo più elegante, spoiler: esiste ed è quello di aggiornare lo state della component genitore \
+					in questo caso suppongo bisogni aggiornare lo state sia della singola componente DocumentList, sia lo stato di \
+					DocumentProfileInfo */
 					//aggiunto il metodo per reloadare la pagina quando viene caricato un documento accettato
 					window.location.reload(false);
 					Log.info(response);
