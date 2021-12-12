@@ -1,17 +1,14 @@
 import React from "react";
 import ConfirmDialog from "./ConfirmDialog";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import axios from "axios";
 import { Skeleton } from "antd";
-import OptionsModal from "./OptionsModal";
-import moment from "moment";
 import { withRouter } from "react-router-dom";
 import * as path from "lodash.get";
-import Texts from "../Constants/Texts";
+// import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 import Avatar from "./Avatar";
 import Log from "./Log";
-import responsiveObserve from "antd/lib/_util/responsiveObserve";
 
 const getMyProfile = async (userId) => {
     try {
@@ -60,6 +57,10 @@ class DocumentListItem extends React.Component {
             })
     }
 
+    base64ToBlob(base64Data, contentType) {
+        // funzione per convertire base64 a blob
+    }
+
     handleDelete = () => {
         const { _document } = this.state;
         const { keyId, userId } = this.props;
@@ -81,6 +82,12 @@ class DocumentListItem extends React.Component {
                 Log.error(error);
                 // history.goBack();
             });
+    }
+
+    handleClick = () => {
+        const { _document } = this.state;
+        const { keyId } = this.props;
+        alert('da implementare');
     }
 
     handleConfirmDialogOpen = () => {
@@ -123,6 +130,7 @@ class DocumentListItem extends React.Component {
                                 tabIndex={-42}
                                 id="childInfoContainer"
                                 className="verticalCenter"
+                                onClick={this.handleClick}
                             >
                                 {/*TODO OnClick */}
                                 <h1>{`${_document[keyId].file_name}`}</h1>
