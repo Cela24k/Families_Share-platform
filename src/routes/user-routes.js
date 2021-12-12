@@ -1101,7 +1101,7 @@ router.delete('/:id/health/documents', (req, res, next) => {
 })
 
 // to check
-router.get('/:Id/health/medicines', (req, res, next) => {
+router.get('/:Id/health/medicines/edit', (req, res, next) => {
   const { id } = req.params.Id
   if (!id) { return res.status(401).send('Unauthorized') }
   Med.find({ user_id: id }).then(meds => {

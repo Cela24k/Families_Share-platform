@@ -24,10 +24,8 @@ const medSchema = new mongoose.Schema(
 )
 
 function get_date_nd_time(datetime) {
-  if (!(localeCompare(typeof datetime, 'string')))
-    var date_time = new Date(datetime)
-  else
-    date_time = datetime
+  if (!('string'.localeCompare(typeof datetime))) { var date_time = new Date(datetime) } else
+  { date_time = datetime }
 
   return {
     getMonth: function () {
