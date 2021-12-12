@@ -6,6 +6,21 @@ import * as path from "lodash.get";
 import DocumentProfileHeader from "./DocumentProfileHeader";
 import DocumentProfileInfo from "./DocumentProfileInfo";
 import LoadingSpinner from "./LoadingSpinner";
+import getMyChildren from "./ProfileScreen"
+
+/*
+const getMyChildren = (userId) => {
+    return axios
+        .get(`/api/users/${userId}/children`)
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            Log.error(error);
+            return [];
+        });
+}
+*/
 
 /* richiede i documenti al server */
 const getMyDocuments = (userId) => {
@@ -22,6 +37,7 @@ const getMyDocuments = (userId) => {
         });
 };
 
+/* richiede le informazioni al server del profilo dello user attualmente connesso */
 const getMyProfile = async (userId) => {
     try {
         const response = await axios.get(`/api/users/${userId}/profile`);
@@ -43,7 +59,7 @@ const getMyProfile = async (userId) => {
 };
 
 class DocumentProfileScreen extends React.Component {
-    
+
     state = {
         profile: {},
         documents: [],
@@ -55,6 +71,7 @@ class DocumentProfileScreen extends React.Component {
         const { profileId } = match.params;
         const userDocuments = await getMyDocuments(profileId);
         const profile = await getMyProfile(profileId);
+        // const children = await getMyChildren(profileId);
         this.setState({
             profile,
             documents: userDocuments,

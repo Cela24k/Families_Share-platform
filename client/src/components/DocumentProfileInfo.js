@@ -27,9 +27,9 @@ class DocumentProfileInfo extends React.Component {
 		const reader = new FileReader();
 		reader.onload = () => {
 			axios
-				.post(`/api/users/${profileId}/health/documents`, { 
-					"filename": file.name, 
-					"filedata": reader.result 
+				.post(`/api/users/${profileId}/health/documents`, {
+					"filename": file.name,
+					"filedata": reader.result
 				})
 				.then((response) => {
 					/*trovare un metodo più elegante, spoiler: esiste ed è quello di aggiornare lo state della component genitore \
@@ -87,12 +87,12 @@ class DocumentProfileInfo extends React.Component {
 					/>
 					{myProfile && (
 						<Fab
-							color="primary"	
+							color="primary"
 							aria-label="Add"
 							className={classes.add}
 							onClick={() => { document.getElementById('input').click() }}
 						>
-							<i className="fas fa-solid fa-file" />
+							<i className="fas fa-regular fa-file" />
 						</Fab>
 					)}
 				</div>

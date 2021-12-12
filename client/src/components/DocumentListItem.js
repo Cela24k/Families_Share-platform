@@ -11,6 +11,27 @@ import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 import Avatar from "./Avatar";
 import Log from "./Log";
+import responsiveObserve from "antd/lib/_util/responsiveObserve";
+
+const getMyProfile = async (userId) => {
+    try {
+        const response = await axios.get(`/api/users/${userId}/profile`);
+        return response.data;
+    } catch (error) {
+        Log.error(error);
+        return {
+            given_name: "",
+            family_name: "",
+            image: { path: "/images/profiles/user_default_photo.png" },
+            address: { street: "", number: "" },
+            email: "",
+            phone: "",
+            phone_type: "",
+            visible: false,
+            user_id: "",
+        };
+    }
+};
 
 class DocumentListItem extends React.Component {
 
@@ -18,16 +39,20 @@ class DocumentListItem extends React.Component {
         confirmDialogIsOpen: false,
         fetchedDocument: false,
         _document: {},
+        profile: {}
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         const { userId } = this.props;
+        const profile = await getMyProfile(userId);
+        console.log(profile);
         axios
             .get(`/api/users/${userId}/health/documents`)
             .then((response) => {
                 this.setState({
                     fetchedDocument: true,
-                    _document: response.data
+                    _document: response.data,
+                    profile
                 });
             })
             .catch((error) => {
@@ -39,14 +64,16 @@ class DocumentListItem extends React.Component {
         const { _document } = this.state;
         const { keyId, userId } = this.props;
         axios
-            .delete(`/api/users/${userId}/health/documents/`, { data: {
-                _id: _document[keyId]._id }
+            .delete(`/api/users/${userId}/health/documents/`, {
+                data: {
+                    _id: _document[keyId]._id
+                }
             })
             .then(response => {
                 /*trovare un metodo più elegante, spoiler: esiste ed è quello di aggiornare lo state della component genitore \
-					in questo caso suppongo bisogni aggiornare lo state sia della singola componente DocumentList, sia lo stato di \
-					DocumentProfileInfo */
-				window.location.reload(false);
+                    in questo caso suppongo bisogni aggiornare lo state sia della singola componente DocumentList, sia lo stato di \
+                    DocumentProfileInfo */
+                window.location.reload(false);
                 Log.info(response);
                 // history.goBack();
             })
@@ -68,7 +95,7 @@ class DocumentListItem extends React.Component {
     };
 
     render() {
-        const { confirmDialogIsOpen, fetchedDocument, _document, pos } = this.state;
+        const { confirmDialogIsOpen, fetchedDocument, _document, profile } = this.state;
         const { userId, keyId } = this.props; //aggiunto keyId al prop per sapere cosa usare come indice per stampare
         // const texts = Texts[language].documentListItem;
         return (
@@ -80,12 +107,15 @@ class DocumentListItem extends React.Component {
                 {fetchedDocument ? (
                     <React.Fragment>
                         <ConfirmDialog
-                            title="TTERMINATOR"
+                            title="Confermi di voler eliminare il documento?"
                             handleClose={this.handleConfirmDialogClose}
                             isOpen={confirmDialogIsOpen}
                         />
                         <div className="col-3-10">
-
+                            <Avatar
+                                thumbnail={path(profile, ["image", "path"])}
+                                className="center"
+                            />
                         </div>
                         <div className="col-5-10">
                             <div
@@ -94,8 +124,7 @@ class DocumentListItem extends React.Component {
                                 id="childInfoContainer"
                                 className="verticalCenter"
                             >
-                                {/*TODO OnClick */
-                                    console.log(_document[keyId]._id)}
+                                {/*TODO OnClick */}
                                 <h1>{`${_document[keyId].file_name}`}</h1>
                                 <h2>Documento</h2>
                             </div>
