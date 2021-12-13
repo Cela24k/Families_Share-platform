@@ -2811,18 +2811,7 @@ a:active {
 }
 
 /*questa è la parte di healthprofileheader*/
-.feedbackContainerHeader {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 5.3rem 0 5px 0;
-  height: 20px;
-  
 
-}
-.feedbackContainerHeader i{
-  padding: 5px;
-}
 /*questo si trova in HealthProfileInfo*/
 .feedbackContainer {
   display: flex;
@@ -2844,9 +2833,18 @@ a:active {
 .feedbackContainer i:hover{
  
   opacity: 100%;
+  color: #f7931e;
   
   
 
+}
+.textAreaHealth{
+  display:flex;
+  justify-content: center;
+  padding-top: 3rem;
+}
+.textAreaHealth textarea{
+ width: 60%;
 }
 
 
