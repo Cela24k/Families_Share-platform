@@ -34,14 +34,14 @@ class HealthProfileInfo extends React.Component {
 						<i className="far fa-solid fa-smile center" />
 					</div>
 					<div className="col-6-10 ">
-						<div className="verticalCenter" >
+						<div className="verticalCenter">
 							<h1>Il tuo mood</h1>
 						</div>
 					</div>
 					<div className="col-2-10">
 						<i className="fas fa-pencil-alt center"
 							role="button"
-							onClick={this.handleMedicinesOption} />
+							/>{/*onClick da implementare */} 
 					</div>
 				</div>
 			</React.Fragment>
