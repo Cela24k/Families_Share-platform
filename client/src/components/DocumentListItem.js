@@ -86,7 +86,6 @@ class DocumentListItem extends React.Component {
 
     handleClick = () => {
         const { _document } = this.state;
-        console.log(document);
         const { keyId } = this.props;
         fetch(_document[keyId].file_data)
             .then(resp => resp.blob())
