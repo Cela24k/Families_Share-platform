@@ -20,11 +20,11 @@ const medSchema = new mongoose.Schema(
       type: Buffer
       // EX 'December 17, 1995 03:24:00' o '1995-12-17T03:24:00'
     }
-  }
-)
+  }, { timestamps: true })
 
 function get_date_nd_time(datetime) {
   if (!('string'.localeCompare(typeof datetime))) { var date_time = new Date(datetime) } else
+  // eslint-disable-next-line brace-style
   { date_time = datetime }
 
   return {

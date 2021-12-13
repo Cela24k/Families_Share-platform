@@ -79,6 +79,7 @@ const Rating = require('../models/rating')
 const Community = require('../models/community')
 const Document = require('../models/document')
 const Med = require('../models/medicine')
+const health_p = require('../models/health-profile')
 
 router.post('/', async (req, res, next) => {
   const {
@@ -1101,12 +1102,55 @@ router.delete('/:id/health/documents', (req, res, next) => {
 })
 
 // to check
+router.delete('/:id/health/healthprofile', (req, res, next) => {
+  const { user_id } = req.params.Id
+  if (!user_id) { return res.status(401).send('Unauthorized') }
+  health_p.deleteOne({ id: req.body.id })
+    .then(() => {
+      return res.status(200).send('healthprofile deleted')
+    })
+    .catch(next)
+})
+
+// to check
+router.delete('/:id/health/medicines/edit', (req, res, next) => {
+  const { user_id } = req.params.Id
+  if (!user_id) { return res.status(401).send('Unauthorized') }
+  Med.deleteOne({ id: req.body.id })
+    .then(() => {
+      return res.status(200).send('Medicine deleted')
+    })
+    .catch(next)
+})
+
+// to check
 router.get('/:Id/health/medicines/edit', (req, res, next) => {
   const { id } = req.params.Id
   if (!id) { return res.status(401).send('Unauthorized') }
   Med.find({ user_id: id }).then(meds => {
     if (meds.length === 0) { return res.status(404).send('User has no meds') }
     res.json(meds)
+  }).catch(next)
+})
+
+// to check
+router.get('/:Id/health/healthprofile', (req, res, next) => {
+  const { id } = req.params.Id
+  if (!id) { res.status(401).send('Unauthorized') }
+  health_p.find({ user_id: id }).then(healths => {
+    if (healths.lenght === 0) { res.status(404).send('User has not set up health profile yet') }
+    res.json(healths)
+  }).catch(next)
+})
+
+// to check
+router.get('/:Id/health/healthprofile/:id', (req, res, next) => {
+  const { id_user } = req.params.Id[0]
+  const { id } = req.params.Id[1]
+  if (!(id_user && id)) { res.status(401).send('Unauthorized') }
+  health_p.findOne({ id: id }).then(health => {
+    if (health.lenght === 0) { res.status(404).send('User has not set up health profile yet') }
+    res.json(health)
   }).catch(next)
 })
 
@@ -1159,6 +1203,24 @@ router.post('/:Id/health/medicines/edit', async (req, res, next) => {
   }
 })
 
+// to check
+router.post('/:Id/health/healthprofile', async (req, res, next) => {
+  const {
+    user_id, mood, sintomi, day
+  } = req.body
+  if (!(user_id && mood && sintomi && day)) {
+    return res.status(400).send('Bad Request')
+  }
+  var new_id = objectid()
+  const newMed = {
+    id: new_id,
+    user_id: user_id,
+    mood: mood,
+    sintomi: sintomi,
+    day: day
+  }
+  await Med.create(newMed).then(() => { res.status(200).send('Medicine added') }).catch(next)
+})
 module.exports = router
 
 router.post('/:userId/sendmenotification', async (req, res, next) => {
