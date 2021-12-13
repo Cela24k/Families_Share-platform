@@ -2820,6 +2820,7 @@ a:active {
 }
 .feedbackContainer i{
   padding: 5px;
+  opacity: 1;
 }
 
 #profileNavbarContainer {
