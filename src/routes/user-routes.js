@@ -1103,8 +1103,8 @@ router.delete('/:id/health/documents', (req, res, next) => {
 
 // to check
 router.delete('/:id/health/healthprofile', (req, res, next) => {
-  const { user_id } = req.params.Id
-  if (!user_id) { return res.status(401).send('Unauthorized') }
+  const { id } = req.params
+  if (!id) { return res.status(401).send('Unauthorized') }
   health_p.deleteOne({ id: req.body.id })
     .then(() => {
       return res.status(200).send('healthprofile deleted')
@@ -1114,8 +1114,8 @@ router.delete('/:id/health/healthprofile', (req, res, next) => {
 
 // to check
 router.delete('/:id/health/medicines/edit', (req, res, next) => {
-  const { user_id } = req.params.Id
-  if (!user_id) { return res.status(401).send('Unauthorized') }
+  const { id } = req.params
+  if (!id) { return res.status(401).send('Unauthorized') }
   Med.deleteOne({ id: req.body.id })
     .then(() => {
       return res.status(200).send('Medicine deleted')
@@ -1124,8 +1124,8 @@ router.delete('/:id/health/medicines/edit', (req, res, next) => {
 })
 
 // to check
-router.get('/:Id/health/medicines/edit', (req, res, next) => {
-  const { id } = req.params.Id
+router.get('/:id/health/medicines/edit', (req, res, next) => {
+  const { id } = req.params
   if (!id) { return res.status(401).send('Unauthorized') }
   Med.find({ user_id: id }).then(meds => {
     if (meds.length === 0) { return res.status(404).send('User has no meds') }
@@ -1134,8 +1134,8 @@ router.get('/:Id/health/medicines/edit', (req, res, next) => {
 })
 
 // to check
-router.get('/:Id/health/healthprofile', (req, res, next) => {
-  const { id } = req.params.Id
+router.get('/:id/health/healthprofile', (req, res, next) => {
+  const { id } = req.params
   if (!id) { res.status(401).send('Unauthorized') }
   health_p.find({ user_id: id }).then(healths => {
     if (healths.lenght === 0) { res.status(404).send('User has not set up health profile yet') }
@@ -1144,9 +1144,9 @@ router.get('/:Id/health/healthprofile', (req, res, next) => {
 })
 
 // to check
-router.get('/:Id/health/healthprofile/:id', (req, res, next) => {
-  const { id_user } = req.params.Id[0]
-  const { id } = req.params.Id[1]
+router.get('/:id/health/healthprofile/:id', (req, res, next) => {
+  const id_user = req.params[0]
+  const id = req.params[1]
   if (!(id_user && id)) { res.status(401).send('Unauthorized') }
   health_p.findOne({ id: id }).then(health => {
     if (health.lenght === 0) { res.status(404).send('User has not set up health profile yet') }
@@ -1156,8 +1156,8 @@ router.get('/:Id/health/healthprofile/:id', (req, res, next) => {
 
 // to check
 router.get('/:Id/health/medicines/edit/:id', (req, res, next) => {
-  const { id_user } = req.params[0]
-  const { id } = req.params[1]
+  const id_user = req.params[0]
+  const id = req.params[1]
   if (!(id_user && id)) { return res.status(401).send('Unauthorized') }
   Med.findOne({ id: id }).then(med => {
     if (med.length === 0) { return res.status(404).send('Med doesnt found') }
