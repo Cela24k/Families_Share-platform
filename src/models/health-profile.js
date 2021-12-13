@@ -12,11 +12,14 @@ const health_profileSchema = new mongoose.Schema(
       required: true
     },
     mood: {
-      type: Number
-      // encoding based on your mood
+      text: String,
+      rate: Number
     },
     sintomi: {
-      type: Buffer
+      type: String
+    },
+    allergies: {
+      type: String
     },
     day: {
       type: Date,
@@ -27,6 +30,6 @@ const health_profileSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-const model = mongoose.model('health-profile', health_profileSchema)
+const model = mongoose.model('HealthProfile', health_profileSchema)
 
 module.exports = model

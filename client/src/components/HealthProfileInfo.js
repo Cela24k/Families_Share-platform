@@ -8,6 +8,25 @@ import Log from "./Log";
 import DocumentListItem from "./DocumentListItem";
 import { doc } from "prettier";
 
+const getMyHealthProfile = async (userId) => {
+	try {
+		const response = await axios
+			.get(`/api/users/${userId}/healtprofile`);
+		return response.data;
+	} catch (error) {
+		Log.error(error);
+		return {
+			health_id: "",
+			user_id: "",
+			mood: { text: "", rate: "" },
+			sintomi: "",
+			allergies: "",
+			day: ""
+
+		};
+	}
+};
+
 class HealthProfileInfo extends React.Component {
 
 	constructor(props) {
@@ -15,25 +34,53 @@ class HealthProfileInfo extends React.Component {
 		const userId = JSON.parse(localStorage.getItem("user")).id;
 		const { profileId } = this.props;
 		const myProfile = userId === profileId;
-		const moodText = "";
 		this.state = {
 			myProfile,
-			profileId,
-			moodText 
+			profileId
 		};
 	}
+
+	async componentDidMount() {
+		const { profileId } = this.state;
+		const healthprofile = await getMyHealthProfile(profileId);
+		this.state = {
+			healthprofile
+		};
+		console.log(healthprofile)
+	}
+
+
 
 	handleText = (id) => {
 		console.log(document.getElementById(id))
 	}
+	postData = () =>{
+		const { profileId } = this.state
+		axios
+				.post(`/api/users/${profileId}/health/healthprofile`, {
+					"user_id": "",
+					"mood": {"text" : "mimmo", "mood": ""},
+					"sintomi": "sintomi",
+					"allergies" : "mimmo"
+
+				})
+				.then((response) => {
+					window.location.reload(false);
+					Log.info(response);
+				})
+				.catch((error) => {
+					Log.error(error);
+				})
+	}
+
 
 
 
 
 	render() {
-		const { myProfile, profileId, documents,moodText } = this.state;
+		const { myProfile, profileId, healthprofile } = this.state;
 		const { classes } = this.props;
-		
+
 		// const texts = Texts[language].profileDocuments;
 		return (
 			<React.Fragment>
@@ -47,9 +94,7 @@ class HealthProfileInfo extends React.Component {
 						</div>
 					</div>
 					<div className="col-2-10">
-						<i className="fas fa-chart-line center"
-							role="button"
-						/>
+						<i className="fas fa-chart-line center" />
 					</div>
 				</div>
 				<div className="feedbackContainer">
@@ -63,9 +108,9 @@ class HealthProfileInfo extends React.Component {
 					<textarea id="moodAreaText"
 						rows='3' data-min-rows='3'
 						placeholder="Scrivi il tuo mood..."
-						onClick={this.handleText('moodAreaText')}
 					></textarea>
 				</div>
+				<button type="button" class="btn btn-primary" onClick={this.postData}>Primary</button>
 
 				<div className="row no-gutters medicinesInfoContainer" style={{ height: "30%" }}>
 					<div className="col-2-10">
@@ -77,9 +122,7 @@ class HealthProfileInfo extends React.Component {
 						</div>
 					</div>
 					<div className="col-2-10">
-						<i className="fas fa-thermometer-half center"
-							role="button"
-						/>
+						<i className="fas fa-thermometer-half center" />
 					</div>
 
 
@@ -88,9 +131,31 @@ class HealthProfileInfo extends React.Component {
 					<textarea id="moodAreaText"
 						rows='3' data-min-rows='3'
 						placeholder="Scrivi i tuoi sintomi giornalieri..."
-						onClick={this.handleText('moodAreaText')}
-					>{moodText}</textarea>
+					></textarea>
 				</div>
+
+				<div className="row no-gutters medicinesInfoContainer" style={{ height: "30%" }}>
+					<div className="col-2-10">
+						<i className="fas fa-solid fa-exclamation-triangle center" />
+					</div>
+					<div className="col-6-10 ">
+						<div className="verticalCenter">
+							<h1>Allergie</h1>
+						</div>
+					</div>
+					<div className="col-2-10">
+
+					</div>
+
+
+				</div>
+				<div className="textAreaHealth">
+					<textarea id="moodAreaText"
+						rows='3' data-min-rows='3'
+						placeholder="Scrivi le tue allergie..."
+					></textarea>
+				</div>
+
 
 			</React.Fragment>
 		);

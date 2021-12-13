@@ -40,10 +40,10 @@ const transporter = nodemailer.createTransport({
 })
 
 const profileStorage = multer.diskStorage({
-  destination (req, file, cb) {
+  destination(req, file, cb) {
     cb(null, path.join(__dirname, '../../images/profiles'))
   },
-  filename (req, file, cb) {
+  filename(req, file, cb) {
     fr(path.join(__dirname, '../../images/profiles'), { prefix: req.params.id })
     cb(null, `${req.params.id}-${Date.now()}.${file.mimetype.slice(file.mimetype.indexOf('/') + 1, file.mimetype.length)}`)
   }
@@ -51,10 +51,10 @@ const profileStorage = multer.diskStorage({
 const profileUpload = multer({ storage: profileStorage, limits: { fieldSize: 52428800 } })
 
 const childProfileStorage = multer.diskStorage({
-  destination (req, file, cb) {
+  destination(req, file, cb) {
     cb(null, path.join(__dirname, '../../images/profiles'))
   },
-  filename (req, file, cb) {
+  filename(req, file, cb) {
     fr(path.join(__dirname, '../../images/profiles'), { prefix: req.params.childId })
     cb(null, `${req.params.childId}-${Date.now()}.${file.mimetype.slice(file.mimetype.indexOf('/') + 1, file.mimetype.length)}`)
   }
@@ -79,7 +79,7 @@ const Rating = require('../models/rating')
 const Community = require('../models/community')
 const Document = require('../models/document')
 const Med = require('../models/medicine')
-const health_p = require('../models/health-profile')
+const HealthProfile = require('../models/health-profile')
 
 router.post('/', async (req, res, next) => {
   const {
@@ -1105,7 +1105,7 @@ router.delete('/:id/health/documents', (req, res, next) => {
 router.delete('/:id/health/healthprofile', (req, res, next) => {
   const { id } = req.params
   if (!id) { return res.status(401).send('Unauthorized') }
-  health_p.deleteOne({ id: req.body.id })
+  HealthProfile.deleteOne({ id: req.body.id })
     .then(() => {
       return res.status(200).send('healthprofile deleted')
     })
@@ -1137,20 +1137,9 @@ router.get('/:id/health/medicines/edit', (req, res, next) => {
 router.get('/:id/health/healthprofile', (req, res, next) => {
   const { id } = req.params
   if (!id) { res.status(401).send('Unauthorized') }
-  health_p.find({ user_id: id }).then(healths => {
+  HealthProfile.find({ user_id: id }).then(healths => {
     if (healths.lenght === 0) { res.status(404).send('User has not set up health profile yet') }
     res.json(healths)
-  }).catch(next)
-})
-
-// to check
-router.get('/:id/health/healthprofile/:id', (req, res, next) => {
-  const id_user = req.params[0]
-  const id = req.params[1]
-  if (!(id_user && id)) { res.status(401).send('Unauthorized') }
-  health_p.findOne({ id: id }).then(health => {
-    if (health.lenght === 0) { res.status(404).send('User has not set up health profile yet') }
-    res.json(health)
   }).catch(next)
 })
 
@@ -1207,20 +1196,21 @@ router.post('/:Id/health/medicines/edit', async (req, res, next) => {
 // to check
 router.post('/:Id/health/healthprofile', async (req, res, next) => {
   const {
-    user_id, mood, sintomi, day
+    user_id, mood, sintomi, day, allerg
   } = req.body
   if (!(user_id && mood && sintomi && day)) {
     return res.status(400).send('Bad Request')
   }
   var new_id = objectid()
-  const newMed = {
+  const newProfile = {
     id: new_id,
     user_id: user_id,
     mood: mood,
     sintomi: sintomi,
+    allergies: allerg,
     day: day
   }
-  await Med.create(newMed).then(() => { res.status(200).send('Medicine added') }).catch(next)
+  await HealthProfile.create(newProfile).then(() => { res.status(200).send('HealthProfile added') }).catch(next)
 })
 module.exports = router
 
