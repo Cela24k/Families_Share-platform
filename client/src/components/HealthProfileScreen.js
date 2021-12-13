@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 import Log from "./Log";
+import HealthProfileHeader from "./HealthProfileHeader";
+import HealthProfileInfo from "./HealthProfileInfo";
 import PropTypes from "prop-types";
 import * as path from "lodash.get";
 /*
@@ -9,19 +11,7 @@ import * as path from "lodash.get";
 import LoadingSpinner from "./LoadingSpinner";
 
 
-/* richiede i medicinali al server */
-const getMyMedicines = (userId) => {
-    return axios
-        .get(`/api/users/${userId}/health/medicines/edit`)
-        .then((response) => {
-            console.log(response.data)
-            return response.data;
-        })
-        .catch((error) => {
-            Log.error(error);
-            return [];
-        });
-};
+
 
 
 /* richiede le informazioni al server del profilo dello user attualmente connesso */
@@ -40,27 +30,24 @@ const getMyProfile = async (userId) => {
             phone: "",
             phone_type: "",
             visible: false,
-            user_id: "",
+            user_id: ""
         };
     }
 };
 
-class MedicineProfileScreen extends React.Component {
+class HealtProfileScreen extends React.Component {
 
     state = {
         profile: {},
-        medicines: [],
         fetchedProfile: false,
     };
 
     async componentDidMount() {
         const { match } = this.props;
         const { profileId } = match.params;
-        const userMedicines = await getMyMedicines(profileId);
         const profile = await getMyProfile(profileId);
         this.setState({
             profile,
-            medicines: userMedicines,
             fetchedProfile: true,
         });
     }
@@ -68,14 +55,14 @@ class MedicineProfileScreen extends React.Component {
     render() {
         const { match } = this.props;
         const { profileId } = match.params;
-        const { profile, medicines, fetchedProfile } = this.state;
+        const { profile, fetchedProfile } = this.state;
         return fetchedProfile ? (
             <React.Fragment>
-                <MedicineProfileHeader
+                <HealthProfileHeader
                     name={`${profile.given_name} ${profile.family_name}`}
                     photo={path(profile, ["image", "path"])}
                 />
-                <MedicineProfileInfo profileId={profileId} userMedicines={medicines} />
+                <HealthProfileInfo profileId={profileId} />
             </React.Fragment>
         ) : (
             <LoadingSpinner />
@@ -83,8 +70,8 @@ class MedicineProfileScreen extends React.Component {
     }
 }
 
-MedicineProfileScreen.propTypes = {
+HealtProfileScreen.propTypes = {
     medicines: PropTypes.array
 };
 
-export default MedicineProfileScreen;
+export default HealtProfileScreen;

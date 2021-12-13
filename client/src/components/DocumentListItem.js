@@ -86,6 +86,7 @@ class DocumentListItem extends React.Component {
 
     handleClick = () => {
         const { _document } = this.state;
+        console.log(document);
         const { keyId } = this.props;
         alert('da implementare');
     }
