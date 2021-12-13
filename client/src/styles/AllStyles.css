@@ -2811,7 +2811,7 @@ a:active {
 }
 
 /*questa è la parte di healthprofileheader*/
-.feedbackContainer {
+.feedbackContainerHeader {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2820,14 +2820,35 @@ a:active {
   
 
 }
+.feedbackContainerHeader i{
+  padding: 5px;
+}
+/*questo si trova in HealthProfileInfo*/
+.feedbackContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0 5px 0;
+  height: 20px;
+  
+
+}
 .feedbackContainer i{
   padding: 5px;
-  opacity: 1;
-}
-.feedbackContainer h2{
-  position: relative;
+  margin-top: 10px;
+  opacity: 52%;
+  cursor: pointer;
   
+
 }
+.feedbackContainer i:hover{
+ 
+  opacity: 100%;
+  
+  
+
+}
+
 
 #profileNavbarContainer {
   height: 5rem;

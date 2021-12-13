@@ -39,11 +39,18 @@ class HealthProfileInfo extends React.Component {
 						</div>
 					</div>
 					<div className="col-2-10">
-						<i className="fas fa-pencil-alt center"
+						<i className="fas fa-chart-line center"
 							role="button"
-							/>{/*onClick da implementare */} 
+						/>{/*onClick da implementare */}
 					</div>
-				</div>
+					</div>
+					<div className="feedbackContainer">
+						<i className="far fa-smile fa-3x" onClick={this.handleSmile} />
+						<i className="far fa-smile fa-3x" onClick={this.handleSmile} />
+						<i className="far fa-smile fa-3x" onClick={this.handleSmile} />
+						<i className="far fa-smile fa-3x" onClick={this.handleSmile} />
+						<i className="far fa-smile fa-3x" onClick={this.handleSmile} />
+					</div>
 			</React.Fragment>
 		);
 	}
