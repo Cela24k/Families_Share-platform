@@ -347,11 +347,6 @@ class App extends React.Component {
               />
               <PrivateRoute
                 exact
-                path="/groups/:groupId/activities/create"
-                component={CreateActivityScreen}
-              />
-              <PrivateRoute
-                exact
                 path="/groups/:groupId/plans/create"
                 component={CreatePlanScreen}
               />
