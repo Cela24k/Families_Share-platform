@@ -88,7 +88,16 @@ class DocumentListItem extends React.Component {
         const { _document } = this.state;
         console.log(document);
         const { keyId } = this.props;
-        alert('da implementare');
+        fetch(_document[keyId].file_data)
+            .then(resp => resp.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.setAttribute("download", _document[keyId].file_name);
+                a.click();
+            })
+            .catch(() => alert('errore nel download'));
     }
 
     handleConfirmDialogOpen = () => {

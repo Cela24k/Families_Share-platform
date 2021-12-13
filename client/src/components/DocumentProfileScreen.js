@@ -27,7 +27,6 @@ const getMyDocuments = (userId) => {
     return axios
         .get(`/api/users/${userId}/health/documents`)
         .then((response) => {
-            console.log(response.data)//da togliere
             return response.data;
         })
         .catch((error) => {
