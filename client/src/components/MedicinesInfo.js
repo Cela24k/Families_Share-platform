@@ -16,10 +16,9 @@ class MedicinesInfo extends React.Component {
     handleMedicinesOption = () => {
         const { history } = this.props;
         const { pathname } = history.location;
-        const newPath = `${pathname}/edit`;
+        const newPath = `${pathname}/expand`;
         history.push(newPath);
     }
-
     render() {
         const { myProfile, profileId, documents } = this.state;
         // const texts = Texts[language].profileDocuments;
@@ -34,17 +33,14 @@ class MedicinesInfo extends React.Component {
                             <h1>Panoramica Farmaci</h1>
                         </div>
                     </div>
-                    <div className="col-2-10">
-                        <i className="fas fa-pencil-alt center"
-                            role="button"
-                            onClick={this.handleMedicinesOption} />
-                    </div>
                 </div>
                 <div style={{ height: "8rem", "marginBottom": "10px", "borderBottom": "1px ridge", justifyContent: "center" }}>
                     <div className="row no-gutters medicinesInfoContainer" style={{
                         "marginTop": "2rem",
                         height: "40%", opacity: 0.8, height: "2rem", justifyContent: "center", "borderBottom": "none"
                     }}>
+                        <div className="col-1-10">
+                        </div>
                         <div className="col-1-10" style={boxBorders}>
                             <div style={dayBannerStyle}>LUN</div>
                         </div>
@@ -66,6 +62,11 @@ class MedicinesInfo extends React.Component {
                         </div>
                         <div className="col-1-10" style={boxBorders}>
                             <div style={dayBannerStyle}>DOM</div>
+                        </div>
+                        <div className="col-1-10" style={{opacity:0.6}}>
+                        <i className="fas fa-eye center"
+                            role="button"
+                            onClick={this.handleMedicinesOption} />
                         </div>
                     </div>
                 </div>

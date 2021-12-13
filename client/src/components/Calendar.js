@@ -13,8 +13,16 @@ import Texts from "../Constants/Texts";
 import Log from "./Log";
 
 //TODO da aggiungere la get per il database 
-const getMedicines = userdId => {
-
+const getMedicines = userId => {
+  return axios
+    .get(`/api/users/${userId}/health/medicines/edit`)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      Log.error(error);
+      return [];
+    });
 }
 
 const getGroupEvents = groupId => {

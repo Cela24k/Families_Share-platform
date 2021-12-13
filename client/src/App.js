@@ -121,8 +121,8 @@ const ActivityScreen = Loadable({
   loader: () => import("./components/ActivityScreen"),
   loading: () => Loading
 });
-const CreateActivityScreen = Loadable({
-  loader: () => import("./components/CreateActivityScreen"),
+const CreateMedicineStepper = Loadable({
+  loader: () => import("./components/CreateMedicineStepper"),
   loading: () => Loading
 });
 const CreatePlanScreen = Loadable({
@@ -261,11 +261,6 @@ class App extends React.Component {
                 component={MyFamiliesShareScreen}
               />
               <PrivateRoute
-                exact
-                path="/comp"
-                component={EditMedicinesProfileScreen}
-              />
-              <PrivateRoute
                 path="/myfamiliesshare/invites"
                 component={PendingRequestsScreen}
               />
@@ -305,9 +300,14 @@ class App extends React.Component {
                 path="/profiles/:profileId/health/healthprofile"
                 component={HealthProfileScreen}
               />
+              <PrivateRoute
+                exact
+                path="/profiles/:profileId/health/medicines/expand/add"
+                component={CreateMedicineStepper}
+              />
               {/* Risolto, bisogna metterli in ordine, prima quello /medicines/edit , poi /medicines */}
               <PrivateRoute
-                path="/profiles/:profileId/health/medicines/edit"
+                path="/profiles/:profileId/health/medicines/expand"
                 component={EditMedicinesProfileScreen}
               />
               <PrivateRoute

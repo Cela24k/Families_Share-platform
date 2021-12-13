@@ -1180,8 +1180,9 @@ router.get('/:id/health/documents/:id', (req, res, next) => {
 // to check
 router.post('/:Id/health/medicines/edit', async (req, res, next) => {
   const {
-    name, user_id, assumption
+    name, assumption
   } = req.body
+  const user_id = req.params.Id
   if (!(name && user_id && assumption)) {
     return res.status(400).send('Bad Request')
   }

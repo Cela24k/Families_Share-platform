@@ -132,6 +132,8 @@ class DocumentListItem extends React.Component {
                                 thumbnail={path(profile, ["image", "path"])}
                                 className="center"
                             />
+                            { /* thumbnail={path(profile, ["image", "path"])} */ }
+
                         </div>
                         <div className="col-5-10">
                             <div
