@@ -6,7 +6,7 @@ import { disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 import ExpandedImageModal from "./ExpandedImageModal";
 
 class HealthProfileHeader extends React.Component {
-    
+
     state = {
         optionsModalIsOpen: false,
         confirmDialogIsOpen: false,
@@ -63,7 +63,14 @@ class HealthProfileHeader extends React.Component {
                     src={photo}
                     onClick={this.handleImageModalOpen}
                 />
-                <h1 className="horizontalCenter">{name}</h1>
+                <div className="feedbackContainer">
+                    <i className="far fa-smile fa-2x" />
+                    <i className="far fa-smile fa-2x" />
+                    <i className="far fa-smile fa-2x" />
+                    <i className="far fa-smile fa-2x" />
+                    <i className="far fa-smile fa-2x" />
+                </div>
+
                 <ExpandedImageModal
                     isOpen={imageModalIsOpen}
                     handleClose={this.handleImageModalClose}

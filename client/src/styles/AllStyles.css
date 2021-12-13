@@ -2809,6 +2809,19 @@ a:active {
   border-bottom: 1px solid rgba(01, 01, 01, 0.1);
   opacity: 55%;
 }
+
+/*questa è la parte di healthprofileheader*/
+.feedbackContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5.5rem;
+
+}
+.feedbackContainer i{
+  padding: 5px;
+}
+
 #profileNavbarContainer {
   height: 5rem;
   background-color: #0a848f;
