@@ -2815,12 +2815,18 @@ a:active {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 5.5rem;
+  margin: 5.3rem 0 5px 0;
+  height: 20px;
+  
 
 }
 .feedbackContainer i{
   padding: 5px;
   opacity: 1;
+}
+.feedbackContainer h2{
+  position: relative;
+  
 }
 
 #profileNavbarContainer {
@@ -3007,6 +3013,13 @@ a:active {
   bottom: 0;
   width: 90%;
   text-align: center;
+}
+#profileHeaderText  {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  
 }
 .medicinesHeader h2{
   color: #ffffff;

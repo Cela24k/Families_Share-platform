@@ -31,8 +31,9 @@ class HealthProfileHeader extends React.Component {
     handleOptions = () => {
         alert("da implementare");
     };
-    handleSmile = () => {
+    handleSmile = (element) => {
         alert("da implementare");
+
     };
 
     handleBackNav = () => {
@@ -68,11 +69,12 @@ class HealthProfileHeader extends React.Component {
                 />
                 <div className="feedbackContainer">
                     <i className="far fa-smile fa-2x" onClick={this.handleSmile} />
-                    <i className="far fa-smile fa-2x" onClick={this.handleSmile}/>
-                    <i className="far fa-smile fa-2x" onClick={this.handleSmile}/>
-                    <i className="far fa-smile fa-2x" onClick={this.handleSmile}/>
-                    <i className="far fa-smile fa-2x" onClick={this.handleSmile}/>
+                    <i className="far fa-smile fa-2x" onClick={this.handleSmile} />
+                    <i className="far fa-smile fa-2x" onClick={this.handleSmile} />
+                    <i className="far fa-smile fa-2x" onClick={this.handleSmile} />
+                    <i className="far fa-smile fa-2x" onClick={this.handleSmile} />
                 </div>
+                <h3 id="profileHeaderText">Come ti senti oggi?</h3>
 
                 <ExpandedImageModal
                     isOpen={imageModalIsOpen}

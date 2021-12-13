@@ -20,7 +20,7 @@ class HealthProfileInfo extends React.Component {
 		};
 	}
 
-	
+
 
 
 	render() {
@@ -29,7 +29,21 @@ class HealthProfileInfo extends React.Component {
 		// const texts = Texts[language].profileDocuments;
 		return (
 			<React.Fragment>
-				
+				<div className="row no-gutters medicinesInfoContainer" style={{ height: "30%" }}>
+					<div className="col-2-10">
+						<i className="far fa-solid fa-smile center" />
+					</div>
+					<div className="col-6-10 ">
+						<div className="verticalCenter" >
+							<h1>Il tuo mood</h1>
+						</div>
+					</div>
+					<div className="col-2-10">
+						<i className="fas fa-pencil-alt center"
+							role="button"
+							onClick={this.handleMedicinesOption} />
+					</div>
+				</div>
 			</React.Fragment>
 		);
 	}
