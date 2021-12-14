@@ -11,7 +11,7 @@ import { doc } from "prettier";
 const getMyHealthProfile = async (userId) => {
 	try {
 		const response = await axios
-			.get(`/api/users/${userId}/healthprofile`);
+			.get(`/api/users/${userId}/healtprofile`);
 		return response.data;
 	} catch (error) {
 		Log.error(error);
@@ -22,6 +22,7 @@ const getMyHealthProfile = async (userId) => {
 			sintomi: "",
 			allergies: "",
 			day: ""
+
 		};
 	}
 };
@@ -49,32 +50,42 @@ class HealthProfileInfo extends React.Component {
 		console.log(healthprofile)
 	}
 
+	retrieveHealthProfileInfo = () =>{
+		
+	}
+
+
+
 	handleText = (id) => {
 		console.log(document.getElementById(id))
 	}
-
-	postData = () => {
-		const { profileId } = this.state;
-		console.log(profileId);
+	postData = () =>{
+		const { profileId } = this.state
+		console.log(profileId)
 		axios
-			.post(`/api/users/${profileId}/health/healthprofile`, {
-				"mood": { "text": "mimmo", "mood": "" },
-				"sintomi": "sintomi",
-				"allergies": "mimmo"
-			})
-			.then((response) => {
-				window.location.reload(false);
-				Log.info(response);
-			})
-			.catch((error) => {
-				Log.error(error);
-			})
+				.post(`/api/users/${profileId}/health/healthprofile`, {
+					"mood": {"text" : "mimmo", "mood": ""},
+					"sintomi": "sintomi",
+					"allergies" : "mimmo"
+
+				})
+				.then((response) => {
+					window.location.reload(false);
+					Log.info(response);
+				})
+				.catch((error) => {
+					Log.error(error);
+				})
 	}
+
+
+
+
 
 	render() {
 		const { myProfile, profileId, healthprofile } = this.state;
 		const { classes } = this.props;
-		// const activeTab = healthprofile.mood.rate;
+
 		// const texts = Texts[language].profileDocuments;
 		return (
 			<React.Fragment>
@@ -92,14 +103,7 @@ class HealthProfileInfo extends React.Component {
 					</div>
 				</div>
 				<div className="feedbackContainer">
-					<div>
-						<i
-							className="far fa-sad-cry fa-3x"
-							onClick={this.handleSmile}
-							
-						/>
-					</div>
-
+					<i className="far fa-sad-cry fa-3x" onClick={this.handleSmile} />
 					<i className="far fa-sad-tear fa-3x" onClick={this.handleSmile} />
 					<i className="far fa-meh fa-3x" onClick={this.handleSmile} />
 					<i className="far fa-smile-beam fa-3x" onClick={this.handleSmile} />
@@ -109,6 +113,7 @@ class HealthProfileInfo extends React.Component {
 					<textarea id="moodAreaText"
 						rows='3' data-min-rows='3'
 						placeholder="Scrivi il tuo mood..."
+						onChange={this.retrieveHealthProfileInfo()}
 					></textarea>
 				</div>
 				<button type="button" class="btn btn-primary" onClick={this.postData}>Primary</button>
@@ -148,6 +153,7 @@ class HealthProfileInfo extends React.Component {
 
 					</div>
 
+
 				</div>
 				<div className="textAreaHealth">
 					<textarea id="moodAreaText"
@@ -155,6 +161,7 @@ class HealthProfileInfo extends React.Component {
 						placeholder="Scrivi le tue allergie..."
 					></textarea>
 				</div>
+
 
 			</React.Fragment>
 		);
@@ -177,4 +184,8 @@ const styles = () => ({
 	},
 });
 
+
+
+
 export default withStyles(styles)(withLanguage(HealthProfileInfo));
+
