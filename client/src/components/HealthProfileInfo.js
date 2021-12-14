@@ -11,7 +11,7 @@ import { doc } from "prettier";
 const getMyHealthProfile = async (userId) => {
 	try {
 		const response = await axios
-			.get(`/api/users/${userId}/healtprofile`);
+			.get(`/api/users/${userId}/health/healthprofile`);
 		return response.data;
 	} catch (error) {
 		Log.error(error);
@@ -44,38 +44,41 @@ class HealthProfileInfo extends React.Component {
 
 	async componentDidMount() {
 		const { profileId } = this.state;
-		
+
 		const healthprofile = await getMyHealthProfile(profileId);
-		this.setState({healthprofile})
-		console.log(healthprofile)
-	}
-
-	retrieveHealthProfileInfo = () =>{
+		this.setState({ healthprofile })
 		
 	}
 
+	//questa funzione mi returna il contenuto delle text area che verrà letto solo una volta finito di fare le modifiche
+	retrieveHealthProfileInfo = () => {
+		const moodtext = document.getElementById("moodAreaText").value
+		const symptomstext = document.getElementById("symptomsAreaText").value
+		const allergiestext = document.getElementById("allergiesAreaText").value
 
-
-	handleText = (id) => {
-		console.log(document.getElementById(id))
+		return { "moodtext": moodtext, "symptomstext": symptomstext, "allergiestext": allergiestext }
 	}
-	postData = () =>{
-		const { profileId } = this.state
-		console.log(profileId)
-		axios
-				.post(`/api/users/${profileId}/health/healthprofile`, {
-					"mood": {"text" : "mimmo", "mood": ""},
-					"sintomi": "sintomi",
-					"allergies" : "mimmo"
 
-				})
-				.then((response) => {
-					window.location.reload(false);
-					Log.info(response);
-				})
-				.catch((error) => {
-					Log.error(error);
-				})
+
+
+	
+	postData = () => {
+		const { profileId } = this.state
+		const info = this.retrieveHealthProfileInfo()
+		axios
+			.post(`/api/users/${profileId}/health/healthprofile`, {
+				"mood": { "text": info.moodtext, "mood": "" },
+				"sintomi": info.symptomstext,
+				"allergies": info.allergiestext
+
+			})
+			.then((response) => {
+				window.location.reload(false);
+				Log.info(response);
+			})
+			.catch((error) => {
+				Log.error(error);
+			})
 	}
 
 
@@ -113,10 +116,9 @@ class HealthProfileInfo extends React.Component {
 					<textarea id="moodAreaText"
 						rows='3' data-min-rows='3'
 						placeholder="Scrivi il tuo mood..."
-						onChange={this.retrieveHealthProfileInfo()}
 					></textarea>
 				</div>
-				<button type="button" class="btn btn-primary" onClick={this.postData}>Primary</button>
+				<button type="button" class="btn btn-primary" onClick={this.postData}>Submit</button>
 
 				<div className="row no-gutters medicinesInfoContainer" style={{ height: "30%" }}>
 					<div className="col-2-10">
@@ -134,7 +136,7 @@ class HealthProfileInfo extends React.Component {
 
 				</div>
 				<div className="textAreaHealth">
-					<textarea id="moodAreaText"
+					<textarea id="symptomsAreaText"
 						rows='3' data-min-rows='3'
 						placeholder="Scrivi i tuoi sintomi giornalieri..."
 					></textarea>
@@ -156,7 +158,7 @@ class HealthProfileInfo extends React.Component {
 
 				</div>
 				<div className="textAreaHealth">
-					<textarea id="moodAreaText"
+					<textarea id="allergiesAreaText"
 						rows='3' data-min-rows='3'
 						placeholder="Scrivi le tue allergie..."
 					></textarea>
