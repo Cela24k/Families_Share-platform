@@ -2825,19 +2825,30 @@ a:active {
 .feedbackContainer i{
   padding: 5px;
   margin-top: 10px;
-  opacity: 52%;
+  color: #C8C8C8;
   cursor: pointer;
   
 
 }
 .feedbackContainer i:hover{
  
-  opacity: 100%;
+  
   color: #f7931e;
   
   
 
 }
+
+.healthprofileButton{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+
 .textAreaHealth{
   display:flex;
   justify-content: center;

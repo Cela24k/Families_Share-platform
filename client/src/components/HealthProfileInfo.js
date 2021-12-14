@@ -36,6 +36,7 @@ class HealthProfileInfo extends React.Component {
 		this.state = {
 			myProfile,
 			profileId,
+			disableFlag: true,
 			fetchedProfile: false,
 			healthprofile: {
 				health_id: "",
@@ -45,6 +46,7 @@ class HealthProfileInfo extends React.Component {
 				allergies: ""
 			}
 		};
+
 	}
 
 	async componentDidMount() {
@@ -52,10 +54,18 @@ class HealthProfileInfo extends React.Component {
 
 		const healthprofile = await getMyHealthProfile(profileId);
 		this.setState({
+
 			fetchedProfile: true,
 			healthprofile
 		})
 	}
+
+	handleSubmitButton = () => {
+		const disableFlag = false;
+		this.setState({ disableFlag })
+	}
+
+
 
 	//questa funzione mi returna il contenuto delle text area che verrà letto solo una volta finito di fare le modifiche
 	retrieveHealthProfileInfo = () => {
@@ -67,12 +77,21 @@ class HealthProfileInfo extends React.Component {
 	}
 
 	handleSmile = (event) => {
-		this.setState({ mood: { rate: event.target.id } })
+		this.setState({ mood: { rate: event } })
+	}
+
+	getColorRate = (event) => {
+		const { healthprofile } = this.state.healthprofile
+		if (!healthprofile.mood.rate || healthprofile.mood.rate === event) { // vedere perchè qui mi da undefined
+			return "#C8C8C8";
+		} else {
+			return "#f7931e";
+		}
 	}
 
 	// TODO da fare update 
 	sumbitChanges = () => {
-		const { profileId, healthprofile } = this.state
+		const { profileId, healthprofile, onModifyText } = this.state
 		const { moodtext, symptomstext, allergiestext } = this.retrieveHealthProfileInfo()
 		axios
 			.post(`/api/users/${profileId}/health/healthprofile`, {
@@ -90,7 +109,7 @@ class HealthProfileInfo extends React.Component {
 	}
 
 	render() {
-		const { healthprofile, fetchedProfile } = this.state;
+		const { healthprofile, fetchedProfile, disableFlag } = this.state;
 		// const texts = Texts[language].profileDocuments;
 		return fetchedProfile ? (
 			<React.Fragment >
@@ -108,7 +127,7 @@ class HealthProfileInfo extends React.Component {
 					</div>
 				</div>
 				<div className="feedbackContainer">
-					<i id="1" className="far fa-sad-cry fa-3x" onClick={this.handleSmile} />
+					<i id="1" className="far fa-sad-cry fa-3x" onClick={() => { }} />
 					<i id="2" className="far fa-sad-tear fa-3x" onClick={this.handleSmile} />
 					<i id="3" className="far fa-meh fa-3x" onClick={this.handleSmile} />
 					<i id="4" className="far fa-smile-beam fa-3x" onClick={this.handleSmile} />
@@ -118,9 +137,9 @@ class HealthProfileInfo extends React.Component {
 					<textarea id="moodAreaText"
 						rows='3' data-min-rows='3'
 						placeholder="Scrivi il tuo mood..."
+						onChange={this.handleSubmitButton}
 					>{healthprofile.mood.text}</textarea>
 				</div>
-				<button type="button" className="btn btn-primary" onClick={this.sumbitChanges}>Submit</button>
 
 				<div className="row no-gutters medicinesInfoContainer" style={{ height: "30%" }}>
 					<div className="col-2-10">
@@ -139,6 +158,7 @@ class HealthProfileInfo extends React.Component {
 					<textarea id="symptomsAreaText"
 						rows='3' data-min-rows='3'
 						placeholder="Scrivi i tuoi sintomi giornalieri..."
+						onChange={this.handleSubmitButton}
 					>{healthprofile.sintomi}</textarea>
 				</div>
 
@@ -158,7 +178,11 @@ class HealthProfileInfo extends React.Component {
 					<textarea id="allergiesAreaText"
 						rows='3' data-min-rows='3'
 						placeholder="Scrivi le tue allergie..."
+						onChange={this.handleSubmitButton}
 					>{healthprofile.allergies}</textarea>
+				</div>
+				<div className="healthprofileButton">
+					<button id="submitButton" type="button" className="btn btn-secondary btn-lg " disabled={disableFlag} onClick={this.sumbitChanges}>Invia Modifiche</button>
 				</div>
 			</React.Fragment>
 		) : (<LoadingSpinner />);
