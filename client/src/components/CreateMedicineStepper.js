@@ -15,12 +15,12 @@ import Button from "@material-ui/core/Button";
 import moment from "moment";
 import axios from "axios";
 import withLanguage from "./LanguageContext";
-import CreateActivityInformation from "./CreateActivityInformation";
 import CreateActivityDates from "./CreateActivityDates";
-import CreateActivityTimeslots from "./CreateActivityTimeslots";
 import Texts from "../Constants/Texts";
 import Log from "./Log";
 import LoadingSpinner from "./LoadingSpinner";
+import CreateMedicineInformation from "./CreateMedicineInformation";
+import CreateMedicineTimeslots from "./CreateMedicineTimeslots";
 
 const muiTheme = createMuiTheme({
   typography: {
@@ -326,7 +326,7 @@ class CreateMedicineStepper extends React.Component {
     switch (activeStep) {
       case 0:
         return (
-          <CreateActivityInformation
+          <CreateMedicineInformation
             {...information}
             handleSubmit={this.handleInformationSubmit}
           />
@@ -340,10 +340,9 @@ class CreateMedicineStepper extends React.Component {
         );
       case 2:
         return (
-          <CreateActivityTimeslots
+          <CreateMedicineTimeslots
             activityName={information.name}
             activityLocation={information.location}
-            activityLink={information.link}
             dates={dates.selectedDays}
             {...timeslots}
             handleSubmit={this.handleTimeslotsSubmit}

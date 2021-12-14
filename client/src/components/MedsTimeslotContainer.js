@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
-import CreateMedicineTimeslotModal from "./CreateMedicineTimeslotModal"; 
+import CreateTimeslotModal from "./CreateTimeslotModal";
 import ConfirmDialog from "./ConfirmDialog";
+import CreateMedicineTimeslotsModal from "./CreateMedicineTimeslots";
 
-class TimeslotsContainer extends React.Component {
+class MedsTimeslotsContainer extends React.Component {
   constructor(props) {
     super(props);
     const { timeslots, dateIndex, handleTimeslots } = props;
@@ -27,7 +28,7 @@ class TimeslotsContainer extends React.Component {
 
   handleAddTimeslot = () => {
     const { timeslots } = this.state;
-    const { activityName, activityLocation, activityLink } = this.props;
+    const { activityName, activityDesc } = this.props;
     this.setState({
       expandedTimeslot: {
         expanded: true,
@@ -35,14 +36,9 @@ class TimeslotsContainer extends React.Component {
         data: {
           startTime: "00:00",
           endTime: "00:00",
-          requiredChildren: 2,
-          requiredParents: 2,
-          description: "",
+          description: activityDesc,
           name: activityName,
-          cost: "",
           category: "other",
-          location: activityLocation,
-          link: activityLink
         }
       }
     });
@@ -244,13 +240,12 @@ class TimeslotsContainer extends React.Component {
 
 export default withLanguage(TimeslotsContainer);
 
-TimeslotsContainer.propTypes = {
+MedsTimeslotsContainer.propTypes = {
   dateIndex: PropTypes.number,
   timeslots: PropTypes.array,
   header: PropTypes.string,
   handleTimeslots: PropTypes.func,
-  activityLocation: PropTypes.string,
   activityName: PropTypes.string,
   language: PropTypes.string,
-  activityLink: PropTypes.string
+  activityDesc: PropTypes.string
 };
