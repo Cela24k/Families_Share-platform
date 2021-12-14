@@ -5,8 +5,7 @@ import Fab from "@material-ui/core/Fab";
 import { withStyles } from "@material-ui/core/styles";
 import withLanguage from "./LanguageContext";
 import Log from "./Log";
-import DocumentListItem from "./DocumentListItem";
-import { doc } from "prettier";
+import LoadingSpinner from "./LoadingSpinner";
 
 const getMyHealthProfile = async (userId) => {
 	try {
@@ -18,11 +17,10 @@ const getMyHealthProfile = async (userId) => {
 		return {
 			health_id: "",
 			user_id: userId,
-			mood: { text: "", rate: "" },
+			mood: { text: "", rate: 0 },
 			sintomi: "",
 			allergies: "",
 			day: ""
-
 		};
 	}
 };
@@ -38,13 +36,13 @@ class HealthProfileInfo extends React.Component {
 		this.state = {
 			myProfile,
 			profileId,
+			fetchedProfile: false,
 			healthprofile: {
 				health_id: "",
 				user_id: userId,
-				mood: { text: "", rate: "" },
+				mood: { text: "", rate: 0 },
 				sintomi: "",
 				allergies: ""
-
 			}
 		};
 	}
@@ -53,8 +51,10 @@ class HealthProfileInfo extends React.Component {
 		const { profileId } = this.state;
 
 		const healthprofile = await getMyHealthProfile(profileId);
-		this.setState({ healthprofile })
-
+		this.setState({
+			fetchedProfile: true,
+			healthprofile
+		})
 	}
 
 	//questa funzione mi returna il contenuto delle text area che verrà letto solo una volta finito di fare le modifiche
@@ -66,18 +66,19 @@ class HealthProfileInfo extends React.Component {
 		return { "moodtext": moodtext, "symptomstext": symptomstext, "allergiestext": allergiestext }
 	}
 
+	handleSmile = (event) => {
+		this.setState({ mood: { rate: event.target.id } })
+	}
 
-
-
+	// TODO da fare update 
 	sumbitChanges = () => {
-		const { profileId } = this.state
-		const info = this.retrieveHealthProfileInfo
+		const { profileId, healthprofile } = this.state
+		const { moodtext, symptomstext, allergiestext } = this.retrieveHealthProfileInfo()
 		axios
 			.post(`/api/users/${profileId}/health/healthprofile`, {
-				"mood": { "text": info.moodtext, "mood": "" },
-				"sintomi": info.symptomstext,
-				"allergies": info.allergiestext
-
+				"mood": { "text": moodtext, "rate": healthprofile.mood.rate },
+				"sintomi": symptomstext,
+				"allergies": allergiestext
 			})
 			.then((response) => {
 				window.location.reload(false);
@@ -88,17 +89,11 @@ class HealthProfileInfo extends React.Component {
 			})
 	}
 
-
-
-
-
 	render() {
-		const { myProfile, profileId, healthprofile } = this.state;
-		const { classes } = this.props;
-		
+		const { healthprofile, fetchedProfile } = this.state;
 		// const texts = Texts[language].profileDocuments;
-		return (
-			<React.Fragment>
+		return fetchedProfile ? (
+			<React.Fragment >
 				<div className="row no-gutters medicinesInfoContainer" style={{ height: "30%" }}>
 					<div className="col-2-10">
 						<i className="far fa-solid fa-smile center" />
@@ -113,11 +108,11 @@ class HealthProfileInfo extends React.Component {
 					</div>
 				</div>
 				<div className="feedbackContainer">
-					<i className="far fa-sad-cry fa-3x" onClick={this.handleSmile} />
-					<i className="far fa-sad-tear fa-3x" onClick={this.handleSmile} />
-					<i className="far fa-meh fa-3x" onClick={this.handleSmile} />
-					<i className="far fa-smile-beam fa-3x" onClick={this.handleSmile} />
-					<i className="far fa-grin-beam fa-3x" onClick={this.handleSmile} />
+					<i id="1" className="far fa-sad-cry fa-3x" onClick={this.handleSmile} />
+					<i id="2" className="far fa-sad-tear fa-3x" onClick={this.handleSmile} />
+					<i id="3" className="far fa-meh fa-3x" onClick={this.handleSmile} />
+					<i id="4" className="far fa-smile-beam fa-3x" onClick={this.handleSmile} />
+					<i id="5" className="far fa-grin-beam fa-3x" onClick={this.handleSmile} />
 				</div>
 				<div className="textAreaHealth">
 					<textarea id="moodAreaText"
@@ -139,8 +134,6 @@ class HealthProfileInfo extends React.Component {
 					<div className="col-2-10">
 						<i className="fas fa-thermometer-half center" />
 					</div>
-
-
 				</div>
 				<div className="textAreaHealth">
 					<textarea id="symptomsAreaText"
@@ -159,10 +152,7 @@ class HealthProfileInfo extends React.Component {
 						</div>
 					</div>
 					<div className="col-2-10">
-
 					</div>
-
-
 				</div>
 				<div className="textAreaHealth">
 					<textarea id="allergiesAreaText"
@@ -170,13 +160,10 @@ class HealthProfileInfo extends React.Component {
 						placeholder="Scrivi le tue allergie..."
 					>{healthprofile.allergies}</textarea>
 				</div>
-
-
 			</React.Fragment>
-		);
+		) : (<LoadingSpinner />);
 	}
 }
-
 
 const styles = () => ({
 	add: {
@@ -193,8 +180,4 @@ const styles = () => ({
 	},
 });
 
-
-
-
 export default withStyles(styles)(withLanguage(HealthProfileInfo));
-

@@ -1188,18 +1188,31 @@ router.post('/:id/health/healthprofile', async (req, res, next) => {
     mood, sintomi, allergies
   } = req.body
   if (!id) { return res.status(401).send('Unauthorized') }
-  console.log(req.body)
   if (!(mood && sintomi && allergies)) { return res.status(400).send('Bad request') }
-  const health_id = objectid()
-  const healthProfile = {
-    health_id: health_id,
-    user_id: id,
-    mood: mood,
-    sintomi: sintomi,
-    allergies: allergies
-  }
-  await HealthProfile.create(healthProfile)
-    .then(() => { res.status(200).send('HealthProfile added') })
+  await HealthProfile.findOne({ user_id: id })
+    .then(healthProfile => {
+      if (!healthProfile) {
+        const health_id = objectid()
+        const healthProfile = {
+          health_id: health_id,
+          user_id: id,
+          mood: mood,
+          sintomi: sintomi,
+          allergies: allergies
+        }
+        HealthProfile.create(healthProfile)
+          .then(() => { res.status(200).send('HealthProfile added') })
+          .catch(next)
+      } else {
+        HealthProfile.update({ user_id: id }, {
+          mood: mood,
+          sintomi: sintomi,
+          allergies: allergies
+        })
+          .then(() => { res.status(200).send('HealthProfile updated') })
+          .catch(next)
+      }
+    })
     .catch(next)
 })
 
