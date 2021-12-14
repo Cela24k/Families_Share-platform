@@ -11,10 +11,6 @@ import * as path from "lodash.get";
 import LoadingSpinner from "./LoadingSpinner";
 import ProfileInfo from "./ProfileInfo";
 
-
-
-
-
 /* richiede le informazioni al server del profilo dello user attualmente connesso */
 const getMyProfile = async (userId) => {
     try {

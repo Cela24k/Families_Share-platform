@@ -6,7 +6,6 @@ import * as path from "lodash.get";
 import DocumentProfileHeader from "./DocumentProfileHeader";
 import DocumentProfileInfo from "./DocumentProfileInfo";
 import LoadingSpinner from "./LoadingSpinner";
-import getMyChildren from "./ProfileScreen"
 
 /*
 const getMyChildren = (userId) => {

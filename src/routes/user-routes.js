@@ -1101,9 +1101,6 @@ router.delete('/:id/health/documents', (req, res, next) => {
     .catch(next)
 })
 
-
-
-// to check
 router.delete('/:id/health/medicines/edit', (req, res, next) => {
   const { id } = req.params
   if (!id) { return res.status(401).send('Unauthorized') }
@@ -1114,7 +1111,6 @@ router.delete('/:id/health/medicines/edit', (req, res, next) => {
     .catch(next)
 })
 
-// to check
 router.get('/:id/health/medicines/edit', (req, res, next) => {
   const { id } = req.params
   if (!id) { return res.status(401).send('Unauthorized') }
@@ -1123,7 +1119,6 @@ router.get('/:id/health/medicines/edit', (req, res, next) => {
     res.json(meds)
   }).catch(next)
 })
-
 
 // to check
 router.get('/:Id/health/medicines/edit/:id', (req, res, next) => {
@@ -1179,43 +1174,35 @@ router.post('/:Id/health/medicines/edit', async (req, res, next) => {
 router.get('/:id/health/healthprofile', (req, res, next) => {
   const { id } = req.params
   if (!id) { res.status(401).send('Unauthorized') }
-  HealthProfile.find({ user_id: id }).then(healths => {
-    if (healths.lenght === 0) { res.status(404).send('User has not set up health profile yet') }
-    res.json(healths)
-  }).catch(next)
+  HealthProfile.findOne({ user_id: id })
+    .then(healthProfile => {
+      if (!healthProfile) { res.status(404).send('User has not set up health profile yet') }
+      res.json(healthProfile)
+    }).catch(next)
 })
 
 // to check
 router.post('/:id/health/healthprofile', async (req, res, next) => {
-  const {
-    mood, sintomi, allerg
-  } = req.body
   const { id } = req.params
-  if (!(id || mood || sintomi)) {
-    return res.status(400).send('Bad Request')
-  }
-  var health_id = objectid()
+  const {
+    mood, sintomi, allergies
+  } = req.body
+  if (!id) { return res.status(401).send('Unauthorized') }
+  if (!(mood && sintomi && allergies)) { return res.status(400).sed('Bad request') }
+  console.log(req.body)
+  const health_id = objectid()
   const healthProfile = {
     health_id: health_id,
     user_id: id,
     mood: mood,
     sintomi: sintomi,
-    allergies: allerg
+    allergies: allergies
   }
-  await HealthProfile.create(healthProfile).then(() => { res.status(200).send('HealthProfile added') }).catch(next)
-})
-
-// to check
-router.delete('/:id/health/healthprofile', (req, res, next) => {
-  const { id } = req.params
-  if (!id) { return res.status(401).send('Unauthorized') }
-  HealthProfile.deleteOne({ id: req.body.id })
-    .then(() => {
-      return res.status(200).send('healthprofile deleted')
-    })
+  await HealthProfile.create(healthProfile)
+    .then(() => { res.status(200).send('HealthProfile added') })
     .catch(next)
 })
-// puo questo stare qui?
+
 module.exports = router
 
 router.post('/:userId/sendmenotification', async (req, res, next) => {
