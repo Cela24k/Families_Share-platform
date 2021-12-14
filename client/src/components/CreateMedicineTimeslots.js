@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 import withLanguage from "./LanguageContext";
-import TimeslotsContainer from "./TimeslotsContainer";
+import MedicinesTimeslotContainer from "./MedicinesTimeslotContainer";
 import Texts from "../Constants/Texts";
 
-class CreateActivityTimeslots extends React.Component {
+class CreateMedicineTimeslots extends React.Component {
   constructor(props) {
     super(props);
     const { activityTimeslots, dates, differentTimeslots } = this.props;
@@ -42,7 +42,7 @@ class CreateActivityTimeslots extends React.Component {
               header = moment(date).format("D MMMM YYYY");
               return (
                 <li key={index}>
-                  <TimeslotsContainer
+                  <MedicinesTimeslotContainer
                     activityName={activityName}
                     activityDesc={activityDesc}
                     timeslots={activityTimeslots[index]}
@@ -58,7 +58,7 @@ class CreateActivityTimeslots extends React.Component {
       }
       header = `${dates.length} ${texts.selected}`;
       return (
-        <TimeslotsContainer
+        <MedicinesTimeslotContainer
           activityDesc={activityDesc}
           activityName={activityName}
           timeslots={activityTimeslots[0]}
@@ -70,7 +70,7 @@ class CreateActivityTimeslots extends React.Component {
     }
     header = moment(dates[0]).format("D MMMM YYYY");
     return (
-      <TimeslotsContainer
+      <MedicinesTimeslotContainer
         activityName={activityName}
         activityDesc={activityDesc}
         timeslots={activityTimeslots[0]}
@@ -144,8 +144,9 @@ class CreateActivityTimeslots extends React.Component {
   };
 
   render() {
-    const { language } = this.props;
+    const { language,activityDesc } = this.props;
     const texts = Texts[language].createActivityTimeslots;
+    console.log(activityDesc)
     return (
       <div id="createActivityTimeslotsContainer">
         <div id="createActivityTimeslotsHeader" className="row no-gutters">
@@ -158,9 +159,9 @@ class CreateActivityTimeslots extends React.Component {
   }
 }
 
-export default withLanguage(CreateActivityTimeslots);
+export default withLanguage(CreateMedicineTimeslots);
 
-CreateActivityTimeslots.propTypes = {
+CreateMedicineTimeslots.propTypes = {
   activityName: PropTypes.string,
   activityDesc: PropTypes.string,
   dates: PropTypes.array,

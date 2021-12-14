@@ -183,6 +183,12 @@ class CreateMedicineStepper extends React.Component {
   };
 
   createActivity = () => {
+    const { history } = this.props;
+    alert("da implementare")
+    history.goBack();
+  };
+
+  createMedicines = () => {
     const { match, history, enqueueSnackbar, language } = this.props;
     const texts = Texts[language].createActivityStepper;
     const { groupId } = match.params;
@@ -342,6 +348,7 @@ class CreateMedicineStepper extends React.Component {
         return (
           <CreateMedicineTimeslots
             activityName={information.name}
+            activityDesc = {information.description}
             activityLocation={information.location}
             dates={dates.selectedDays}
             {...timeslots}

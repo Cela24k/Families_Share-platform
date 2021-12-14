@@ -1,22 +1,8 @@
 import Modal from "react-modal";
 import React from "react";
 import PropTypes from "prop-types";
-import autosize from "autosize";
-import { Select, MenuItem } from "@material-ui/core";
-import {
-  MenuBook,
-  EmojiNature,
-  Museum,
-  SportsBaseball,
-  Commute,
-  Mood,
-  Cake,
-  Event,
-  ChildCare
-} from "@material-ui/icons";
 import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
-import Images from "../Constants/Images";
 
 Modal.setAppElement("#root");
 
@@ -123,7 +109,6 @@ class CreateMedicineTimeslotModal extends React.Component {
       requiredParents,
       description,
       name,
-      location,
       category,
       cost,
       link
@@ -133,10 +118,9 @@ class CreateMedicineTimeslotModal extends React.Component {
       endTime,
       requiredChildren,
       requiredParents,
-      description,
       name,
+      description,
       cost,
-      location,
       category,
       link
     };
@@ -152,7 +136,7 @@ class CreateMedicineTimeslotModal extends React.Component {
       startTime,
       endTime,
       name,
-      location,
+      description,
     } = this.state;
     const { language } = this.props;
     const formClass = [];
@@ -287,8 +271,8 @@ class CreateMedicineTimeslotModal extends React.Component {
                 <div className="col-8-10">
                   <input
                     type="text"
-                    name="location"
-                    value={location}
+                    name="description"
+                    value={description}
                     className="expandedTimeslotInput form-control"
                     onChange={this.handleChange}
                     //placeholder={texts.location}

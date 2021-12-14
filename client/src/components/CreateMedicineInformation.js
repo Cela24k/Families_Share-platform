@@ -80,7 +80,8 @@ class CreateMedicineInformation extends React.Component {
                             value={description}
                             onChange={event => {
                                 this.handleChange(event);
-                                autosize(document.querySelectorAll("textarea"));
+                                autosize(document.querySelectorAll("textarea"))
+                                console.log(description);
                             }}
                         />
                     </div>

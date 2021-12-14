@@ -25,6 +25,10 @@ const getMedicines = userId => {
     });
 }
 
+const insertMedicines = (name , ass ) => {
+  
+}
+
 const getGroupEvents = groupId => {
   return axios
     .get(`/api/groups/${groupId}/events`)

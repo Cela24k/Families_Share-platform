@@ -6,7 +6,7 @@ import Texts from "../Constants/Texts";
 import CreateMedicineTimeslotModal from "./CreateMedicineTimeslotModal"; 
 import ConfirmDialog from "./ConfirmDialog";
 
-class TimeslotsContainer extends React.Component {
+class MedicinesTimeslotsContainer extends React.Component {
   constructor(props) {
     super(props);
     const { timeslots, dateIndex, handleTimeslots } = props;
@@ -27,7 +27,7 @@ class TimeslotsContainer extends React.Component {
 
   handleAddTimeslot = () => {
     const { timeslots } = this.state;
-    const { activityName, activityLocation, activityLink } = this.props;
+    const { activityName, activityDesc } = this.props;
     this.setState({
       expandedTimeslot: {
         expanded: true,
@@ -35,14 +35,9 @@ class TimeslotsContainer extends React.Component {
         data: {
           startTime: "00:00",
           endTime: "00:00",
-          requiredChildren: 2,
-          requiredParents: 2,
-          description: "",
+          description: activityDesc,
           name: activityName,
-          cost: "",
           category: "other",
-          location: activityLocation,
-          link: activityLink
         }
       }
     });
@@ -229,7 +224,7 @@ class TimeslotsContainer extends React.Component {
           title={texts.confirmDialogTitle}
           handleClose={this.handleConfirmDialogClose}
         />
-        <CreateActivityTimeslotModal
+        <CreateMedicineTimeslotModal
           handleCancel={this.handleTimeslotModalCancel}
           handleClose={this.handleTimeslotModalClose}
           handleSave={this.handleTimeslotModalSave}
@@ -242,15 +237,14 @@ class TimeslotsContainer extends React.Component {
   }
 }
 
-export default withLanguage(TimeslotsContainer);
+export default withLanguage(MedicinesTimeslotsContainer);
 
-TimeslotsContainer.propTypes = {
+MedicinesTimeslotsContainer.propTypes = {
   dateIndex: PropTypes.number,
   timeslots: PropTypes.array,
   header: PropTypes.string,
   handleTimeslots: PropTypes.func,
-  activityLocation: PropTypes.string,
   activityName: PropTypes.string,
+  activityDesc: PropTypes.string,
   language: PropTypes.string,
-  activityLink: PropTypes.string
 };
