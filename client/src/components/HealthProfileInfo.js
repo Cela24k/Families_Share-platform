@@ -38,7 +38,14 @@ class HealthProfileInfo extends React.Component {
 		this.state = {
 			myProfile,
 			profileId,
-			healthprofile: undefined
+			healthprofile: {
+				health_id: "",
+				user_id: userId,
+				mood: { text: "", rate: "" },
+				sintomi: "",
+				allergies: ""
+
+			}
 		};
 	}
 
@@ -47,7 +54,7 @@ class HealthProfileInfo extends React.Component {
 
 		const healthprofile = await getMyHealthProfile(profileId);
 		this.setState({ healthprofile })
-		
+
 	}
 
 	//questa funzione mi returna il contenuto delle text area che verrà letto solo una volta finito di fare le modifiche
@@ -61,10 +68,10 @@ class HealthProfileInfo extends React.Component {
 
 
 
-	
-	postData = () => {
+
+	sumbitChanges = () => {
 		const { profileId } = this.state
-		const info = this.retrieveHealthProfileInfo()
+		const info = this.retrieveHealthProfileInfo
 		axios
 			.post(`/api/users/${profileId}/health/healthprofile`, {
 				"mood": { "text": info.moodtext, "mood": "" },
@@ -88,7 +95,7 @@ class HealthProfileInfo extends React.Component {
 	render() {
 		const { myProfile, profileId, healthprofile } = this.state;
 		const { classes } = this.props;
-
+		
 		// const texts = Texts[language].profileDocuments;
 		return (
 			<React.Fragment>
@@ -116,9 +123,9 @@ class HealthProfileInfo extends React.Component {
 					<textarea id="moodAreaText"
 						rows='3' data-min-rows='3'
 						placeholder="Scrivi il tuo mood..."
-					></textarea>
+					>{healthprofile.mood.text}</textarea>
 				</div>
-				<button type="button" class="btn btn-primary" onClick={this.postData}>Submit</button>
+				<button type="button" className="btn btn-primary" onClick={this.sumbitChanges}>Submit</button>
 
 				<div className="row no-gutters medicinesInfoContainer" style={{ height: "30%" }}>
 					<div className="col-2-10">
@@ -139,7 +146,7 @@ class HealthProfileInfo extends React.Component {
 					<textarea id="symptomsAreaText"
 						rows='3' data-min-rows='3'
 						placeholder="Scrivi i tuoi sintomi giornalieri..."
-					></textarea>
+					>{healthprofile.sintomi}</textarea>
 				</div>
 
 				<div className="row no-gutters medicinesInfoContainer" style={{ height: "30%" }}>
@@ -161,7 +168,7 @@ class HealthProfileInfo extends React.Component {
 					<textarea id="allergiesAreaText"
 						rows='3' data-min-rows='3'
 						placeholder="Scrivi le tue allergie..."
-					></textarea>
+					>{healthprofile.allergies}</textarea>
 				</div>
 
 
