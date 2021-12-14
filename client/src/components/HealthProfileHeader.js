@@ -58,7 +58,10 @@ class HealthProfileHeader extends React.Component {
                             <i className="fas fa-arrow-left" />
                         </button>
                     </div>
-                    <div className="col-6-10" />
+                    <div className="col-6-10 healthTitle">
+                        Profilo Salute 
+                    </div>
+                    <div className="col-2-10" > </div>
 
                 </div>
                 <img

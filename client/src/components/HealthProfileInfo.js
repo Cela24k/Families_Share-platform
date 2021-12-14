@@ -127,7 +127,7 @@ class HealthProfileInfo extends React.Component {
 					</div>
 				</div>
 				<div className="feedbackContainer">
-					<i id="1" className="far fa-sad-cry fa-3x" onClick={() => { }} />
+					<i id="1" className="far fa-sad-cry fa-3x" onClick={() => { this.handleSmile() }} />
 					<i id="2" className="far fa-sad-tear fa-3x" onClick={this.handleSmile} />
 					<i id="3" className="far fa-meh fa-3x" onClick={this.handleSmile} />
 					<i id="4" className="far fa-smile-beam fa-3x" onClick={this.handleSmile} />
@@ -141,7 +141,7 @@ class HealthProfileInfo extends React.Component {
 					>{healthprofile.mood.text}</textarea>
 				</div>
 
-				<div className="row no-gutters medicinesInfoContainer" style={{ height: "30%" }}>
+				<div className="row no-gutters medicinesInfoContainer" style={borderStyle}>
 					<div className="col-2-10">
 						<i className="fas fa-solid fa-exclamation center" />
 					</div>
@@ -162,7 +162,7 @@ class HealthProfileInfo extends React.Component {
 					>{healthprofile.sintomi}</textarea>
 				</div>
 
-				<div className="row no-gutters medicinesInfoContainer" style={{ height: "30%" }}>
+				<div className="row no-gutters medicinesInfoContainer" style={borderStyle}>
 					<div className="col-2-10">
 						<i className="fas fa-solid fa-exclamation-triangle center" />
 					</div>
@@ -203,5 +203,12 @@ const styles = () => ({
 		fontSize: "2rem",
 	},
 });
+
+const borderStyle = {
+	height: "30%",
+	borderTop: "2px solid rgba(01, 01, 01, 0.1)",
+	borderBottom :" 2px solid rgba(01, 01, 01, 0.1) ",
+	marginTop: "2.5rem"
+}
 
 export default withStyles(styles)(withLanguage(HealthProfileInfo));
