@@ -1188,8 +1188,8 @@ router.post('/:id/health/healthprofile', async (req, res, next) => {
     mood, sintomi, allergies
   } = req.body
   if (!id) { return res.status(401).send('Unauthorized') }
-  if (!(mood && sintomi && allergies)) { return res.status(400).sed('Bad request') }
   console.log(req.body)
+  if (!(mood && sintomi && allergies)) { return res.status(400).send('Bad request') }
   const health_id = objectid()
   const healthProfile = {
     health_id: health_id,

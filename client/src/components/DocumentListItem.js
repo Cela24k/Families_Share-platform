@@ -42,7 +42,6 @@ class DocumentListItem extends React.Component {
     async componentDidMount() {
         const { userId } = this.props;
         const profile = await getMyProfile(userId);
-        console.log(profile);
         axios
             .get(`/api/users/${userId}/health/documents`)
             .then((response) => {
