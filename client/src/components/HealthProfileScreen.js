@@ -9,7 +9,7 @@ import * as path from "lodash.get";
     manca medicinesProfileInfo, MedicineListItem, MedicineProfileHeader
 */
 import LoadingSpinner from "./LoadingSpinner";
-import ProfileInfo from "./ProfileInfo";
+
 
 /* richiede le informazioni al server del profilo dello user attualmente connesso */
 const getMyProfile = async (userId) => {

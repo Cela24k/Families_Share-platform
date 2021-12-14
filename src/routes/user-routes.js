@@ -1171,10 +1171,10 @@ router.post('/:Id/health/medicines/edit', async (req, res, next) => {
 })
 
 // to check
-router.get('/:id/health/healthprofile', (req, res, next) => {
+router.get('/:id/health/healthprofile', async (req, res, next) => {
   const { id } = req.params
   if (!id) { res.status(401).send('Unauthorized') }
-  HealthProfile.findOne({ user_id: id })
+  await HealthProfile.findOne({ user_id: id })
     .then(healthProfile => {
       if (!healthProfile) { res.status(404).send('User has not set up health profile yet') }
       res.json(healthProfile)
