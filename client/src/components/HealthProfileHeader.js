@@ -70,7 +70,7 @@ class HealthProfileHeader extends React.Component {
                     src={photo}
                     onClick={this.handleImageModalOpen}
                 />
-                <h3 id="profileHeaderText">Come ti senti oggi?</h3>
+                <h1 className="horizontalCenter">{name}</h1>
 
                 <ExpandedImageModal
                     isOpen={imageModalIsOpen}

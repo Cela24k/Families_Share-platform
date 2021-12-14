@@ -1188,7 +1188,6 @@ router.post('/:id/health/healthprofile', async (req, res, next) => {
     mood, sintomi, allergies
   } = req.body
   if (!id) { return res.status(401).send('Unauthorized') }
-  if (!(mood && sintomi && allergies)) { return res.status(400).send('Bad request') }
   await HealthProfile.findOne({ user_id: id })
     .then(healthProfile => {
       if (!healthProfile) {

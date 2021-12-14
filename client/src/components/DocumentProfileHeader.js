@@ -54,8 +54,6 @@ class DocumentProfileHeader extends React.Component {
                             <i className="fas fa-arrow-left" />
                         </button>
                     </div>
-                    <div className="col-6-10" />
-
                 </div>
                 <img
                     className="profilePhoto horizontalCenter"
