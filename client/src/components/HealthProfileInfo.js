@@ -17,7 +17,7 @@ const getMyHealthProfile = async (userId) => {
 		Log.error(error);
 		return {
 			health_id: "",
-			user_id: "",
+			user_id: userId,
 			mood: { text: "", rate: "" },
 			sintomi: "",
 			allergies: "",
@@ -34,18 +34,19 @@ class HealthProfileInfo extends React.Component {
 		const userId = JSON.parse(localStorage.getItem("user")).id;
 		const { profileId } = this.props;
 		const myProfile = userId === profileId;
+
 		this.state = {
 			myProfile,
-			profileId
+			profileId,
+			healthprofile: undefined
 		};
 	}
 
 	async componentDidMount() {
 		const { profileId } = this.state;
+		
 		const healthprofile = await getMyHealthProfile(profileId);
-		this.state = {
-			healthprofile
-		};
+		this.setState({healthprofile})
 		console.log(healthprofile)
 	}
 
@@ -56,9 +57,9 @@ class HealthProfileInfo extends React.Component {
 	}
 	postData = () =>{
 		const { profileId } = this.state
+		console.log(profileId)
 		axios
 				.post(`/api/users/${profileId}/health/healthprofile`, {
-					"user_id": "",
 					"mood": {"text" : "mimmo", "mood": ""},
 					"sintomi": "sintomi",
 					"allergies" : "mimmo"

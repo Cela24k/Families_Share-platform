@@ -9,6 +9,7 @@ import * as path from "lodash.get";
     manca medicinesProfileInfo, MedicineListItem, MedicineProfileHeader
 */
 import LoadingSpinner from "./LoadingSpinner";
+import ProfileInfo from "./ProfileInfo";
 
 
 
@@ -35,7 +36,7 @@ const getMyProfile = async (userId) => {
     }
 };
 
-class HealtProfileScreen extends React.Component {
+class HealthProfileScreen extends React.Component {
 
     state = {
         profile: {},
@@ -70,8 +71,8 @@ class HealtProfileScreen extends React.Component {
     }
 }
 
-HealtProfileScreen.propTypes = {
+HealthProfileScreen.propTypes = {
     medicines: PropTypes.array
 };
 
-export default HealtProfileScreen;
+export default HealthProfileScreen;
