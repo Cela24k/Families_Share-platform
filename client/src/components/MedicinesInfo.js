@@ -72,10 +72,34 @@ class MedicinesInfo extends React.Component {
                 </div>
                 <div className="row no-gutters medicinesInfoContainer" style={{justifyContent:"center"}}>
                     <div className="col-10-10">
-                        <h1>Ulteriori informazioni</h1>
-                        <i style={{"fontSize":"16px", justifyContent:"center"}}>Premi su un giorno per visualizzare</i>
+                        <div style={{justifyContent:"center", textAlign:"center"}}>
+                            <h1>Ulteriori informazioni</h1>
+                            <p style={{"fontSize":"16px"}}>Premi su un giorno per visualizzare</p>
+                        </div>   
                     </div>
                 </div>
+                <div className="row no-gutters medicinesInfoContainer" style={borderStyle}>
+					<div className="col-2-10">
+						<i className="fas fa-solid fa-exclamation-triangle center" />
+					</div>
+					<div className="col-6-10 ">
+						<div className="verticalCenter">
+							<h1>Allergie</h1>
+						</div>
+					</div>
+					<div className="col-2-10">
+					</div>
+				</div>
+				<div className="textAreaHealth">
+					<textarea id="allergiesAreaText"
+						rows='3' data-min-rows='3'
+						placeholder="Scrivi le tue allergie..."
+						onChange={this.handleSubmitButton}
+					>{"allergies"}</textarea>
+				</div>
+				<div className="healthprofileButton">
+					<button id="submitButton" type="button" className="btn btn-secondary btn-lg" disabled={"disableFlag"} onClick={this.sumbitChanges}>Invia Modifiche</button>
+				</div>
             </React.Fragment>
         );
     }
@@ -87,6 +111,13 @@ const medicinesContentBox = {
     marginBottom: "10px",
     borderBottom: "1px ridge",
     justifyContent: "center"
+}
+
+const borderStyle = {
+	height: "30%",
+	borderTop: "2px solid rgba(01, 01, 01, 0.1)",
+	borderBottom: " 2px solid rgba(01, 01, 01, 0.1) ",
+	marginTop: "2.5rem"
 }
 
 const boxBorders = {

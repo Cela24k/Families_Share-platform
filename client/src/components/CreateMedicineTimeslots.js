@@ -146,7 +146,6 @@ class CreateMedicineTimeslots extends React.Component {
   render() {
     const { language,activityDesc } = this.props;
     const texts = Texts[language].createActivityTimeslots;
-    console.log(activityDesc)
     return (
       <div id="createActivityTimeslotsContainer">
         <div id="createActivityTimeslotsHeader" className="row no-gutters">

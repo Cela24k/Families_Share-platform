@@ -192,7 +192,6 @@ class HealthProfileInfo extends React.Component {
 						onChange={this.handleSubmitButton}
 					>{sintomi}</textarea>
 				</div>
-
 				<div className="row no-gutters medicinesInfoContainer" style={borderStyle}>
 					<div className="col-2-10">
 						<i className="fas fa-solid fa-exclamation-triangle center" />
