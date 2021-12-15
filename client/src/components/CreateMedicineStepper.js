@@ -143,8 +143,6 @@ class CreateMedicineStepper extends React.Component {
         name: "",
         color: colors[Math.floor(Math.random() * colors.length)],
         description: "",
-        location: "",
-        link: ""
       },
       dates: {
         selectedDays: [],
@@ -188,46 +186,21 @@ class CreateMedicineStepper extends React.Component {
     history.goBack();
   };
 
-  createMedicines = () => {
-    const { match, history, enqueueSnackbar, language } = this.props;
-    const texts = Texts[language].createActivityStepper;
-    const { groupId } = match.params;
+  createMedicinal = () => {
+    const { match, history, enqueueSnackbarm, language } = this.props;
     const { information, dates, timeslots } = this.state;
     const userId = JSON.parse(localStorage.getItem("user")).id;
-    const activity = this.formatDataToActivity(
-      information,
-      dates,
-      timeslots,
-      groupId,
-      userId
-    );
     const events = this.formatDataToEvents(
       information,
       dates,
       timeslots,
-      groupId
-    );
+    )
     this.setState({ creating: true });
-    axios
-      .post(`/api/groups/${groupId}/activities`, { activity, events })
-      .then(response => {
-        if (response.data.status === "pending") {
-          enqueueSnackbar(texts.pendingMessage, {
-            variant: "info"
-          });
-        }
-        Log.info(response);
-        history.goBack();
-      })
-      .catch(error => {
-        Log.error(error);
-        history.goBack();
-      });
-  };
+    console.log(typeof dates.selectedDays[0])
+  }
 
-  formatDataToActivity = (information, dates, timeslots, groupId, userId) => {
+  formatDataToMeds = (information, dates, timeslots, userId) => {
     return {
-      group_id: groupId,
       creator_id: userId,
       name: information.name,
       color: information.color,
@@ -239,7 +212,7 @@ class CreateMedicineStepper extends React.Component {
     };
   };
 
-  formatDataToEvents = (information, dates, timeslots, groupId) => {
+  formatDataToEvents = (information, dates, timeslots) => {
     const events = [];
     dates.selectedDays.forEach((date, index) => {
       timeslots.activityTimeslots[index].forEach(timeslot => {
@@ -284,7 +257,6 @@ class CreateMedicineStepper extends React.Component {
               link: timeslot.link,
               activityColor: information.color,
               category: timeslot.category,
-              groupId,
               repetition: dates.repetition ? dates.repetitionType : "none",
               start: startTime.substr(0, startTime.indexOf(":")),
               end: endTime.substr(0, startTime.indexOf(":"))
@@ -300,7 +272,7 @@ class CreateMedicineStepper extends React.Component {
   handleContinue = () => {
     const { activeStep } = this.state;
     if (activeStep === 2) {
-      this.createActivity();
+      this.createMedicinal()
     } else {
       this.setState({
         activeStep: activeStep + 1
@@ -348,7 +320,7 @@ class CreateMedicineStepper extends React.Component {
         return (
           <CreateMedicineTimeslots
             activityName={information.name}
-            activityDesc = {information.description}
+            activityDesc={information.description}
             activityLocation={information.location}
             dates={dates.selectedDays}
             {...timeslots}
