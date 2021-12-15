@@ -104,7 +104,7 @@ class DocumentListItem extends React.Component {
 
     handleConfirmDialogClose = choice => {
         if (choice === "agree") {
-            this.handleDelete();
+        this.handleDelete();
         }
         this.setState({ confirmDialogIsOpen: false });
     };

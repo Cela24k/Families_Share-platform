@@ -7,21 +7,32 @@ const medSchema = new mongoose.Schema(
       unique: true,
       required: true
     },
-    med_name: {
-      type: String,
-      required: true
-    },
     user_id: {
       type: String,
       required: true
     },
-    repetition: {
-      type: Boolean,
-      required: true
+    information: {
+      name: {
+        type: String,
+        required: true
+      },
+      color: String,
+      description: String
+
     },
-    different_timeslots: {
-      type: Boolean,
-      required: true
+    dates: {
+      slectedDay: {
+        day: {
+          type: String,
+          required: true
+        }// cambiare e vedere cosa mettere da qui per poi gesitre le post
+      },
+      repetition: Boolean,
+      repetitionType: String,
+      lastSelect: Date
+    },
+    timeslots: {
+      type: String
     },
     status: {
       type: String,
