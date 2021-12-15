@@ -75,10 +75,13 @@ class HealthProfileInfo extends React.Component {
 
 	handleSmile = (event) => {
 		const { text } = this.state.mood;
-		this.setState({ 
+		this.setState({
 			mood: { text, rate: event.target.id },
 			disableFlag: false
 		});
+	}
+	handleSmile1 = (value) => {
+		alert(value)
 	}
 
 	sumbitChanges = () => {
@@ -119,22 +122,47 @@ class HealthProfileInfo extends React.Component {
 						<i className="fas fa-chart-line center" />
 					</div>
 				</div>
+
 				<div className="feedbackContainer">
-					<div className={activeSmile === 1 ? "colorChange" : ""}>
-						<i id="1" className="far fa-sad-cry fa-3x" onClick={this.handleSmile} />
-					</div>
-					<div className={activeSmile === 2 ? "colorChange" : ""}>
-						<i id="2" className="far fa-sad-tear fa-3x" onClick={this.handleSmile} />
-					</div>
-					<div className={activeSmile === 3 ? "colorChange" : ""}>
-						<i id="3" className="far fa-meh fa-3x" onClick={this.handleSmile} />
-					</div>
-					<div className={activeSmile === 4 ? "colorChange" : ""}>
-						<i id="4" className="far fa-smile-beam fa-3x" onClick={this.handleSmile} />
-					</div>
-					<div className={activeSmile === 5 ? "colorChange" : ""}>
-						<i id="5" className="far fa-grin-beam fa-3x" onClick={this.handleSmile} />
-					</div>
+
+					<label class="containerSmile">
+						<div className={activeSmile === 1 ? "colorChange" : ""}>
+							<input type="radio" name="radio" />
+							<i id="1" className="far fa-sad-cry fa-3x" onClick={this.handleSmile} />
+						</div>
+					</label>
+
+					<label class="containerSmile">
+						<div className={activeSmile === 2 ? "colorChange" : ""}>
+							<input type="radio" name="radio" />
+							<i id="2" className="far fa-sad-tear fa-3x" onClick={this.handleSmile} />
+						</div>
+					</label>
+
+					<label class="containerSmile">
+						<div className={activeSmile === 3 ? "colorChange" : ""}>
+							<input type="radio" name="radio" />
+							<i id="3" className="far fa-meh fa-3x" onClick={this.handleSmile} />
+						</div>
+					</label>
+
+					<label class="containerSmile">
+						<div className={activeSmile === 4 ? "colorChange" : ""}>
+							<input type="radio" name="radio" />
+							<i id="4" className="far fa-smile-beam fa-3x" onClick={this.handleSmile} />
+						</div>
+
+
+					</label>
+					<label class="containerSmile">
+						<div className={activeSmile === 5 ? "colorChange" : ""}>
+							<input type="radio" name="radio" />
+							<i id="5" className="far fa-grin-beam fa-3x" onClick={this.handleSmile} />
+						</div>
+					</label>
+
+
+
 				</div>
 				<div className="textAreaHealth">
 					<textarea id="moodAreaText"
@@ -210,7 +238,7 @@ const styles = () => ({
 const borderStyle = {
 	height: "30%",
 	borderTop: "2px solid rgba(01, 01, 01, 0.1)",
-	borderBottom :" 2px solid rgba(01, 01, 01, 0.1) ",
+	borderBottom: " 2px solid rgba(01, 01, 01, 0.1) ",
 	marginTop: "2.5rem"
 }
 

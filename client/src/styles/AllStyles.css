@@ -2819,22 +2819,18 @@ a:active {
   align-items: center;
   margin: 2rem 0 5px 0;
   height: 20px;
-  
-
 }
-.feedbackContainer i{
+.feedbackContainer i {
   padding: 5px;
   margin-top: 10px;
-  color: #C8C8C8;
+  color: #c8c8c8;
   cursor: pointer;
-  
-
 }
-.feedbackContainer i:hover{
+.feedbackContainer i:hover {
   color: #f7931e;
 }
 
-.healthTitle{
+.healthTitle {
   color: white;
   text-align: center;
   justify-content: center;
@@ -2842,11 +2838,20 @@ a:active {
   padding-top: 5px;
 }
 
-.colorChange i{
+.containerSmile input[type ="radio"]{
+  -webkit-appearance: none;
+  
+}
+.containerSmile input:checked ~ i{
   color: #f7931e;
 }
 
-.healthprofileButton{
+
+.colorChange i {
+  color: #f7931e;
+}
+
+.healthprofileButton {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -2855,16 +2860,14 @@ a:active {
   padding-bottom: 3rem;
 }
 
-
-.textAreaHealth{
-  display:flex;
+.textAreaHealth {
+  display: flex;
   justify-content: center;
   padding-top: 3rem;
 }
-.textAreaHealth textarea{
- width: 60%;
+.textAreaHealth textarea {
+  width: 60%;
 }
-
 
 #profileNavbarContainer {
   height: 5rem;
@@ -3051,14 +3054,13 @@ a:active {
   width: 90%;
   text-align: center;
 }
-#profileHeaderText  {
+#profileHeaderText {
   position: absolute;
   bottom: 0;
   width: 100%;
   text-align: center;
-  
 }
-.medicinesHeader h2{
+.medicinesHeader h2 {
   color: #ffffff;
   font-size: 3.4rem;
   position: absolute;
