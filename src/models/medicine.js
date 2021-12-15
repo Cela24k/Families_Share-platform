@@ -15,40 +15,19 @@ const medSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    assumption: {
-      // Buffer of full dates (month + day + time) o str
-      type: Buffer
-      // EX 'December 17, 1995 03:24:00' o '1995-12-17T03:24:00'
+    repetition: {
+      type: Boolean,
+      required: true
+    },
+    different_timeslots: {
+      type: Boolean,
+      required: true
+    },
+    status: {
+      type: String,
+      required: true
     }
   }, { timestamps: true })
-
-function get_date_nd_time(datetime) {
-  if (!('string'.localeCompare(typeof datetime))) { var date_time = new Date(datetime) } else
-  // eslint-disable-next-line brace-style
-  { date_time = datetime }
-
-  return {
-    getMonth: function () {
-      return date_time.getMonth() // 0 = gennaio
-    },
-
-    getDay: function () {
-      return date_time.getDay() // 0 = domenica
-    },
-
-    getHours: function () {
-      return date_time.getHours()
-    },
-
-    getMinutes: function () {
-      return date_time.getMinutes()
-    },
-
-    toString: function () {
-      return date_time.toLocaleTimeString()
-    }
-  }
-}
 
 const model = mongoose.model('Medicine', medSchema)
 

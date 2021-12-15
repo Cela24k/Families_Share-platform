@@ -1120,17 +1120,6 @@ router.get('/:id/health/medicines/edit', (req, res, next) => {
   }).catch(next)
 })
 
-// to check
-router.get('/:Id/health/medicines/edit/:id', (req, res, next) => {
-  const id_user = req.params[0]
-  const id = req.params[1]
-  if (!(id_user && id)) { return res.status(401).send('Unauthorized') }
-  Med.findOne({ id: id }).then(med => {
-    if (med.length === 0) { return res.status(404).send('Med doesnt found') }
-    res.json(med)
-  }).catch(next)
-})
-
 router.get('/:id/health/documents/:id', (req, res, next) => {
   const { id } = req.params
   if (!id) { return res.status(401).send('Unauthorized') }
@@ -1144,23 +1133,37 @@ router.get('/:id/health/documents/:id', (req, res, next) => {
 })
 
 // to check
+router.get('/:Id/health/medicines/edit/:id', (req, res, next) => {
+  const id_user = req.params[0]
+  const id = req.params[1]
+  if (!(id_user && id)) { return res.status(401).send('Unauthorized') }
+  Med.findOne({ id: id }).then(med => {
+    if (med.length === 0) { return res.status(404).send('Med doesnt found') }
+    res.json(med)
+  }).catch(next)
+})
+// to check
+
 router.post('/:Id/health/medicines/edit', async (req, res, next) => {
   const {
-    name, assumption
+    med_name, repetition, different_timeslots, status
   } = req.body
   const user_id = req.params.Id
-  if (!(name && user_id && assumption)) {
+  if (!(med_name && repetition && different_timeslots && status && user_id)) {
     return res.status(400).send('Bad Request')
   }
   try {
-    await Med.findOne({ name: name, user_id: user_id }).then(med => {
-      if (med.length !== 0) { res.status(409).send('There is already a medicine for this user with the same name') } else {
+    await Med.findOne({ med_name: med_name, user_id: user_id }).then(med => {
+      if (med.length !== 0) { res.status(409).send('There is already a medicine for this user with the same med_name') } else {
         var new_id = objectid()
         const newMed = {
           id: new_id,
-          med_name: name,
+          med_name: med_name,
           user_id: user_id,
-          assumption: assumption
+          repetition: repetition,
+          different_timeslots: different_timeslots,
+          status: status
+
         }
         Med.create(newMed).then(() => { res.status(200).send('Medicine added') })
       }

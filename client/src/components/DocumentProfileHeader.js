@@ -6,7 +6,7 @@ import { disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 import ExpandedImageModal from "./ExpandedImageModal";
 
 class DocumentProfileHeader extends React.Component {
-    
+
     state = {
         optionsModalIsOpen: false,
         confirmDialogIsOpen: false,
@@ -53,6 +53,9 @@ class DocumentProfileHeader extends React.Component {
                         >
                             <i className="fas fa-arrow-left" />
                         </button>
+                    </div>
+                    <div className="col-6-10 healthTitle">
+                        Documenti
                     </div>
                 </div>
                 <img

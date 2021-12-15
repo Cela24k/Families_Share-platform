@@ -21,28 +21,28 @@ class MedicinesHeader extends React.Component {
   };
 
   componentDidMount() {
-    this.loadInterval = setInterval(this.getTime(),1000)
+    this.loadInterval = setInterval(this.getTime(), 1000)
   }
 
   getTime() {
     const
       takeTwelve = n => n > 12 ? n - 12 : n,
-        addZero = n => n < 10 ? "0" + n : n;
+      addZero = n => n < 10 ? "0" + n : n;
 
-      setInterval(() => {
-        let d, h, m, s, t, amPm;
+    setInterval(() => {
+      let d, h, m, s, t, amPm;
 
-        d = new Date();
-        h = addZero(takeTwelve(d.getHours()));
-        m = addZero(d.getMinutes());
-        s = addZero(d.getSeconds());
-        t = `${h}:${m}:${s}`;
+      d = new Date();
+      h = addZero(takeTwelve(d.getHours()));
+      m = addZero(d.getMinutes());
+      s = addZero(d.getSeconds());
+      t = `${h}:${m}:${s}`;
 
-        amPm = d.getHours() >= 12 ? "pm" : "am";
+      amPm = d.getHours() >= 12 ? "pm" : "am";
 
-        this.setState({
-          currentTime: t,
-        });
+      this.setState({
+        currentTime: t,
+      });
 
     }, 1000);
   }
@@ -75,7 +75,7 @@ class MedicinesHeader extends React.Component {
     var tempo = new Date().getSeconds();
 
     return (
-      <div id="profileHeaderContainer" className = "medicinesHeader">
+      <div id="profileHeaderContainer" className="medicinesHeader">
         <div className="row no-gutters" id="profileHeaderOptions">
           <div className="col-2-10">
             <button
@@ -86,7 +86,9 @@ class MedicinesHeader extends React.Component {
               <i className="fas fa-arrow-left" />
             </button>
           </div>
-          <div className="col-6-10" />
+          <div className="col-6-10 healthTitle">
+            Medicine
+          </div>
           {profileId === JSON.parse(localStorage.getItem("user")).id ? ( // todo bisogna vedere in che modo viene settato lo user nel localStorage
             <React.Fragment>
               <div className="col-1-10">
@@ -119,11 +121,11 @@ class MedicinesHeader extends React.Component {
           onClick={this.handleImageModalOpen}
         />
         <div>
-        {/*change design sopratutto il margin */}
+          {/*change design sopratutto il margin */}
           <h1 className="horizontalCenter" style={{ "fontSize": "16px" }}>Prossima Medicina da prendere:</h1>
           <h2 className="horizontalCenter" > {currentTime} </h2>
         </div>
-        
+
       </div>
     );
   }
