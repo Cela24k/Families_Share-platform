@@ -1,25 +1,11 @@
 import React from "react";
 import axios from "axios";
 import Log from "./Log";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import * as path from "lodash.get";
-import DocumentProfileHeader from "./DocumentProfileHeader";
-import DocumentProfileInfo from "./DocumentProfileInfo";
+import CovidAlertHeader from "./CovidAlertHeader";
+import CovidAlertInfo from "./CovidAlertInfo";
 import LoadingSpinner from "./LoadingSpinner";
-
-/* richiede i documenti al server */
-const getMyDocuments = (userId) => {
-    return axios
-        .get(`/api/users/${userId}/health/documents`)
-        .then((response) => {
-            return response.data;
-        })
-        .catch((error) => {
-            Log.error(error);
-            // console.log('errore nella getMyDocuments');
-            return [];
-        });
-};
 
 /* richiede le informazioni al server del profilo dello user attualmente connesso */
 const getMyProfile = async (userId) => {
@@ -42,23 +28,19 @@ const getMyProfile = async (userId) => {
     }
 };
 
-class DocumentProfileScreen extends React.Component {
+class CovidAlertScreen extends React.Component {
 
     state = {
         profile: {},
-        documents: [],
         fetchedProfile: false,
     };
 
     async componentDidMount() {
         const { match } = this.props;
         const { profileId } = match.params;
-        const userDocuments = await getMyDocuments(profileId);
         const profile = await getMyProfile(profileId);
-        // const children = await getMyChildren(profileId);
         this.setState({
             profile,
-            documents: userDocuments,
             fetchedProfile: true,
         });
     }
@@ -66,15 +48,15 @@ class DocumentProfileScreen extends React.Component {
     render() {
         const { match } = this.props;
         const { profileId } = match.params;
-        const { profile, documents, fetchedProfile } = this.state;
+        const { profile, fetchedProfile } = this.state;
         // const texts = Texts[language].ProfileDocumentHeader;
         return fetchedProfile ? (
             <React.Fragment>
-                <DocumentProfileHeader
+                <CovidAlertHeader
                     name={`${profile.given_name} ${profile.family_name}`}
                     photo={path(profile, ["image", "path"])}
                 />
-                <DocumentProfileInfo profileId={profileId} userDocuments={documents} />
+                <CovidAlertInfo profileId={profileId} />
             </React.Fragment>
         ) : (
             <LoadingSpinner />
@@ -82,8 +64,8 @@ class DocumentProfileScreen extends React.Component {
     }
 }
 
-DocumentProfileScreen.propTypes = {
-    documents: PropTypes.array
+CovidAlertScreen.propTypes = {
+    // TODO
 };
 
-export default DocumentProfileScreen;
+export default CovidAlertScreen;

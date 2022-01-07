@@ -144,7 +144,7 @@ class DocumentListItem extends React.Component {
                             >
                                 {/*TODO OnClick */}
                                 <h1>{`${_document[keyId].file_name}`}</h1>
-                                <h2>Documento</h2>
+                                <h2>Documento di {`${profile.given_name}`}</h2>
                             </div>
                         </div>
                         <div id="div-options" className="col-2-10">

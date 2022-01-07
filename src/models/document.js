@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const documentSchema = new mongoose.Schema({
-  user_id: {
+  user_id: { // cambiare in owner_id
     type: String,
     required: true
   },

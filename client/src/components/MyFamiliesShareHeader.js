@@ -122,14 +122,17 @@ class MyFamiliesShareHeader extends React.Component {
     const { history, dispatch } = this.props;
     const target = document.getElementById("drawerContainer");
     target.style.position = "";
+    const userId = JSON.parse(localStorage.getItem("user")).id;
     this.setState({ drawerIsOpen: false });
     switch (key) {
       case "homepage":
         // window.location.reload();
         break;
       case "myprofile":
-        const userId = JSON.parse(localStorage.getItem("user")).id;
         history.push(`/profiles/${userId}/info`);
+        break;
+      case "covidalert":
+        history.push(`/covidalert/${userId}`);
         break;
       case "mycalendar":
         history.push(`/myfamiliesshare/calendar`);
@@ -277,6 +280,20 @@ class MyFamiliesShareHeader extends React.Component {
                 </div>
                 <div className="col-3-4">
                   <h1>{texts.myProfile}</h1>
+                </div>
+              </div>
+            </Menu.Item>
+            <Menu.Item
+              style={menuItem}
+              key="covidalert"
+              onClick={this.handleDrawerClick}
+            >
+              <div className="row no-gutters">
+                <div className="col-1-4">
+                  <i class="fas fa-exclamation"></i>
+                </div>
+                <div className="col-3-4">
+                  <h1>Covid alert</h1>
                 </div>
               </div>
             </Menu.Item>

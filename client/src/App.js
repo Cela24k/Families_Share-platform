@@ -10,6 +10,7 @@ import { SnackbarProvider } from "notistack";
 import LoadingSpinner from "./components/LoadingSpinner";
 import { LanguageProvider } from "./components/LanguageContext";
 import PrivateRoute from "./components/PrivateRoute";
+import CovidAlertScreen from "./components/CovidAlertScreen";
 
 const styles = () => ({
   info: { backgroundColor: "#202124" },
@@ -267,6 +268,10 @@ class App extends React.Component {
               <PrivateRoute
                 path="/myfamiliesshare/calendar"
                 component={MyCalendarScreen}
+              />
+              <PrivateRoute
+                path="/covidalert/:profileId"
+                component={CovidAlertScreen}
               />
               <PrivateRoute
                 exact

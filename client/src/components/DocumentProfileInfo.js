@@ -102,8 +102,6 @@ class DocumentProfileInfo extends React.Component {
 	}
 }
 
-
-
 const styles = () => ({
 	add: {
 		position: "fixed",
