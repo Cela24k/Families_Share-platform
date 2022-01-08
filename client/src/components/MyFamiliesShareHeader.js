@@ -132,7 +132,7 @@ class MyFamiliesShareHeader extends React.Component {
         history.push(`/profiles/${userId}/info`);
         break;
       case "covidalert":
-        history.push(`/covidalert/${userId}`);
+        history.push(`/covidalert/${userId}/reports`);
         break;
       case "mycalendar":
         history.push(`/myfamiliesshare/calendar`);

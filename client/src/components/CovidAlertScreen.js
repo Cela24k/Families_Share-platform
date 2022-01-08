@@ -1,11 +1,23 @@
 import React from "react";
+import { Route } from "react-router-dom";
 import axios from "axios";
+import Loadable from "react-loadable";
 import Log from "./Log";
 // import PropTypes from "prop-types";
 import * as path from "lodash.get";
 import CovidAlertHeader from "./CovidAlertHeader";
-import CovidAlertInfo from "./CovidAlertInfo";
 import LoadingSpinner from "./LoadingSpinner";
+import CovidAlertNavbar from "./CovidAlertNavbar";
+
+const CovidAlertReports = Loadable({
+    loader: () => import("./CovidAlertReports"),
+    loading: () => <div />,
+});
+
+const CovidAlertGreenPass = Loadable({
+    loader: () => import("./CovidAlertGreenPass"),
+    loading: () => <div />,
+});
 
 /* richiede le informazioni al server del profilo dello user attualmente connesso */
 const getMyProfile = async (userId) => {
@@ -49,6 +61,7 @@ class CovidAlertScreen extends React.Component {
         const { match } = this.props;
         const { profileId } = match.params;
         const { profile, fetchedProfile } = this.state;
+        const currentPath = match.url;
         // const texts = Texts[language].ProfileDocumentHeader;
         return fetchedProfile ? (
             <React.Fragment>
@@ -56,8 +69,22 @@ class CovidAlertScreen extends React.Component {
                     name={`${profile.given_name} ${profile.family_name}`}
                     photo={path(profile, ["image", "path"])}
                 />
-                <CovidAlertInfo profileId={profileId} />
+                <React.Fragment>
+                    <CovidAlertNavbar>
+                        <Route
+                            exact
+                            path={`${currentPath}/report`}
+                            render={(props) => <CovidAlertReports {...props} />}
+                        />
+                        <Route
+                            exact
+                            path={`${currentPath}/greenpass`}
+                            render={(props) => <CovidAlertGreenPass {...props} />}
+                        />
+                    </CovidAlertNavbar>
+                </React.Fragment>
             </React.Fragment>
+
         ) : (
             <LoadingSpinner />
         );

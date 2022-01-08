@@ -10,7 +10,6 @@ import { SnackbarProvider } from "notistack";
 import LoadingSpinner from "./components/LoadingSpinner";
 import { LanguageProvider } from "./components/LanguageContext";
 import PrivateRoute from "./components/PrivateRoute";
-import CovidAlertScreen from "./components/CovidAlertScreen";
 
 const styles = () => ({
   info: { backgroundColor: "#202124" },
@@ -74,6 +73,10 @@ const ChildProfileScreen = Loadable({
   loader: () => import("./components/ChildProfileScreen"),
   loading: () => Loading
 });
+const CovidAlertScreen = Loadable({
+  loader: () => import("./components/CovidAlertScreen"),
+  loading: () => Loading
+})
 const DocumentProfileScreen = Loadable({
   loader: () => import("./components/DocumentProfileScreen"),
   loading: () => Loading
@@ -270,10 +273,6 @@ class App extends React.Component {
                 component={MyCalendarScreen}
               />
               <PrivateRoute
-                path="/covidalert/:profileId"
-                component={CovidAlertScreen}
-              />
-              <PrivateRoute
                 exact
                 path="/profiles/:profileId/children/:childId/edit/additional"
                 component={AdditionalInfoScreen}
@@ -328,6 +327,25 @@ class App extends React.Component {
                 render={props =>
                   localStorage.getItem("user") ? (
                     <ProfileScreen
+                      key={props.match.params.profileId}
+                      {...props}
+                    />
+                  ) : (
+                    <Redirect
+                      to={{
+                        pathname: "/login",
+                        state: { from: props.location }
+                      }}
+                    />
+                  )
+                }
+              />
+              {/* Un utente può accedere alla sezione solo se autenticato */}
+              <Route
+                path="/covidalert/:profileId/"
+                render={props =>
+                  localStorage.getItem("user") ? (
+                    <CovidAlertScreen
                       key={props.match.params.profileId}
                       {...props}
                     />

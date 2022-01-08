@@ -2,7 +2,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import axios from "axios";
 import Loadable from "react-loadable";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import * as path from "lodash.get";
 import ProfileHeader from "./ProfileHeader";
 import ProfileNavbar from "./ProfileNavbar";
