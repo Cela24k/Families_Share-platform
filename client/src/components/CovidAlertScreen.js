@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import axios from "axios";
 import Loadable from "react-loadable";
 import Log from "./Log";
@@ -18,6 +18,22 @@ const CovidAlertGreenPass = Loadable({
     loader: () => import("./CovidAlertGreenPass"),
     loading: () => <div />,
 });
+
+/* richiede il green pass se presente al server */
+const getMyGreenPass = async (userId) => {
+    try {
+        const response = await axios
+            .get(`/api/users/${userId}/greenpass`);
+        return response.data;
+    } catch (error) {
+        Log.error(error);
+        return {
+            user_id: "",
+            file_name: "",
+            file_data: "",
+        };
+    }
+};
 
 /* richiede le informazioni al server del profilo dello user attualmente connesso */
 const getMyProfile = async (userId) => {
@@ -45,22 +61,25 @@ class CovidAlertScreen extends React.Component {
     state = {
         profile: {},
         fetchedProfile: false,
+        greenPass: {}
     };
 
     async componentDidMount() {
         const { match } = this.props;
         const { profileId } = match.params;
         const profile = await getMyProfile(profileId);
+        const greenPass = await getMyGreenPass(profileId);
         this.setState({
             profile,
             fetchedProfile: true,
+            greenPass
         });
     }
 
     render() {
         const { match } = this.props;
         const { profileId } = match.params;
-        const { profile, fetchedProfile } = this.state;
+        const { profile, fetchedProfile, greenPass } = this.state;
         const currentPath = match.url;
         // const texts = Texts[language].ProfileDocumentHeader;
         return fetchedProfile ? (
@@ -70,18 +89,25 @@ class CovidAlertScreen extends React.Component {
                     photo={path(profile, ["image", "path"])}
                 />
                 <React.Fragment>
-                    <CovidAlertNavbar>
+                    <CovidAlertNavbar />
+                    <Switch>
                         <Route
                             exact
-                            path={`${currentPath}/report`}
-                            render={(props) => <CovidAlertReports {...props} />}
+                            path={`${currentPath}/reports`}
+                            render={(props) => (<CovidAlertReports {...props} />)}
                         />
                         <Route
                             exact
                             path={`${currentPath}/greenpass`}
-                            render={(props) => <CovidAlertGreenPass {...props} />}
+                            render={(props) => (
+                                <CovidAlertGreenPass
+                                    {...props}
+                                    profileId={profileId}
+                                    greenPass={greenPass}
+                                />
+                            )}
                         />
-                    </CovidAlertNavbar>
+                    </Switch>
                 </React.Fragment>
             </React.Fragment>
 

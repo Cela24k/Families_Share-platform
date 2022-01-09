@@ -986,6 +986,10 @@ const en = {
     children: "CHILDREN",
     health:"HEALTH"
   },
+  covidAlertNavbar: {
+    reports: "REPORTS",
+    greenpass: "GREEN PASS"
+  },
   profileInfo: {
     adress: "Address",
     description: "Description",
@@ -3570,6 +3574,10 @@ const it = {
     info: "INFO",
     children: "BAMBINI",
     health: "SALUTE"
+  },
+  covidAlertNavbar: {
+    reports: "SEGNALAZIONI",
+    greenpass: "GREEN PASS"
   },
   profileInfo: {
     adress: "Indirizzo",

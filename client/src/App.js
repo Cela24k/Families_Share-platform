@@ -342,7 +342,7 @@ class App extends React.Component {
               />
               {/* Un utente può accedere alla sezione solo se autenticato */}
               <Route
-                path="/covidalert/:profileId/"
+                path="/covidalert/:profileId"
                 render={props =>
                   localStorage.getItem("user") ? (
                     <CovidAlertScreen

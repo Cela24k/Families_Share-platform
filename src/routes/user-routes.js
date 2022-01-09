@@ -1067,6 +1067,18 @@ router.delete('/:userId/children/:childId/parents/:parentId', (req, res, next) =
 })
 
 /* DOCUMENTS */
+router.get('/:id/greenpass', (req, res, next) => {
+  const { id } = req.params
+  if (!id) { return res.status(401).send('Unauthorized') }
+  Document.findOne({ file_name: 'greenpass' })
+    .then(document => {
+      if (document === undefined) {
+        return res.status(404).send('User has no green pass')
+      }
+      res.json(document)
+    }).catch(next)
+})
+
 router.get('/:id/health/documents', (req, res, next) => {
   const { id } = req.params
   if (!id) { return res.status(401).send('Unauthorized') }

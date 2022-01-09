@@ -23,24 +23,11 @@ class CovidAlertReports extends React.Component {
 		// const texts = Texts[language].profileDocuments;
 		return (
 			<React.Fragment>
-                <div style={divStyle} >
-                    <i className="fas fa-file-upload fa-10x" style={labelStyle} />
+                <div>
                 </div>
 			</React.Fragment>
 		);
 	}
-}
-
-const divStyle = {
-	"marginTop": "100px",
-	height: "100%",
-	display: "flex",
-	"justifyContent": "center",
-	"alignItems": "center"
-}
-
-const labelStyle = {
-	opacity: 0.4
 }
 
 export default withLanguage(CovidAlertReports);

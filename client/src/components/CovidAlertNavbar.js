@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
-// import Texts from "../Constants/Texts";
+import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 
 const CovidAlertNavbar = ({ language, history }) => {
@@ -10,7 +10,7 @@ const CovidAlertNavbar = ({ language, history }) => {
     const parentPath = pathname.slice(0, pathname.lastIndexOf("/"));
     history.replace(`${parentPath}/${event.target.id}`);
   };
-  // const texts = Texts[language].profileNavbar;
+  const texts = Texts[language].covidAlertNavbar;
   const { pathname } = history.location;
   const activeTab = pathname.slice(
     pathname.lastIndexOf("/") + 1,
@@ -25,7 +25,7 @@ const CovidAlertNavbar = ({ language, history }) => {
             className={activeTab === "reports" ? "profileTabActive" : ""}
             onClick={handleActiveTab}
           >
-            REPORTS
+            {texts.reports}
           </h1>
         </div>
         <div className="col-1-2">
@@ -34,7 +34,7 @@ const CovidAlertNavbar = ({ language, history }) => {
             className={activeTab === "greenpass" ? "profileTabActive" : ""}
             onClick={handleActiveTab}
           >
-            GREEN PASS
+            {texts.greenpass}
           </h1>
         </div>
       </div>
