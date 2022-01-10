@@ -1,8 +1,11 @@
 import React from "react";
 import axios from "axios";
 // import Texts from "../Constants/Texts";
-import Fab from "@material-ui/core/Fab";
-import { withStyles } from "@material-ui/core/styles";
+// import Fab from "@material-ui/core/Fab";
+import { Fab, Action } from 'react-tiny-fab';
+import 'react-tiny-fab/dist/styles.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus, faChild, faUser } from '@fortawesome/free-solid-svg-icons'
 import withLanguage from "./LanguageContext";
 import Log from "./Log";
 import DocumentListItem from "./DocumentListItem";
@@ -21,10 +24,11 @@ class DocumentProfileInfo extends React.Component {
 		};
 	}
 
-	readFile = () => {
+	readFile = event => {
 		const { profileId } = this.state;
 		const file = document.getElementById("input").files[0];
 		const reader = new FileReader();
+		console.log(event);
 		reader.onload = () => {
 			axios
 				.post(`/api/users/${profileId}/health/documents`, {
@@ -60,7 +64,7 @@ class DocumentProfileInfo extends React.Component {
 
 	render() {
 		const { myProfile, profileId, documents } = this.state;
-		const { classes } = this.props;
+		const { profile, userChildren } = this.props;
 		// const texts = Texts[language].profileDocuments;
 		return (
 			<React.Fragment>
@@ -69,7 +73,10 @@ class DocumentProfileInfo extends React.Component {
 						{documents.map((_document, index) => (
 							<li key={index}>
 								{/* passato l'index della document map per usarlo come prop*/}
-								<DocumentListItem userId={profileId} keyId={index} />
+								<DocumentListItem
+									userId={profileId}
+									keyId={index}
+								/>
 							</li>
 						))}
 					</ul>
@@ -87,12 +94,26 @@ class DocumentProfileInfo extends React.Component {
 					/>
 					{myProfile && (
 						<Fab
-							color="primary"
-							aria-label="Add"
-							className={classes.add}
-							onClick={() => { document.getElementById('input').click() }}
+							mainButtonStyles={mainButtonStyles}
+							alwaysShowTitle={true}
+							icon={<FontAwesomeIcon icon={faPlus} />}
 						>
-							<i className="fas fa-regular fa-file" />
+							<Action
+								style={actionStyles}
+								text={profile.given_name}
+								onClick={() => document.getElementById('input').click()}
+							>
+								<FontAwesomeIcon icon={faUser} />
+							</Action>
+							{userChildren.map(child => (
+								<Action
+									style={actionStyles}
+									text={child.child_id}
+									onClick={() => document.getElementById('input').click()}
+								>
+									<FontAwesomeIcon icon={faChild} />
+								</ Action>
+							))}
 						</Fab>
 					)}
 				</div>
@@ -102,20 +123,13 @@ class DocumentProfileInfo extends React.Component {
 	}
 }
 
-const styles = () => ({
-	add: {
-		position: "fixed",
-		bottom: "5%",
-		right: "5%",
-		height: "5rem",
-		width: "5rem",
-		borderRadius: "50%",
-		border: "solid 0.5px #999",
-		backgroundColor: "#ff6f00",
-		zIndex: 100,
-		fontSize: "2rem",
-	},
-});
+const mainButtonStyles = {
+	backgroundColor: "#ff6f00",
+}
+
+const actionStyles = {
+	backgroundColor: "#ff8c00",
+};
 
 const divStyle = {
 	"marginTop": "100px",
@@ -135,5 +149,5 @@ const labelStyle = {
 	opacity: 0.4
 }
 
-export default withStyles(styles)(withLanguage(DocumentProfileInfo));
+export default withLanguage(DocumentProfileInfo);
 

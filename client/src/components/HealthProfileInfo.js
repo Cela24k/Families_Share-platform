@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 // import Texts from "../Constants/Texts";
-import Fab from "@material-ui/core/Fab";
 import { withStyles } from "@material-ui/core/styles";
 import withLanguage from "./LanguageContext";
 import Log from "./Log";

@@ -8,17 +8,15 @@ import DocumentProfileInfo from "./DocumentProfileInfo";
 import LoadingSpinner from "./LoadingSpinner";
 
 /* richiede i documenti al server */
-const getMyDocuments = (userId) => {
-    return axios
-        .get(`/api/users/${userId}/health/documents`)
-        .then((response) => {
-            return response.data;
-        })
-        .catch((error) => {
-            Log.error(error);
-            // console.log('errore nella getMyDocuments');
-            return [];
-        });
+const getMyDocuments = async (userId) => {
+    try {
+        const response = await axios
+            .get(`/api/users/${userId}/health/documents`);
+        return response.data;
+    } catch (error) {
+        Log.error(error);
+        return [];
+    }
 };
 
 /* richiede le informazioni al server del profilo dello user attualmente connesso */
@@ -42,11 +40,23 @@ const getMyProfile = async (userId) => {
     }
 };
 
+const getMyChildren = async (userId) => {
+    try {
+        const response = await axios
+            .get(`/api/users/${userId}/children`);
+        return response.data;
+    } catch (error) {
+        Log.error(error);
+        return [];
+    }
+};
+
 class DocumentProfileScreen extends React.Component {
 
     state = {
         profile: {},
         documents: [],
+        children: [],
         fetchedProfile: false,
     };
 
@@ -54,11 +64,13 @@ class DocumentProfileScreen extends React.Component {
         const { match } = this.props;
         const { profileId } = match.params;
         const userDocuments = await getMyDocuments(profileId);
+        const userChildren = await getMyChildren(profileId);
         const profile = await getMyProfile(profileId);
         // const children = await getMyChildren(profileId);
         this.setState({
             profile,
             documents: userDocuments,
+            children: userChildren,
             fetchedProfile: true,
         });
     }
@@ -66,7 +78,7 @@ class DocumentProfileScreen extends React.Component {
     render() {
         const { match } = this.props;
         const { profileId } = match.params;
-        const { profile, documents, fetchedProfile } = this.state;
+        const { profile, documents, children, fetchedProfile } = this.state;
         // const texts = Texts[language].ProfileDocumentHeader;
         return fetchedProfile ? (
             <React.Fragment>
@@ -74,7 +86,12 @@ class DocumentProfileScreen extends React.Component {
                     name={`${profile.given_name} ${profile.family_name}`}
                     photo={path(profile, ["image", "path"])}
                 />
-                <DocumentProfileInfo profileId={profileId} userDocuments={documents} />
+                <DocumentProfileInfo
+                    profile={profile}
+                    profileId={profileId}
+                    userDocuments={documents}
+                    userChildren={children}
+                />
             </React.Fragment>
         ) : (
             <LoadingSpinner />

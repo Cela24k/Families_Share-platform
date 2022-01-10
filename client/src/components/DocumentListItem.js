@@ -56,10 +56,6 @@ class DocumentListItem extends React.Component {
             })
     }
 
-    base64ToBlob(base64Data, contentType) {
-        // funzione per convertire base64 a blob
-    }
-
     handleDelete = () => {
         const { _document } = this.state;
         const { keyId, userId } = this.props;
