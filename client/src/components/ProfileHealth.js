@@ -31,8 +31,8 @@ class ProfileHealth extends React.Component {
 							className="verticalCenter"
 							onClick={() => history.push(`${pathname}/documents`)}
 						>
-							<h1>Documenti</h1>
-							<h2>Visualizza/Modifica documenti</h2>
+							<h1>{texts.documentTitle}</h1>
+							<h2>{texts.documentSubTitle}</h2>
 						</div>
 					</div>
 				</div>

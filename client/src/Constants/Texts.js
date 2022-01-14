@@ -2798,7 +2798,9 @@ const it = {
   },
   profileHealth:{
     addHealthPrompt:
-      "Non hai ancora compilato la sezione profilo, comincia ora qua sotto!"
+      "Non hai ancora compilato la sezione profilo, comincia ora qua sotto!",
+    documentTitle: "Documenti",
+    documentSubTitle: "Aggiungi/modifica documenti"
   },
   myCalendarScreen: {
     backNavTitle: "Il mio calendario"
