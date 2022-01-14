@@ -23,8 +23,12 @@ class CovidAlertReports extends React.Component {
 		// const texts = Texts[language].profileDocuments;
 		return (
 			<React.Fragment>
-                <div>
-                </div>
+				<div className="covid-alarm-button">
+					<i class="fas fa-biohazard fa-10x"></i>
+					<h1>Covid Alert</h1>
+					
+					<h3><i class="fas fa-question-circle"></i>Aiuta a prevenire l'espansione del virus</h3>
+				</div>
 			</React.Fragment>
 		);
 	}

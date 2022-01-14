@@ -3072,6 +3072,28 @@ a:active {
   margin-bottom: 3.2rem;
 }
 
+/* COVID REPORTS AND GREEN PASS SECTION*/
+.covid-alarm-button {
+  margin-top: 120px;
+	height: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.covid-alarm-button i{
+  color: #cc3300;
+}
+
+.covid-alarm-button h1{
+  opacity: 0.7;
+  padding-top: 10px;
+}
+.covid-alarm-button h3{
+  opacity: 0.7;
+  
+}
+
 /*PROFILE SCREEN END*/
 
 /*RATING MODAL*/

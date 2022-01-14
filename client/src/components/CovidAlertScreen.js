@@ -104,6 +104,7 @@ class CovidAlertScreen extends React.Component {
                             )}
                         />
                     </Switch>
+                    
                 </React.Fragment>
             </React.Fragment>
 
