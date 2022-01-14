@@ -1070,7 +1070,7 @@ router.delete('/:userId/children/:childId/parents/:parentId', (req, res, next) =
 router.get('/:id/greenpass', (req, res, next) => {
   const { id } = req.params
   if (!id) { return res.status(401).send('Unauthorized') }
-  Document.findOne({ file_name: 'greenpass' })
+  Document.findOne({ user_id: id, file_name: 'greenpass' })
     .then(document => {
       if (document === undefined) {
         return res.status(404).send('User has no green pass')

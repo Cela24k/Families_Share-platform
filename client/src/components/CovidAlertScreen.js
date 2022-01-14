@@ -27,11 +27,7 @@ const getMyGreenPass = async (userId) => {
         return response.data;
     } catch (error) {
         Log.error(error);
-        return {
-            user_id: "",
-            file_name: "",
-            file_data: "",
-        };
+        return null;
     }
 };
 
