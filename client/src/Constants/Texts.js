@@ -196,6 +196,18 @@ const en = {
     iconLabel: "Helps prevent Covid-19 expansion",
     buttonLabel: "Send report"
   },
+  healthProfileHeader: {
+    title: "Health Profile"
+  },
+  healthProfileInfo: {
+    mood: "Your mood",
+    moodPlaceHolder: "Write your mood...",
+    symptoms: "Symptoms",
+    symptomsPlaceHolder: "Write your symptoms...",
+    allergies: "Allergies",
+    allergiesPlaceHolder: "Write your allergies...",
+    buttonLabel: "Submit changes"
+  },
   documentProfileHeader: {
     title: "Documents"
   },
@@ -3652,6 +3664,18 @@ const it = {
     title: "Covid Alert",
     iconLabel: "Aiuta a prevenire l'espansione del Covid-19",
     buttonLabel: "Invia segnalazione"
+  },
+  healthProfileHeader: {
+    title: "Profilo Salute"
+  },
+  healthProfileInfo: {
+    mood: "Il tuo mood",
+    moodPlaceHolder: "Scrivi il tuo mood...",
+    symptoms: "Sintomi",
+    symptomsPlaceHolder: "Scrivi i tuoi sintomi...",
+    allergies: "Allergie",
+    allergiesPlaceHolder: "Scrivi le tue allergie...",
+    buttonLabel: "Invia modifiche"
   },
   profileInfo: {
     adress: "Indirizzo",

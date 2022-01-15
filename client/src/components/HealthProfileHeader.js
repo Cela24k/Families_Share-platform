@@ -44,7 +44,7 @@ class HealthProfileHeader extends React.Component {
     render() {
         const { language, match, history, photo, name } = this.props;
         const { profileId } = match.params;
-        // const texts = Texts[language].profileHeader;
+        const texts = Texts[language].healthProfileHeader;
         const { imageModalIsOpen } = this.state;
         return (
             <div id="profileHeaderContainer">
@@ -59,7 +59,7 @@ class HealthProfileHeader extends React.Component {
                         </button>
                     </div>
                     <div className="col-6-10 healthTitle">
-                        Profilo Salute 
+                        {texts.title}
                     </div>
                     <div className="col-2-10" > </div>
 
