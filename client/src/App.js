@@ -76,7 +76,11 @@ const ChildProfileScreen = Loadable({
 const CovidAlertScreen = Loadable({
   loader: () => import("./components/CovidAlertScreen"),
   loading: () => Loading
-})
+});
+const CovidAlertReportCreate = Loadable({
+  loader: () => import("./components/CovidAlertReportCreate"),
+  loading: () => Loading
+});
 const DocumentProfileScreen = Loadable({
   loader: () => import("./components/DocumentProfileScreen"),
   loading: () => Loading
@@ -340,6 +344,11 @@ class App extends React.Component {
                   )
                 }
               />
+              <PrivateRoute
+                exact
+                path="/covidalert/:profileId/reports/createreport"
+                component={CovidAlertReportCreate}
+              />
               {/* Un utente può accedere alla sezione solo se autenticato */}
               <Route
                 path="/covidalert/:profileId"
@@ -359,6 +368,7 @@ class App extends React.Component {
                   )
                 }
               />
+
               <PrivateRoute
                 exact
                 path="/groups/:groupId/management"

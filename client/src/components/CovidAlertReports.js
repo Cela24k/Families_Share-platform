@@ -17,7 +17,8 @@ class CovidAlertReports extends React.Component {
 
   render() {
     // const { myProfile, profileId } = this.state;
-    const { language } = this.props;
+    const { language,history } = this.props;
+	const {pathname} = history.location
     const texts = Texts[language].covidAlertReports;
     return (
       <React.Fragment>
@@ -35,7 +36,7 @@ class CovidAlertReports extends React.Component {
             id="submitButton" 
             type="button" 
             className="btn btn-secondary btn-lg btn-warning" 
-            onClick={() => { alert("da implementare more") }}
+            onClick={() => {history.push(`${pathname}/createreport`) }}
           >
             {texts.buttonLabel}
           </button>

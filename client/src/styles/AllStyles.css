@@ -3098,6 +3098,14 @@ a:active {
   
 }
 
+#editCreateReportsHeader {
+  height: 10rem;
+}
+.createReportSlot{
+  text-align: center;
+  margin-top: 3rem;
+}
+
 /*PROFILE SCREEN END*/
 
 /*RATING MODAL*/
