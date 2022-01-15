@@ -5,6 +5,7 @@ import Fab from "@material-ui/core/Fab";
 import withLanguage from "./LanguageContext";
 import { withStyles } from "@material-ui/core/styles";
 import Log from "./Log";
+import { on } from "nodemailer/lib/xoauth2";
 
 class CovidAlertGreenPass extends React.Component {
 
@@ -13,11 +14,14 @@ class CovidAlertGreenPass extends React.Component {
 		const userId = JSON.parse(localStorage.getItem("user")).id;
 		const { profileId, greenPass } = this.props;
 		const myProfile = userId === profileId;
+		const loadedGP = greenPass ? true : false;
+
 		// var image = document.getElementById("output");
 		// image.src = URL.createObjectURL(greenPass);
 		this.state = {
 			myProfile,
 			profileId,
+			loadedGP
 		};
 	}
 
@@ -44,27 +48,55 @@ class CovidAlertGreenPass extends React.Component {
 		reader.readAsDataURL(file);
 	}
 
+	handleDelete = () => {
+		const { profileId } = this.state
+		axios
+			.delete(`/api/users/${profileId}/greenpass`, {
+				"filename": "greenpass",
+				"user_id": profileId,
+			})
+			.then(response => {
+				window.location.reload(false);
+				Log.info(response);
+			})
+			.catch(error => {
+				Log.error(error);
+			});
+	}
+
 	render() {
-		const { myProfile, profileId } = this.state;
+		const { myProfile, profileId, loadedGP } = this.state;
 		const { greenPass, classes } = this.props;
+		
+		console.log(loadedGP)
+
 		if (greenPass !== null) {
 			fetch(greenPass.file_data)
-			.then(resp => resp.blob())
-			.then(blob => {
-				const image = document.getElementById("output");
-				image.src = URL.createObjectURL(blob);
-			})
-			.catch(() => alert("Aaaaaah"));
+				.then(resp => resp.blob())
+				.then(blob => {
+					const image = document.getElementById("output");
+					image.src = URL.createObjectURL(blob);
+				})
+				.catch(() => alert("Errore Green Pass"));
 		}
 		// const texts = Texts[language].profileDocuments;
 		return (
 			<React.Fragment>
 				{myProfile && greenPass !== null ? (
-					<div style={divStyle}>
+					<div style={divStyle} >
 						<img id="output" width="350"></img>
+						<Fab
+								color="primary"
+								aria-label="Add"
+								className={classes.add}
+								onClick={this.handleDelete}
+							> 
+								<i className="fas fa-trash fa-1x" />
+							
+							</Fab>
 					</div>
 				) : (
-					<div style={divStyle}>
+					<div style={loadedGP ? divStyle : divStyle2}>
 						<i className="fas fa-file-upload fa-10x" style={labelStyle} />
 						<input
 							style={fileInput}
@@ -105,7 +137,15 @@ const styles = () => ({
 });
 
 const divStyle = {
-	"marginTop": "100px",
+	"marginTop": "50px",
+	height: "100%",
+	display: "flex",
+	"justifyContent": "center",
+	"alignItems": "center"
+}
+
+const divStyle2 = {
+	"marginTop": "140px",
 	height: "100%",
 	display: "flex",
 	"justifyContent": "center",

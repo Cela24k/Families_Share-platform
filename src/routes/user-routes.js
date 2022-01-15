@@ -1091,6 +1091,16 @@ router.get('/:id/greenpass', (req, res, next) => {
     }).catch(next)
 })
 
+router.delete('/:id/greenpass', (req, res, next) => {
+  const { user_id } = req
+  if (!user_id) { return res.status(401).send('Unauthorized') }
+  Document.deleteOne({ filename: req.body.filename, user_id: user_id })
+    .then(() => {
+      return res.status(200).send('Document deleted')
+    })
+    .catch(next)
+})
+
 router.get('/:id/health/documents', (req, res, next) => {
   const { id } = req.params
   if (!id) { return res.status(401).send('Unauthorized') }
