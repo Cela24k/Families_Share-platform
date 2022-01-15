@@ -39,7 +39,7 @@ class DocumentProfileScreen extends React.Component {
       return response.data;
     } catch (error) {
       Log.error(error);
-      return [];
+      this.setState({ myDocuments: [], fetchedMyDocuments: true });;
     }
   };
 

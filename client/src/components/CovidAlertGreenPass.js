@@ -28,6 +28,8 @@ class CovidAlertGreenPass extends React.Component {
 		reader.onload = () => {
 			axios
 				.post(`/api/users/${profileId}/health/documents`, {
+					"is_child": false,
+					"user_id": profileId,
 					"filename": "greenpass",
 					"filedata": reader.result
 				})

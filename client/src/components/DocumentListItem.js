@@ -173,9 +173,6 @@ class DocumentListItem extends React.Component {
       </div>
     );
   }
-
-
 }
-
 
 export default withRouter(withLanguage(DocumentListItem));

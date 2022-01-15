@@ -1052,7 +1052,9 @@ const en = {
     buttonLabel: "Submit changes"
   },
   editMedicineScreen: {
-    backNavTitle: "Medicines"
+    backNavTitle: "Medicines",
+    addButtonLabel: "Add medicine",
+    delButtonLabel: "Delete medicine"
   },
   addMedicine: {
     backNavTitle: "Calendar"
@@ -3008,7 +3010,9 @@ const it = {
     buttonLabel: "Invia modifiche" 
   },
   editMedicineScreen: {
-    backNavTitle: "Medicine"
+    backNavTitle: "Medicine",
+    addButtonLabel: "Aggiungi medicina",
+    delButtonLabel: "Elimina medicina"
   },
   addMedicine: {
     backNavTitle: "Calendario"
