@@ -18,11 +18,14 @@ const EditMedicinesProfileScreen = ({ history, language }) => {
         history.goBack();
     };
     const weekly = false
-    const texts = Texts[language].myCalendarScreen;
+    const texts = Texts[language].editMedicineScreen;
     const userId = JSON.parse(localStorage.getItem("user")).id;
     return (
         <React.Fragment>
-            <BackNavigation title={"Medicines"} onClick={handleBackNav} />
+            <BackNavigation 
+                title={texts.backNavTitle} 
+                onClick={handleBackNav} 
+            />
             <div class="row no-gutters" style={{ height: "2.5rem", justifyContent: "center", backgroundColor:"#F0F0F0" }} >
                 <div className="col-8-10">
                 </div>
@@ -39,10 +42,10 @@ const EditMedicinesProfileScreen = ({ history, language }) => {
                 <div className="col-1-10">
                     <i className="fas fa-minus-circle center"
                         role="button"
-                        onClick={()=>{}} />
+                        onClick={()=>{}}
+                    />
                 </div>
             </div>
-
             <Calendar ownerType="user" ownerId={userId} week={weekly} />
         </React.Fragment>
     );

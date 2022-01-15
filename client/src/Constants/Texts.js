@@ -1025,6 +1025,27 @@ const en = {
     cityErr: "City doesn't exist",
     requiredErr: "Please fill out this field."
   },
+  medicineHeader: {
+    title: "Medicines"
+  },
+  medicineInfo: {
+    medOverviewTitle: "Medication Overview",
+    allergiesTitle: "Allergies",
+    monday: "MON",
+    tuesday: "TUE",
+    wednesday: "WED",
+    thurday: "THU",
+    friday: "FRI",
+    saturday: "SAT",
+    sunday: "SUN",
+    buttonLabel: "Submit changes"
+  },
+  editMedicineScreen: {
+    backNavTitle: "Medicines"
+  },
+  addMedicine: {
+    backNavTitle: "Calendar"
+  },
   editGroupScreen: {
     phone: "Phone",
     email: "E-mail",
@@ -2954,6 +2975,27 @@ const it = {
     backNavTitle: "Accedi",
     accountQuestion: "Hai già un account?",
     logIn: "Accedi"
+  },
+  medicineHeader: {
+    title: "Medicine"
+  },
+  medicineInfo: {
+    medOverviewTitle: "Panoramica Farmaci",
+    allergiesTitle: "Allergie",
+    monday: "LUN",
+    tuesday: "MAR",
+    wednesday: "MER",
+    thurday: "GIO",
+    friday: "VEN",
+    saturday: "SAB",
+    sunday: "DOM",
+    buttonLabel: "Invia modifiche" 
+  },
+  editMedicineScreen: {
+    backNavTitle: "Medicine"
+  },
+  addMedicine: {
+    backNavTitle: "Calendario"
   },
   signUpForm: {
     email: "E-mail",

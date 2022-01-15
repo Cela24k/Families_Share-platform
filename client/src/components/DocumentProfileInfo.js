@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 // import Texts from "../Constants/Texts";
-// import Fab from "@material-ui/core/Fab";
 import { Fab, Action } from 'react-tiny-fab';
 import 'react-tiny-fab/dist/styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -15,30 +14,29 @@ class DocumentProfileInfo extends React.Component {
   constructor(props) {
     super(props);
     const userId = JSON.parse(localStorage.getItem("user")).id;
-    const { profileId, userDocuments } = this.props;
+    const { profileId, userDocuments, childDocuments } = this.props;
     const myProfile = userId === profileId;
+    this.readFile = this.readFile.bind(this);
     this.state = {
       myProfile,
-      documents: userDocuments,
       profileId,
+      is_child: false
     };
   }
 
-  readFile = () => {
-    const { profileId } = this.state;
-    const file = document.getElementById("input").files[0];
+  readFile(user_id) {
+    const { profileId, is_child } = this.state;
+    const file = document.getElementById(user_id).files[0];
     const reader = new FileReader();
     reader.onload = () => {
       axios
         .post(`/api/users/${profileId}/health/documents`, {
+          "user_id": user_id,
+          "is_child": is_child,
           "filename": file.name,
           "filedata": reader.result
         })
         .then((response) => {
-          /*trovare un metodo più elegante, spoiler: esiste ed è quello di aggiornare lo state della component genitore \
-          in questo caso suppongo bisogni aggiornare lo state sia della singola componente DocumentList, sia lo stato di \
-          DocumentProfileInfo */
-          //aggiunto il metodo per reloadare la pagina quando viene caricato un documento accettato
           window.location.reload(false);
           Log.info(response);
         })
@@ -62,17 +60,29 @@ class DocumentProfileInfo extends React.Component {
   }
 
   render() {
-    const { myProfile, profileId, documents } = this.state;
-    const { profile, userChildren } = this.props;
+    const { myProfile, profileId } = this.state;
+    const { profile, userChildren, userDocuments, childrenDocuments } = this.props;
     // const texts = Texts[language].profileDocuments;
     return (
       <React.Fragment>
-        {myProfile && documents.length > 0 ? (
+        {myProfile && userDocuments.length > 0 ? (
           <ul>
-            {documents.map((_document, index) => (
+            {userDocuments.map((_document, index) => (
               <li key={index}>
                 <DocumentListItem
-                  userId={profileId}
+                  is_child={false}
+                  profileId={profileId}
+                  documentId={_document.user_id}
+                  keyId={index}
+                />
+              </li>
+            ))}
+            {childrenDocuments.map((_document, index) => (
+              <li key={index}>
+                <DocumentListItem
+                  is_child={true}
+                  profileId={profileId}
+                  documentId={_document.user_id}
                   keyId={index}
                 />
               </li>
@@ -83,13 +93,22 @@ class DocumentProfileInfo extends React.Component {
             <i className="fas fa-file-upload fa-10x" style={labelStyle} />
           </div>
         )}
-        <div>
+        {/** qui sotto c'è tutto ciò che serve per il fab */}
+        <div id="fab-container">
           <input
+            id={profileId}
             style={fileInput}
-            id="input"
             type="file"
-            onChange={this.readFile}
+            onChange={() => this.readFile(profileId)}
           />
+          {userChildren.map(child => (
+            <input
+              id={child.child_id}
+              style={fileInput}
+              type="file"
+              onChange={() => this.readFile(child.child_id)}
+            />
+          ))}
           {myProfile && (
             <Fab
               mainButtonStyles={mainButtonStyles}
@@ -97,19 +116,23 @@ class DocumentProfileInfo extends React.Component {
               icon={<FontAwesomeIcon icon={faPlus} />}
             >
               <Action
-                id={profileId}
                 style={actionStyles}
                 text={profile.given_name}
-                onClick={() => document.getElementById('input').click()}
+                onClick={() => {
+                  this.setState({ is_child: false });
+                  document.getElementById(profileId).click();
+                }}
               >
                 <FontAwesomeIcon icon={faUser} />
               </Action>
               {userChildren.map(child => (
                 <Action
-                  id={child.child_id}
                   style={actionStyles}
                   text={child.given_name}
-                  onClick={() => document.getElementById('input').click()}
+                  onClick={() => { 
+                    this.setState({ is_child: true }); 
+                    document.getElementById(child.child_id).click();
+                  }}
                 >
                   <FontAwesomeIcon icon={faChild} />
                 </Action>

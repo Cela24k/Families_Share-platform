@@ -8,6 +8,7 @@ import ConfirmDialog from "./ConfirmDialog";
 import CreateMedicineTimeslotsModal from "./CreateMedicineTimeslots";
 
 class MedsTimeslotsContainer extends React.Component {
+  
   constructor(props) {
     super(props);
     const { timeslots, dateIndex, handleTimeslots } = props;

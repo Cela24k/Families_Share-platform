@@ -5,7 +5,6 @@ import * as path from "lodash.get";
 import LoadingSpinner from "./LoadingSpinner";
 import Log from "./Log";
 import axios from "axios";
-import { Calendar } from "antd";
 
 const getMyProfile = async (userId) => {
     try {
