@@ -2858,6 +2858,10 @@ a:active {
   align-items: center;
   margin-top: 3rem;
   padding-bottom: 3rem;
+
+}
+.buttonAlert{
+  color: #cc3300;
 }
 
 .textAreaHealth {
@@ -3082,7 +3086,7 @@ a:active {
 }
 
 .covid-alarm-button i{
-  color: #cc3300;
+  color: #00838fa9;
 }
 
 .covid-alarm-button h1{

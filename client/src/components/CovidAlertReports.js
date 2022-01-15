@@ -26,8 +26,14 @@ class CovidAlertReports extends React.Component {
 				<div className="covid-alarm-button">
 					<i class="fas fa-biohazard fa-10x"></i>
 					<h1>Covid Alert</h1>
-					
-					<h3><i class="fas fa-question-circle"></i>Aiuta a prevenire l'espansione del virus</h3>
+
+					<h3>
+						<i class="far fa-question-circle"></i>
+						Aiuta a prevenire l'espansione del virus
+					</h3>
+				</div>
+				<div className="healthprofileButton">
+					<button id="submitButton" type="button" className="btn btn-secondary btn-lg btn-warning" onClick={()=>{alert("da implementare more")}}>Invia Segnalazione</button>
 				</div>
 			</React.Fragment>
 		);
