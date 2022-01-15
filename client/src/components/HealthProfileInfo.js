@@ -23,7 +23,24 @@ const getMyHealthProfile = async (userId) => {
     };
   }
 };
+function ButtonSubmit(params) {
+  const {myProfile,disableFlag,texts,sumbitChanges} = params;
+  if (myProfile) {
+    return <div className="healthprofileButton">
+      <button
+        id="submitButton"
+        type="button"
+        className="btn btn-secondary btn-lg"
+        disabled={disableFlag}
+        onClick={sumbitChanges}
+      >
+        {texts}
+      </button>
+    </div>
+  }
+  return <div></div>
 
+}
 class HealthProfileInfo extends React.Component {
 
   constructor(props) {
@@ -46,6 +63,7 @@ class HealthProfileInfo extends React.Component {
     };
 
   }
+
 
   async componentDidMount() {
     const { profileId } = this.state;
@@ -103,7 +121,7 @@ class HealthProfileInfo extends React.Component {
   }
 
   render() {
-    const { mood, sintomi, allergies, fetchedProfile, disableFlag } = this.state;
+    const { mood, sintomi, allergies, fetchedProfile, disableFlag,myProfile } = this.state;
     const { language } = this.props;
     const activeSmile = mood.rate;
     const texts = Texts[language].healthProfileInfo;
@@ -200,17 +218,8 @@ class HealthProfileInfo extends React.Component {
             onChange={this.handleSubmitButton}
           >{allergies}</textarea>
         </div>
-        <div className="healthprofileButton">
-          <button
-            id="submitButton"
-            type="button"
-            className="btn btn-secondary btn-lg"
-            disabled={disableFlag}
-            onClick={this.sumbitChanges}
-          >
-            {texts.buttonLabel}
-          </button>
-        </div>
+        <ButtonSubmit myProfile={myProfile} disableFlag={disableFlag} texts={texts.buttonLabel} sumbitChanges={this.sumbitChanges}/>
+
       </React.Fragment>
     ) : (<LoadingSpinner />);
   }
