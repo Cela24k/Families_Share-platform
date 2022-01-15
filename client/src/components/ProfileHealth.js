@@ -46,8 +46,8 @@ class ProfileHealth extends React.Component {
 							className="verticalCenter"
 							onClick={() => history.push(`${pathname}/medicines`)}
 						>
-							<h1>Medicine</h1>
-							<h2>Visualizza/Modifica medicine</h2>
+							<h1>{texts.medicineTitle}</h1>
+							<h2>{texts.medicineSubTitle}</h2>
 						</div>
 					</div>
 				</div>
@@ -61,8 +61,8 @@ class ProfileHealth extends React.Component {
 							className="verticalCenter"
 							onClick={() => history.push(`${pathname}/healthprofile`)}
 						>
-							<h1>Profilo salute</h1>
-							<h2>Visualizza profilo salute</h2>
+							<h1>{texts.healthProfileTitle}</h1>
+							<h2>{texts.healthProfileSubTitle}</h2>
 						</div>
 					</div>
 				</div>

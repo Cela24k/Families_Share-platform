@@ -184,8 +184,12 @@ const en = {
       "You haven't added any children yet. Click the child icon to add a new child"
   },
   profileHealth:{
-    addHealthPrompt:
-      "You haven't configured your Health profile yet. Click the icon down below to start now!"
+    documentTitle: "Documents",
+    documentSubTitle: "Documents section",
+    medicineTitle: "Medicines",
+    medicineSubTitle: "Medicines section",
+    healthProfileTitle: "Health Profile",
+    healthProfileSubTitle: "Health profile section"
   },
   myCalendarScreen: {
     backNavTitle: "My Calendar"
@@ -1534,10 +1538,6 @@ const nl = {
     addChildPrompt:
       "Je hebt nog geen kinderen toegevoegd. Klik op het kindpictogram om een ​​nieuw kind toe te voegen"
   },
-  profileHealth:{
-    addHealthPrompt:
-      "Calling the best translators.... boop boop boop :^/"
-  },
   myCalendarScreen: {
     backNavTitle: "Mijn Kalender"
   },
@@ -2818,10 +2818,12 @@ const it = {
       "Non hai ancora aggiunto figli. Fare clic sull'icona figlio per aggiungere un nuovo figlio"
   },
   profileHealth:{
-    addHealthPrompt:
-      "Non hai ancora compilato la sezione profilo, comincia ora qua sotto!",
     documentTitle: "Documenti",
-    documentSubTitle: "Aggiungi/modifica documenti"
+    documentSubTitle: "Sezione documenti",
+    medicineTitle: "Medicine",
+    medicineSubTitle: "Sezione medicine",
+    healthProfileTitle: "Profilo Salute",
+    healthProfileSubTitle: "Sezione profilo salute"
   },
   myCalendarScreen: {
     backNavTitle: "Il mio calendario"
