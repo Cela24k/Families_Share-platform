@@ -5,11 +5,20 @@ import PropTypes from "prop-types";
 import BackNavigation from "./BackNavigation";
 import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { Fab, Action } from 'react-tiny-fab';
+import 'react-tiny-fab/dist/styles.css';
 
 const EditMedicinesProfileScreen = ({ history, language, match }) => {
   const handleBackNav = () => {
     history.goBack();
   };
+  const handleAdd = () => {
+    const { pathname } = history.location;
+    const newPath = `${pathname}/add`;
+    history.push(newPath);
+  }
   const { profileId } = match.params;
   const weekly = false
   const texts = Texts[language].editMedicineScreen;
@@ -22,25 +31,25 @@ const EditMedicinesProfileScreen = ({ history, language, match }) => {
         onClick={handleBackNav}
       />
       {myProfile && (
-        <div class="row no-gutters" style={{ height: "2.5rem", justifyContent: "center", backgroundColor: "#F0F0F0" }} >
-          <div className="col-8-10" />
-          <div className="col-1-10">
-            <i className="fas fa-plus center"
-              role="button"
-              onClick={() => {
-                const { pathname } = history.location;
-                const newPath = `${pathname}/add`;
-                history.push(newPath);
-              }}
-            />
-          </div>
-          <div className="col-1-10">
-            <i className="fas fa-minus-circle center"
-              role="button"
-              onClick={() => { }}
-            />
-          </div>
-        </div>
+        <Fab
+          alwaysShowTitle={true}
+          mainButtonStyles={mainButtonStyles}
+          icon={<FontAwesomeIcon icon={faPlus} />}
+        >
+          <Action
+            style={actionStyles}
+            text={texts.addButtonLabel}
+            onClick={handleAdd}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </Action>
+          <Action
+            style={actionStyles}
+            text={texts.delButtonLabel}
+          >
+            <FontAwesomeIcon icon={faTrash} />
+          </Action>
+        </Fab>
       )}
       <Calendar ownerType="user" ownerId={userId} week={weekly} />
     </React.Fragment>
@@ -50,6 +59,14 @@ const EditMedicinesProfileScreen = ({ history, language, match }) => {
 EditMedicinesProfileScreen.propTypes = {
   history: PropTypes.object,
   language: PropTypes.string
+};
+
+const mainButtonStyles = {
+  backgroundColor: "#ff6f00",
+}
+
+const actionStyles = {
+  backgroundColor: "#ff8c00",
 };
 
 export default withRouter(withLanguage(EditMedicinesProfileScreen));
