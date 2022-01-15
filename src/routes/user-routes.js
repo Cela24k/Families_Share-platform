@@ -72,6 +72,7 @@ const Parent = require('../models/parent')
 const Reply = require('../models/reply')
 const Child = require('../models/child')
 const Announcement = require('../models/announcement')
+const Activity = require('../models/activity')
 // const Framily = require('../models/framily')
 const Password_Reset = require('../models/password-reset')
 const Device = require('../models/device')
@@ -80,6 +81,7 @@ const Community = require('../models/community')
 const Document = require('../models/document')
 const Med = require('../models/medicine')
 const HealthProfile = require('../models/health-profile')
+
 
 router.post('/', async (req, res, next) => {
   const {
@@ -1068,15 +1070,25 @@ router.delete('/:userId/children/:childId/parents/:parentId', (req, res, next) =
 /* Covid Alert  TODO problema get not found */
 router.get('/:id/covidalert', async (req, res, next) => {
   const { id } = req.params
+  const activitiesList = {}
   console.log('diocane')
   Member.find({ user_id: id })
     .then(member => {
       if (member === undefined) {
         return res.status(404).send('User has no group')
       }
-      res.json(member)
+
+      member.forEach((member) => {
+        Activity.find({ group_id: member.group_id })
+          .then(activities => {
+            if (activities === undefined) {
+              return res.status(404).send('User has no group')
+            }
+            activitiesList.push(activities)
+          })
+      })
+      res.json(activitiesList)
     }).catch(next)
-  if (!id) { return res.status(401).send('Unauthorized') }
 })
 /* DOCUMENTS */
 router.get('/:id/greenpass', (req, res, next) => {

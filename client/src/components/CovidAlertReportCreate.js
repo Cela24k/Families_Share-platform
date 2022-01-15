@@ -20,6 +20,7 @@ class CovidAlertReportCreate extends React.Component {
             console.log(response.data);
             return response.data;
         } catch (error) {
+            console.log("mimmo mammo")
             Log.error(error);
             return null;
         }
