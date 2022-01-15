@@ -107,7 +107,7 @@ async function newAnnouncementNotification (group_id, user_id) {
     await sendPushNotifications(messages)
   }
 };
-// Covid alert notification system
+// Covid alert notification system qui bisogna vedere come inviare la notifica
 async function newCovidAlertNotfication (group_id, user_id) {
   const object = await Group.findOne({ group_id })
   const subject = await Profile.findOne({ user_id })
@@ -120,7 +120,7 @@ async function newCovidAlertNotfication (group_id, user_id) {
       notifications.push({
         owner_type: 'user',
         owner_id: member,
-        type: 'announcements',
+        type: 'covid-alert',
         code: 1,
         read: false,
         subject: `${subject.given_name} ${subject.family_name}`,
@@ -128,18 +128,6 @@ async function newCovidAlertNotfication (group_id, user_id) {
       })
     })
     await Notification.create(notifications)
-    const messages = []
-    devices.forEach(device => {
-      const language = users.filter(user => user.user_id === device.user_id)[0].language
-      messages.push({
-        to: device.device_id,
-        sound: 'default',
-        title: texts[language]['announcements'][1]['header'],
-        body: `${subject.given_name} ${subject.family_name} ${texts[language]['announcements'][1]['description']} ${object.name}`,
-        data: { url: `${process.env.CITYLAB_URI}/groups/${group_id}/chat` }
-      })
-    })
-    await sendPushNotifications(messages)
   }
 };
 

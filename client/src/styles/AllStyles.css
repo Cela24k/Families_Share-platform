@@ -3120,6 +3120,11 @@ a:active {
   height: 4rem ;
 }
 
+.covidInformation{
+  background-color: rgba(128, 128, 128, 0.521);
+  padding: 10px
+}
+
 /*PROFILE SCREEN END*/
 
 /*RATING MODAL*/

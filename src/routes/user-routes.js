@@ -1067,7 +1067,7 @@ router.delete('/:userId/children/:childId/parents/:parentId', (req, res, next) =
     res.status(200).send('Parent deleted')
   }).catch(next)
 })
-/* Covid Alert  TODO problema get not found */
+/* Covid Alert vedere come finire di implementare */
 router.get('/:id/covidalert', async (req, res, next) => {
   const { id } = req.params
   const activitiesList = {}

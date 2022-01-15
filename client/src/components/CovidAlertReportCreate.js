@@ -12,19 +12,19 @@ class CovidAlertReportCreate extends React.Component {
  
     }
 
-    getMember = async () => {
-        const  userId = JSON.parse(localStorage.getItem("user")).id;
-        try {
-            const response = await axios
-                .get(`/api/users/${userId}/covidalert`);
-            console.log(response.data);
-            return response.data;
-        } catch (error) {
-            console.log("mimmo mammo")
-            Log.error(error);
-            return null;
-        }
-    };
+    // getMember = async () => {
+    //     const  userId = JSON.parse(localStorage.getItem("user")).id;
+    //     try {
+    //         const response = await axios
+    //             .get(`/api/users/${userId}/covidalert`);
+    //         console.log(response.data);
+    //         return response.data;
+    //     } catch (error) {
+    //         console.log("mimmo mammo")
+    //         Log.error(error);
+    //         return null;
+    //     }
+    // };
 
     render() {
         const { language, history } = this.props;
@@ -33,7 +33,7 @@ class CovidAlertReportCreate extends React.Component {
             <div>
                 <div
                     id="editChildProfileHeaderContainer"
-                    style={{ backgroundColor: "green", height: "5rem" }}
+                    style={{ backgroundColor: "#00838f", height: "5rem" }}
                 >
                     <div className="row no-gutters" id="profileHeaderOptions">
                         <div className="col-2-10">
@@ -60,6 +60,7 @@ class CovidAlertReportCreate extends React.Component {
                     </div>
 
                 </div>
+                <p className="covidInformation">Assicurati di aver fatto un tampone ed esser risultato positivo prima di inviare segnalazioni. Aiutaci a prevenire il contagio :) Abbasso il Covid-19</p>
                 <div className="createReportSlot">
                     <h3>Data primi sintomi</h3>
                     <div className="row no-gutters reportDataSlot" >
@@ -79,12 +80,27 @@ class CovidAlertReportCreate extends React.Component {
                         </div>
                     </div>
                 </div>
-                <button
-                    id="submitButton"
-                    type="button"
-                    className="btn btn-secondary btn-lg btn-warning"
-                    onClick={() => { this.getMember() }}
-                ></button>
+
+                <div className="createReportSlot">
+                    <h3>Data contatto con positivo</h3>
+                    <div className="row no-gutters reportDataSlot" >
+                        <div className="col-2-10">
+                            <i className="fas fa-calendar activityInfoIcon" />
+                        </div>
+                        <div className="col-2-10">
+                        </div>
+                        <div className="col-6-10">
+                            <input
+                                className="expandedTimeslotTimeInputReport form-control"
+                                type="date"
+                                onChange={this.handleChange}
+                                required
+                                name="date"
+                            />
+                        </div>
+                    </div>
+                </div>
+               
             </div>
         );
     }
