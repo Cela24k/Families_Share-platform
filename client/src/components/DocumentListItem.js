@@ -5,7 +5,7 @@ import axios from "axios";
 import { Skeleton } from "antd";
 import { withRouter } from "react-router-dom";
 import * as path from "lodash.get";
-// import Texts from "../Constants/Texts";
+import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 import Avatar from "./Avatar";
 import Log from "./Log";
@@ -124,8 +124,8 @@ class DocumentListItem extends React.Component {
 
   render() {
     const { confirmDialogIsOpen, fetchedDocument, _document, profile } = this.state;
-    const { userId, keyId } = this.props; //aggiunto keyId al prop per sapere cosa usare come indice per stampare
-    // const texts = Texts[language].documentListItem;
+    const { keyId, language } = this.props; //aggiunto keyId al prop per sapere cosa usare come indice per stampare
+    const texts = Texts[language].documentListItem;
     return (
       <div
         id="childContainer"
@@ -135,7 +135,7 @@ class DocumentListItem extends React.Component {
         {fetchedDocument ? (
           <React.Fragment>
             <ConfirmDialog
-              title="Confermi di voler eliminare il documento?"
+              title={texts.confirmDialog}
               handleClose={this.handleConfirmDialogClose}
               isOpen={confirmDialogIsOpen}
             />
@@ -153,9 +153,8 @@ class DocumentListItem extends React.Component {
                 className="verticalCenter"
                 onClick={this.handleClick}
               >
-                {/*TODO OnClick */}
                 <h1>{`${_document[keyId].file_name}`}</h1>
-                <h2>Documento di {`${profile.given_name}`}</h2>
+                <h2>{texts.owner}{`${profile.given_name}`}</h2>
               </div>
             </div>
             <div id="div-options" className="col-2-10">

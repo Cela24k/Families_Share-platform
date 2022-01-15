@@ -191,6 +191,13 @@ const en = {
     healthProfileTitle: "Health Profile",
     healthProfileSubTitle: "Health profile section"
   },
+  documentProfileHeader: {
+    title: "Documents"
+  },
+  documentListItem: {
+    owner: "Owner: ",
+    confirmDialog: "Are you sure you want to delete the document?"
+  },
   myCalendarScreen: {
     backNavTitle: "My Calendar"
   },
@@ -2825,6 +2832,13 @@ const it = {
     healthProfileTitle: "Profilo Salute",
     healthProfileSubTitle: "Sezione profilo salute"
   },
+  documentProfileHeader: {
+    title: "Documenti"
+  },
+  documentListItem: {
+    owner: "Proprietario: ",
+    confirmDialog: "Sei sicuro di voler eliminare il documento?"
+  },
   myCalendarScreen: {
     backNavTitle: "Il mio calendario"
   },
@@ -4151,10 +4165,6 @@ const el = {
     addChildPrompt:
       "Δεν έχετε προσθέσει ακόμη παιδιά. Κάντε κλικ στο εικονίδιο για να προσθέσετε ένα νέο παιδί"
   },
-  profileHealth:{
-    addHealthPrompt:
-      "Calling the best translators.... boop boop boop :^/"
-  },
   myCalendarScreen: {
     backNavTitle: "Το ημερολόγιο μου"
   },
@@ -5449,10 +5459,6 @@ const hu = {
   profileChildren: {
     addChildPrompt:
       "Még nem adott meg gyermeket. Kattintson a gyermek ikonra új gyermek hozzáadásáért"
-  },
-  profileHealth:{
-    addHealthPrompt:
-      "Calling the best translators.... boop boop boop :^/"
   },
   myCalendarScreen: {
     backNavTitle: "Eseménynaptáram"
@@ -6771,10 +6777,6 @@ const fr = {
   },
   "profileChildren": {
     "addChildPrompt": "Vous n'avez pas encore ajouté d'enfants. Cliquez sur l'icône enfant pour ajouter un nouvel enfant"
-  },
-  "profileHealth":{
-    "addHealthPrompt":
-      "Calling the best translators.... boop boop boop :^/"
   },
   "myCalendarScreen": {
     "backNavTitle": "Mon calendrier"
