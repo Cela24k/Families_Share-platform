@@ -40,7 +40,7 @@ class DocumentProfileHeader extends React.Component {
     render() {
         const { language, match, history, photo, name } = this.props;
         const { profileId } = match.params;
-        // const texts = Texts[language].profileHeader;
+        const texts = Texts[language].documentProfileHeader;
         const { imageModalIsOpen } = this.state;
         return (
             <div id="profileHeaderContainer">
@@ -55,7 +55,7 @@ class DocumentProfileHeader extends React.Component {
                         </button>
                     </div>
                     <div className="col-6-10 healthTitle">
-                        Documenti
+                        {texts.title}
                     </div>
                 </div>
                 <img

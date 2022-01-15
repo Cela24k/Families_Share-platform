@@ -13,14 +13,13 @@ import StepLabel from "@material-ui/core/StepLabel";
 import StepContent from "@material-ui/core/StepContent";
 import Button from "@material-ui/core/Button";
 import moment from "moment";
-import axios from "axios";
 import withLanguage from "./LanguageContext";
 import CreateActivityDates from "./CreateActivityDates";
 import Texts from "../Constants/Texts";
-import Log from "./Log";
 import LoadingSpinner from "./LoadingSpinner";
 import CreateMedicineInformation from "./CreateMedicineInformation";
 import CreateMedicineTimeslots from "./CreateMedicineTimeslots";
+import BackNavigation from "./BackNavigation";
 
 const muiTheme = createMuiTheme({
   typography: {
@@ -402,63 +401,69 @@ class CreateMedicineStepper extends React.Component {
   };
 
   render() {
-    const { language, classes } = this.props;
+    const { language, classes, history } = this.props;
     const texts = Texts[language].createActivityStepper;
     const steps = texts.stepLabels;
     const { activeStep, stepWasValidated, creating } = this.state;
     return (
-      <div className={classes.root}>
-        {creating && <LoadingSpinner />}
-        <MuiThemeProvider theme={muiTheme}>
-          <Stepper activeStep={activeStep} orientation="vertical">
-            {steps.map((label, index) => {
-              return (
-                <Step key={label}>
-                  <StepLabel
-                    icon={this.getStepLabel(label, index)}
-                    className={classes.stepLabel}
-                  >
-                    {activeStep > index && index === 1 ? (
-                      <div>{this.getDatesCompletedLabel(label)}</div>
-                    ) : (
-                      label
-                    )}
-                  </StepLabel>
-                  <StepContent>
-                    {this.getStepContent()}
-                    <div className={classes.actionsContainer}>
-                      <div>
-                        <Button
-                          disabled={!stepWasValidated}
-                          variant="contained"
-                          color="primary"
-                          onClick={this.handleContinue}
-                          className={
-                            activeStep === steps.length - 1
-                              ? classes.createButton
-                              : classes.continueButton
-                          }
-                        >
-                          {activeStep === steps.length - 1
-                            ? texts.finish
-                            : texts.continue}
-                        </Button>
-                        <Button
-                          disabled={activeStep === 0}
-                          onClick={this.handleCancel}
-                          className={classes.cancelButton}
-                        >
-                          {texts.cancel}
-                        </Button>
+      <React.Fragment>
+        <BackNavigation
+          title={Texts[language].addMedicine.backNavTitle}
+          onClick={() => history.goBack()}
+        />
+        <div className={classes.root}>
+          {creating && <LoadingSpinner />}
+          <MuiThemeProvider theme={muiTheme}>
+            <Stepper activeStep={activeStep} orientation="vertical">
+              {steps.map((label, index) => {
+                return (
+                  <Step key={label}>
+                    <StepLabel
+                      icon={this.getStepLabel(label, index)}
+                      className={classes.stepLabel}
+                    >
+                      {activeStep > index && index === 1 ? (
+                        <div>{this.getDatesCompletedLabel(label)}</div>
+                      ) : (
+                        label
+                      )}
+                    </StepLabel>
+                    <StepContent>
+                      {this.getStepContent()}
+                      <div className={classes.actionsContainer}>
+                        <div>
+                          <Button
+                            disabled={!stepWasValidated}
+                            variant="contained"
+                            color="primary"
+                            onClick={this.handleContinue}
+                            className={
+                              activeStep === steps.length - 1
+                                ? classes.createButton
+                                : classes.continueButton
+                            }
+                          >
+                            {activeStep === steps.length - 1
+                              ? texts.finish
+                              : texts.continue}
+                          </Button>
+                          <Button
+                            disabled={activeStep === 0}
+                            onClick={this.handleCancel}
+                            className={classes.cancelButton}
+                          >
+                            {texts.cancel}
+                          </Button>
+                        </div>
                       </div>
-                    </div>
-                  </StepContent>
-                </Step>
-              );
-            })}
-          </Stepper>
-        </MuiThemeProvider>
-      </div>
+                    </StepContent>
+                  </Step>
+                );
+              })}
+            </Stepper>
+          </MuiThemeProvider>
+        </div>
+      </React.Fragment>
     );
   }
 }

@@ -1,8 +1,12 @@
 const mongoose = require('mongoose')
 
 const documentSchema = new mongoose.Schema({
-  user_id: { // cambiare in owner_id
+  user_id: {
     type: String,
+    required: true
+  },
+  is_child: {
+    type: Boolean,
     required: true
   },
   file_name: {

@@ -1091,11 +1091,25 @@ router.get('/:id/health/documents', (req, res, next) => {
     }).catch(next)
 })
 
+router.get('/:id/health/documents/:childId', (req, res, next) => {
+  const { id, childId } = req.params
+  if (!id) { return res.status(401).send('Unauthorized') }
+  Document.find({ user_id: childId })
+    .then(documents => {
+      if (documents.length === 0) {
+        return res.status(404).send('Child has no documents')
+      }
+      res.json(documents)
+    }).catch(next)
+})
+
 router.post('/:id/health/documents', (req, res, next) => {
   const { user_id } = req
   if (!user_id) { return res.status(401).send('Unauthorized') }
+  console.log(req.body.user_id)
   Document.create({
-    user_id,
+    user_id: req.body.user_id,
+    is_child: req.body.is_child,
     file_name: req.body.filename,
     file_data: req.body.filedata
   }).then(() => {

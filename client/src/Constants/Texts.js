@@ -184,8 +184,19 @@ const en = {
       "You haven't added any children yet. Click the child icon to add a new child"
   },
   profileHealth:{
-    addHealthPrompt:
-      "You haven't configured your Health profile yet. Click the icon down below to start now!"
+    documentTitle: "Documents",
+    documentSubTitle: "Documents section",
+    medicineTitle: "Medicines",
+    medicineSubTitle: "Medicines section",
+    healthProfileTitle: "Health Profile",
+    healthProfileSubTitle: "Health profile section"
+  },
+  documentProfileHeader: {
+    title: "Documents"
+  },
+  documentListItem: {
+    owner: "Owner: ",
+    confirmDialog: "Are you sure you want to delete the document?"
   },
   myCalendarScreen: {
     backNavTitle: "My Calendar"
@@ -1025,6 +1036,27 @@ const en = {
     cityErr: "City doesn't exist",
     requiredErr: "Please fill out this field."
   },
+  medicineHeader: {
+    title: "Medicines"
+  },
+  medicineInfo: {
+    medOverviewTitle: "Medication Overview",
+    allergiesTitle: "Allergies",
+    monday: "MON",
+    tuesday: "TUE",
+    wednesday: "WED",
+    thurday: "THU",
+    friday: "FRI",
+    saturday: "SAT",
+    sunday: "SUN",
+    buttonLabel: "Submit changes"
+  },
+  editMedicineScreen: {
+    backNavTitle: "Medicines"
+  },
+  addMedicine: {
+    backNavTitle: "Calendar"
+  },
   editGroupScreen: {
     phone: "Phone",
     email: "E-mail",
@@ -1512,10 +1544,6 @@ const nl = {
   profileChildren: {
     addChildPrompt:
       "Je hebt nog geen kinderen toegevoegd. Klik op het kindpictogram om een ​​nieuw kind toe te voegen"
-  },
-  profileHealth:{
-    addHealthPrompt:
-      "Calling the best translators.... boop boop boop :^/"
   },
   myCalendarScreen: {
     backNavTitle: "Mijn Kalender"
@@ -2797,10 +2825,19 @@ const it = {
       "Non hai ancora aggiunto figli. Fare clic sull'icona figlio per aggiungere un nuovo figlio"
   },
   profileHealth:{
-    addHealthPrompt:
-      "Non hai ancora compilato la sezione profilo, comincia ora qua sotto!",
     documentTitle: "Documenti",
-    documentSubTitle: "Aggiungi/modifica documenti"
+    documentSubTitle: "Sezione documenti",
+    medicineTitle: "Medicine",
+    medicineSubTitle: "Sezione medicine",
+    healthProfileTitle: "Profilo Salute",
+    healthProfileSubTitle: "Sezione profilo salute"
+  },
+  documentProfileHeader: {
+    title: "Documenti"
+  },
+  documentListItem: {
+    owner: "Proprietario: ",
+    confirmDialog: "Sei sicuro di voler eliminare il documento?"
   },
   myCalendarScreen: {
     backNavTitle: "Il mio calendario"
@@ -2954,6 +2991,27 @@ const it = {
     backNavTitle: "Accedi",
     accountQuestion: "Hai già un account?",
     logIn: "Accedi"
+  },
+  medicineHeader: {
+    title: "Medicine"
+  },
+  medicineInfo: {
+    medOverviewTitle: "Panoramica Farmaci",
+    allergiesTitle: "Allergie",
+    monday: "LUN",
+    tuesday: "MAR",
+    wednesday: "MER",
+    thurday: "GIO",
+    friday: "VEN",
+    saturday: "SAB",
+    sunday: "DOM",
+    buttonLabel: "Invia modifiche" 
+  },
+  editMedicineScreen: {
+    backNavTitle: "Medicine"
+  },
+  addMedicine: {
+    backNavTitle: "Calendario"
   },
   signUpForm: {
     email: "E-mail",
@@ -4106,10 +4164,6 @@ const el = {
   profileChildren: {
     addChildPrompt:
       "Δεν έχετε προσθέσει ακόμη παιδιά. Κάντε κλικ στο εικονίδιο για να προσθέσετε ένα νέο παιδί"
-  },
-  profileHealth:{
-    addHealthPrompt:
-      "Calling the best translators.... boop boop boop :^/"
   },
   myCalendarScreen: {
     backNavTitle: "Το ημερολόγιο μου"
@@ -5405,10 +5459,6 @@ const hu = {
   profileChildren: {
     addChildPrompt:
       "Még nem adott meg gyermeket. Kattintson a gyermek ikonra új gyermek hozzáadásáért"
-  },
-  profileHealth:{
-    addHealthPrompt:
-      "Calling the best translators.... boop boop boop :^/"
   },
   myCalendarScreen: {
     backNavTitle: "Eseménynaptáram"
@@ -6727,10 +6777,6 @@ const fr = {
   },
   "profileChildren": {
     "addChildPrompt": "Vous n'avez pas encore ajouté d'enfants. Cliquez sur l'icône enfant pour ajouter un nouvel enfant"
-  },
-  "profileHealth":{
-    "addHealthPrompt":
-      "Calling the best translators.... boop boop boop :^/"
   },
   "myCalendarScreen": {
     "backNavTitle": "Mon calendrier"

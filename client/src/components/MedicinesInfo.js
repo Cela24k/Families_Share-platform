@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import withLanguage from "./LanguageContext";
+import Texts from "../Constants/Texts";
+
 class MedicinesInfo extends React.Component {
 
     constructor(props) {
@@ -13,15 +15,17 @@ class MedicinesInfo extends React.Component {
             profileId,
         };
     }
+
     handleMedicinesOption = () => {
         const { history } = this.props;
         const { pathname } = history.location;
         const newPath = `${pathname}/expand`;
         history.push(newPath);
     }
+    
     render() {
-        const { myProfile, profileId, documents } = this.state;
-        // const texts = Texts[language].profileDocuments;
+        const { language } = this.props;
+        const texts = Texts[language].medicineInfo;
         return (
             <React.Fragment>
                 <div className="row no-gutters medicinesInfoContainer" style={{ height: "30%" }}>
@@ -30,7 +34,7 @@ class MedicinesInfo extends React.Component {
                     </div>
                     <div className="col-6-10 ">
                         <div className="verticalCenter" >
-                            <h1>Panoramica Farmaci</h1>
+                            <h1>{texts.medOverviewTitle}</h1>
                         </div>
                     </div>
                 </div>
@@ -42,26 +46,25 @@ class MedicinesInfo extends React.Component {
                         <div className="col-1-10">
                         </div>
                         <div className="col-1-10" style={boxBorders}>
-                            <div style={dayBannerStyle}>LUN</div>
+                            <div style={dayBannerStyle}>{texts.monday}</div>
                         </div>
                         <div className="col-1-10" style={boxBorders}>
-                            <div style={dayBannerStyle}>MAR</div>
+                            <div style={dayBannerStyle}>{texts.tuesday}</div>
                         </div>
                         <div className="col-1-10" style={boxBorders}>
-                            <div style={dayBannerStyle}>MER</div>
-                            <p>i</p>
+                            <div style={dayBannerStyle}>{texts.wednesday}</div>
                         </div>
                         <div className="col-1-10" style={boxBorders}>
-                            <div style={dayBannerStyle}>GIO</div>
+                            <div style={dayBannerStyle}>{texts.thurday}</div>
                         </div>
                         <div className="col-1-10" style={boxBorders}>
-                            <div style={dayBannerStyle}>VEN</div>
+                            <div style={dayBannerStyle}>{texts.friday}</div>
                         </div>
                         <div className="col-1-10" style={boxBorders}>
-                            <div style={dayBannerStyle}>SAB</div>
+                            <div style={dayBannerStyle}>{texts.saturday}</div>
                         </div>
                         <div className="col-1-10" style={boxBorders}>
-                            <div style={dayBannerStyle}>DOM</div>
+                            <div style={dayBannerStyle}>{texts.sunday}</div>
                         </div>
                         <div className="col-1-10" style={{opacity:0.6}}>
                         <i className="fas fa-eye center"
@@ -75,7 +78,7 @@ class MedicinesInfo extends React.Component {
                         <div style={{justifyContent:"center", textAlign:"center"}}>
                             <h1>Ulteriori informazioni</h1>
                             <p style={{"fontSize":"16px"}}>Premi su un giorno per visualizzare</p>
-                        </div>   
+                        </div>
                     </div>
                 </div>
                 <div className="row no-gutters medicinesInfoContainer" style={borderStyle}>
@@ -84,7 +87,7 @@ class MedicinesInfo extends React.Component {
 					</div>
 					<div className="col-6-10 ">
 						<div className="verticalCenter">
-							<h1>Allergie</h1>
+							<h1>{texts.allergiesTitle}</h1>
 						</div>
 					</div>
 					<div className="col-2-10">
@@ -98,12 +101,20 @@ class MedicinesInfo extends React.Component {
 					>{"allergies"}</textarea>
 				</div>
 				<div className="healthprofileButton">
-					<button id="submitButton" type="button" className="btn btn-secondary btn-lg" disabled={"disableFlag"} onClick={this.sumbitChanges}>Invia Modifiche</button>
+					<button 
+                        id="submitButton" 
+                        type="button" 
+                        className="btn btn-secondary btn-lg" 
+                        disabled={"disableFlag"} 
+                        onClick={this.sumbitChanges}
+                    >{texts.buttonLabel}
+                    </button>
 				</div>
             </React.Fragment>
         );
     }
 }
+
 //mettere questo in css
 const medicinesContentBox = {
     height: "8rem",
@@ -130,4 +141,5 @@ const dayBannerStyle = {
     color: "white",
     "backgroundColor": "#00838f",
 }
+
 export default withRouter(withLanguage(MedicinesInfo));

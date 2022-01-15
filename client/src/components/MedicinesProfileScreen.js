@@ -5,7 +5,6 @@ import * as path from "lodash.get";
 import LoadingSpinner from "./LoadingSpinner";
 import Log from "./Log";
 import axios from "axios";
-import { Calendar } from "antd";
 
 const getMyProfile = async (userId) => {
     try {
@@ -43,10 +42,11 @@ class MedicinesProfileScreen extends React.Component {
             fetchedProfile: true,
         });
     }
+    
     render() {
         const { match } = this.props;
         const { profileId } = match.params;
-        const { profile, documents, fetchedProfile } = this.state;
+        const { profile, fetchedProfile } = this.state;
         return fetchedProfile ? (
             <React.Fragment>
                 <MedicinesHeader
