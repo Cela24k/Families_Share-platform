@@ -191,6 +191,11 @@ const en = {
     healthProfileTitle: "Health Profile",
     healthProfileSubTitle: "Health profile section"
   },
+  covidAlertReports: {
+    title: "Covid Alert",
+    iconLabel: "Helps prevent Covid-19 expansion",
+    buttonLabel: "Send report"
+  },
   documentProfileHeader: {
     title: "Documents"
   },
@@ -3642,6 +3647,11 @@ const it = {
   covidAlertNavbar: {
     reports: "SEGNALAZIONI",
     greenpass: "GREEN PASS"
+  },
+  covidAlertReports: {
+    title: "Covid Alert",
+    iconLabel: "Aiuta a prevenire l'espansione del Covid-19",
+    buttonLabel: "Invia segnalazione"
   },
   profileInfo: {
     adress: "Indirizzo",
