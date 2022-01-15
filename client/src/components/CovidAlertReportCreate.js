@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+import Log from "./Log";
+import axios from "axios";
 import withLanguage from "./LanguageContext";
 
 import Texts from "../Constants/Texts";
@@ -8,18 +9,20 @@ import Texts from "../Constants/Texts";
 class CovidAlertReportCreate extends React.Component {
     constructor(props) {
         super(props);
+ 
     }
-    handleAcceptTerms = () => {
-        const { acceptTerms } = this.state;
-        const { language } = this.props;
-        const elem = document.getElementById("acceptTermsCheckbox");
-        elem.checked = !acceptTerms;
-        if (!acceptTerms) {
-            elem.setCustomValidity("");
-        } else {
-            elem.setCustomValidity(Texts[language].createChildScreen.acceptTermsErr);
+
+    getMember = async () => {
+        const  userId = JSON.parse(localStorage.getItem("user")).id;
+        try {
+            const response = await axios
+                .get(`/api/users/${userId}/covidalert`);
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            Log.error(error);
+            return null;
         }
-        this.setState({ acceptTerms: !acceptTerms });
     };
 
     render() {
@@ -57,16 +60,16 @@ class CovidAlertReportCreate extends React.Component {
 
                 </div>
                 <div className="createReportSlot">
-                    <div className="row no-gutters" >
+                    <h3>Data primi sintomi</h3>
+                    <div className="row no-gutters reportDataSlot" >
                         <div className="col-2-10">
                             <i className="fas fa-calendar activityInfoIcon" />
                         </div>
                         <div className="col-2-10">
-                            <div className="activityInfoDescription">mimmo</div>
                         </div>
                         <div className="col-6-10">
                             <input
-                                className="expandedTimeslotTimeInput form-control"
+                                className="expandedTimeslotTimeInputReport form-control"
                                 type="date"
                                 onChange={this.handleChange}
                                 required
@@ -75,6 +78,12 @@ class CovidAlertReportCreate extends React.Component {
                         </div>
                     </div>
                 </div>
+                <button
+                    id="submitButton"
+                    type="button"
+                    className="btn btn-secondary btn-lg btn-warning"
+                    onClick={() => { this.getMember() }}
+                ></button>
             </div>
         );
     }

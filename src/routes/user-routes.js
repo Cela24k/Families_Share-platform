@@ -1065,7 +1065,19 @@ router.delete('/:userId/children/:childId/parents/:parentId', (req, res, next) =
     res.status(200).send('Parent deleted')
   }).catch(next)
 })
-
+/* Covid Alert  TODO problema get not found */
+router.get('/:id/covidalert', async (req, res, next) => {
+  const { id } = req.params
+  console.log('diocane')
+  Member.find({ user_id: id })
+    .then(member => {
+      if (member === undefined) {
+        return res.status(404).send('User has no group')
+      }
+      res.json(member)
+    }).catch(next)
+  if (!id) { return res.status(401).send('Unauthorized') }
+})
 /* DOCUMENTS */
 router.get('/:id/greenpass', (req, res, next) => {
   const { id } = req.params
@@ -1281,3 +1293,5 @@ router.post('/:userId/sendmenotification', async (req, res, next) => {
     next(err)
   }
 })
+
+
