@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-// import Texts from "../Constants/Texts";
 import { Fab, Action } from 'react-tiny-fab';
 import 'react-tiny-fab/dist/styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -62,7 +61,6 @@ class DocumentProfileInfo extends React.Component {
   render() {
     const { myProfile, profileId } = this.state;
     const { profile, userChildren, userDocuments, childrenDocuments } = this.props;
-    // const texts = Texts[language].profileDocuments;
     return (
       <React.Fragment>
         {myProfile && userDocuments.length > 0 ? (

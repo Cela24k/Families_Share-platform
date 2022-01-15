@@ -42,10 +42,11 @@ class MedicinesProfileScreen extends React.Component {
             fetchedProfile: true,
         });
     }
+    
     render() {
         const { match } = this.props;
         const { profileId } = match.params;
-        const { profile, documents, fetchedProfile } = this.state;
+        const { profile, fetchedProfile } = this.state;
         return fetchedProfile ? (
             <React.Fragment>
                 <MedicinesHeader
