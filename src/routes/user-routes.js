@@ -1070,25 +1070,22 @@ router.delete('/:userId/children/:childId/parents/:parentId', (req, res, next) =
 /* Covid Alert vedere come finire di implementare */
 router.get('/:id/covidalert', async (req, res, next) => {
   const { id } = req.params
-  const activitiesList = {}
+  const group_id_list = []
+  const activit_list = []
   console.log('diocane')
   Member.find({ user_id: id })
     .then(member => {
       if (member === undefined) {
         return res.status(404).send('User has no group')
       }
-
-      member.forEach((member) => {
-        Activity.find({ group_id: member.group_id })
-          .then(activities => {
-            if (activities === undefined) {
-              return res.status(404).send('User has no group')
-            }
-            activitiesList.push(activities)
-          })
+      member.map(member => {
+        group_id_list.push(member.group_id)
       })
-      res.json(activitiesList)
     }).catch(next)
+  // group_id_list.map(group_id => {
+  //   Activity.find({ group_id }).then(act => { activit_list.push(act) })
+  // })
+  // res.json(activit_list)  TODO vedere per quale motivo non ci returna nessuna attivitò
 })
 /* DOCUMENTS */
 router.get('/:id/greenpass', (req, res, next) => {

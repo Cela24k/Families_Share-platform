@@ -9,22 +9,22 @@ import Texts from "../Constants/Texts";
 class CovidAlertReportCreate extends React.Component {
     constructor(props) {
         super(props);
- 
+
     }
 
-    // getMember = async () => {
-    //     const  userId = JSON.parse(localStorage.getItem("user")).id;
-    //     try {
-    //         const response = await axios
-    //             .get(`/api/users/${userId}/covidalert`);
-    //         console.log(response.data);
-    //         return response.data;
-    //     } catch (error) {
-    //         console.log("mimmo mammo")
-    //         Log.error(error);
-    //         return null;
-    //     }
-    // };
+    getMember = async () => {
+        const  userId = JSON.parse(localStorage.getItem("user")).id;
+        try {
+            const response = await axios
+                .get(`/api/users/${userId}/covidalert`);
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            console.log("mimmo mammo")
+            Log.error(error);
+            return null;
+        }
+    };
 
     render() {
         const { language, history } = this.props;
@@ -100,7 +100,17 @@ class CovidAlertReportCreate extends React.Component {
                         </div>
                     </div>
                 </div>
-               
+                <div className="healthprofileButton">
+                    <button
+                        id="submitButton"
+                        type="button"
+                        className="btn btn-secondary btn-lg"
+                        onClick={()=>{this.getMember()}}
+                    >
+                        {texts}
+                    </button>
+                </div>
+
             </div>
         );
     }
