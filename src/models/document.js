@@ -16,6 +16,10 @@ const documentSchema = new mongoose.Schema({
   file_data: {
     type: String,
     required: true
+  },
+  file_date: {
+    type: Date,
+    required: true
   }
 }, { timestamps: true })
 

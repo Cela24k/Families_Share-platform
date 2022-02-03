@@ -1067,12 +1067,12 @@ router.delete('/:userId/children/:childId/parents/:parentId', (req, res, next) =
     res.status(200).send('Parent deleted')
   }).catch(next)
 })
+
 /* Covid Alert vedere come finire di implementare */
 router.get('/:id/covidalert', async (req, res, next) => {
   const { id } = req.params
   const group_id_list = []
   const activit_list = []
-  console.log('diocane')
   Member.find({ user_id: id })
     .then(member => {
       if (member === undefined) {
@@ -1087,7 +1087,7 @@ router.get('/:id/covidalert', async (req, res, next) => {
   // })
   // res.json(activit_list)  TODO vedere per quale motivo non ci returna nessuna attivitò
 })
-/* DOCUMENTS */
+
 router.get('/:id/greenpass', (req, res, next) => {
   const { id } = req.params
   if (!id) { return res.status(401).send('Unauthorized') }
@@ -1110,10 +1110,11 @@ router.delete('/:id/greenpass', (req, res, next) => {
     .catch(next)
 })
 
+/* DOCUMENTS */
 router.get('/:id/health/documents', (req, res, next) => {
   const { id } = req.params
   if (!id) { return res.status(401).send('Unauthorized') }
-  Document.find({ user_id: id })
+  Document.find({ user_id: id, file_name: { $not: { $eq: "greenpass" }}})
     .then(documents => {
       if (documents.length === 0) {
         return res.status(404).send('User has no documents')
@@ -1122,6 +1123,7 @@ router.get('/:id/health/documents', (req, res, next) => {
     }).catch(next)
 })
 
+/** ritorna i documenti associati ad un bambino */
 router.get('/:id/health/documents/:childId', (req, res, next) => {
   const { id, childId } = req.params
   if (!id) { return res.status(401).send('Unauthorized') }
@@ -1142,7 +1144,8 @@ router.post('/:id/health/documents', (req, res, next) => {
     user_id: req.body.user_id,
     is_child: req.body.is_child,
     file_name: req.body.filename,
-    file_data: req.body.filedata
+    file_data: req.body.filedata,
+    file_date: new Date()
   }).then(() => {
     return res.status(200).send('Document added')
   }).catch(next)

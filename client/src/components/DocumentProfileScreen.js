@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import Log from "./Log";
-import PropTypes from "prop-types";
 import * as path from "lodash.get";
 import DocumentProfileHeader from "./DocumentProfileHeader";
 import DocumentProfileInfo from "./DocumentProfileInfo";
@@ -9,138 +8,138 @@ import LoadingSpinner from "./LoadingSpinner";
 
 class DocumentProfileScreen extends React.Component {
 
-  state = {
-    profile: {},
-    myDocuments: [],
-    myChildDocuments: [],
-    children: [],
-    fetchedProfile: false,
-    fetchedChildren: false,
-    fetchedMyDocuments: false,
-    fetchedChildDocuments: false
-  };
+    state = {
+        profile: {},
+        userDocuments: [],
+        childrenProfiles: [],
+        childrenDocuments: [],
+        fetchedAll: false
+    };
 
-  getMyChildren = async (userId) => {
-    try {
-      const response = await axios
-        .get(`/api/users/${userId}/children`);
-      return response.data;
-    } catch (error) {
-      Log.error(error);
-      return [];
+    getUserProfile = async (profileId) => {
+        try {
+            const response = await axios.get(`/api/users/${profileId}/profile`);
+            return response.data;
+        } catch (error) {
+            Log.error(error);
+            return {
+                given_name: "",
+                family_name: "",
+                image: { path: "/images/profiles/user_default_photo.png" },
+                address: { street: "", number: "" },
+                email: "",
+                phone: "",
+                phone_type: "",
+                visible: false,
+                user_id: "",
+            };
+        }
     }
-  };
 
-  getMyDocuments = async (userId) => {
-    try {
-      const response = await axios
-        .get(`/api/users/${userId}/health/documents`);
-      this.setState({ myDocuments: response.data, fetchedMyDocuments: true });
-      return response.data;
-    } catch (error) {
-      Log.error(error);
-      this.setState({ myDocuments: [], fetchedMyDocuments: true });;
+    getUserChildren = async (profileId) => {
+        return axios
+            .get(`/api/users/${profileId}/children`)
+            .then(response => {
+                return response.data.map(child => child.child_id);
+            })
+            .catch(error => {
+                Log.error(error);
+                return [];
+            });
+    };
+
+    /** funzione NON async in modo che axios.all possa richiedere i profili dei bambini in parallelo */
+    getChildProfile = (profileId, childId) => {
+        return axios
+            .get(`/api/users/${profileId}/children/${childId}`)
+            .then(response => { return response.data })
+            .catch(error => {
+                Log.error(error);
+                return {
+                    child_id: childId,
+                    image: { path: "" },
+                    background: "",
+                    given_name: "",
+                    family_name: "",
+                    birthdate: new Date(),
+                    gender: "unspecified",
+                    allergies: "",
+                    other_info: "",
+                    special_needs: ""
+                };
+            });
     }
-  };
 
-  getMyChildDocuments = async (userId, userChildren) => {
-    const childrenDocuments = [];
-    userChildren.forEach(async child => {
-      await axios
-        .get(`/api/users/${userId}/health/documents/${child.child_id}`)
-        .then(response => {
-          childrenDocuments.push(response.data)
-        })
-        .catch(error => {
-          Log.error(error)
-        })
-    })
-    this.setState({ myChildDocuments: childrenDocuments, fetchedChildDocuments: true })
-  }
-
-  getMyProfile = async (userId) => {
-    try {
-      const response = await axios.get(`/api/users/${userId}/profile`);
-      this.setState({ profile: response.data, fetchedProfile: true })
-      return response.data;
-    } catch (error) {
-      Log.error(error);
-      return {
-        given_name: "",
-        family_name: "",
-        image: { path: "/images/profiles/user_default_photo.png" },
-        address: { street: "", number: "" },
-        email: "",
-        phone: "",
-        phone_type: "",
-        visible: false,
-        user_id: "",
-      };
+    getUserDocuments = async (profileId) => {
+        try {
+            const response = await axios
+                .get(`/api/users/${profileId}/health/documents`);
+            return response.data;
+        } catch (error) {
+            Log.error(error);
+            return [];
+        }
     }
-  };
 
-  getMyChildrenInfo = async (userId, userChildren) => {
-    const childrenInfo = [];
-    userChildren.forEach(async child => {
-      await axios
-        .get(`/api/users/${userId}/children/${child.child_id}`)
-        .then(response => {
-          childrenInfo.push(response.data)
-        })
-        .catch(error => {
-          Log.error(error)
-        })
-    })
-    this.setState({ children: childrenInfo, fetchedChildren: true })
-  }
+    /** funzione NON async in modo che axios.all possa richiedere i documenti dei bambini in parallelo */
+    getChildDocuments = (profileId, childId) => {
+        return axios
+            .get(`/api/users/${profileId}/health/documents/${childId}`)
+            .then(response => {
+                return response.data;
+            })
+            .catch(error => {
+                Log.error(error);
+                return [];
+            });
+    }
 
-  async componentDidMount() {
-    const { match } = this.props;
-    const { profileId } = match.params;
-    const children = await this.getMyChildren(profileId);
-    await this.getMyDocuments(profileId);
-    await this.getMyChildDocuments(profileId, children);
-    await this.getMyChildrenInfo(profileId, children);
-    await this.getMyProfile(profileId);
-  }
+    async componentDidMount() {
+        const { match } = this.props;
+        const { profileId } = match.params;
+        const profile = await this.getUserProfile(profileId);
+        const userDocuments = await this.getUserDocuments(profileId);
+        const userChildren = await this.getUserChildren(profileId);
+        const childrenProfiles = await axios.all(userChildren.map(childId => {
+            return this.getChildProfile(profileId, childId);
+        }));
+        const tmp = await axios.all(userChildren.map(childId => {
+            return this.getChildDocuments(profileId, childId);
+        }));
+        /* soluzione orribile ma per adesso funziona */
+        const childrenDocuments = [];
+        tmp.forEach(documents => 
+            documents.forEach(document => childrenDocuments.push(document)));
+        /* triggera il re-rendering */
+        this.setState({
+            profile,
+            userDocuments,
+            childrenProfiles,
+            childrenDocuments,
+            fetchedAll: true
+        });
+    }
 
-  render() {
-    const { match } = this.props;
-    const { profileId } = match.params;
-    const {
-      profile,
-      myDocuments,
-      myChildDocuments,
-      children,
-      fetchedProfile,
-      fetchedChildren,
-      fetchedMyDocuments,
-      fetchedChildDocuments
-    } = this.state;
-    // const texts = Texts[language].ProfileDocumentHeader;
-    return fetchedProfile && fetchedChildren && fetchedChildDocuments && fetchedMyDocuments ? (
-      <React.Fragment>
-        <DocumentProfileHeader
-          name={`${profile.given_name} ${profile.family_name}`}
-          photo={path(profile, ["image", "path"])}
-        />
-        <DocumentProfileInfo
-          profile={profile}
-          profileId={profileId}
-          userDocuments={myDocuments}
-          childrenDocuments={myChildDocuments}
-          userChildren={children}
-        />
-      </React.Fragment>
-    ) : (
-      <LoadingSpinner />
-    );
-  }
+    render() {
+        const { profile, userDocuments, childrenProfiles, childrenDocuments, fetchedAll } = this.state;
+        return fetchedAll ? (
+            <React.Fragment>
+                <DocumentProfileHeader
+                    name={`${profile.given_name} ${profile.family_name}`}
+                    photo={path(profile, ["image", "path"])}
+                />
+                <DocumentProfileInfo
+                    profile={profile}
+                    profileId={profile.user_id}
+                    userDocuments={userDocuments}
+                    childrenDocuments={childrenDocuments}
+                    childrenProfiles={childrenProfiles}
+                />
+            </React.Fragment>
+        ) : (
+            <LoadingSpinner />
+        );
+    }
 }
-
-DocumentProfileScreen.propTypes = {
-  myDocuments: PropTypes.array,
-  children: PropTypes.array
-};
 
 export default DocumentProfileScreen;
