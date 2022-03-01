@@ -10,7 +10,7 @@ const texts = require('../constants/notification-texts')
 const { Expo } = require('expo-server-sdk')
 let expo = new Expo()
 
-async function newMemberNotification (group_id, user_id) {
+async function newMemberNotification(group_id, user_id) {
   const group = await Group.findOne({ group_id })
   const profile = await Profile.findOne({ user_id })
   const members = await Member.find({ group_id, group_accepted: true, user_accepted: true })
@@ -38,7 +38,7 @@ async function newMemberNotification (group_id, user_id) {
   }
 };
 
-async function newActivityNotification (group_id, user_id) {
+async function newActivityNotification(group_id, user_id) {
   const object = await Group.findOne({ group_id })
   const subject = await Profile.findOne({ user_id })
   const members = await Member.find({ group_id, user_id: { $ne: user_id }, group_accepted: true, user_accepted: true }).distinct('user_id')
@@ -73,7 +73,7 @@ async function newActivityNotification (group_id, user_id) {
   }
 };
 
-async function newAnnouncementNotification (group_id, user_id) {
+async function newAnnouncementNotification(group_id, user_id) {
   const object = await Group.findOne({ group_id })
   const subject = await Profile.findOne({ user_id })
   const members = await Member.find({ group_id, user_id: { $ne: user_id }, group_accepted: true, user_accepted: true }).distinct('user_id')
@@ -108,30 +108,37 @@ async function newAnnouncementNotification (group_id, user_id) {
   }
 };
 // Covid alert notification system qui bisogna vedere come inviare la notifica
-async function newCovidAlertNotfication (group_id, user_id) {
-  const object = await Group.findOne({ group_id })
-  const subject = await Profile.findOne({ user_id })
-  const members = await Member.find({ group_id, user_id: { $ne: user_id }, group_accepted: true, user_accepted: true }).distinct('user_id')
-  const users = await User.find({ user_id: { $in: members } })
-  const devices = await Device.find({ user_id: { $in: members } })
-  if (subject && object) {
-    const notifications = []
-    members.forEach(member => {
-      notifications.push({
-        owner_type: 'user',
-        owner_id: member,
-        type: 'covid-alert',
-        code: 1,
-        read: false,
-        subject: `${subject.given_name} ${subject.family_name}`,
-        object: `${object.name}`
-      })
-    })
-    await Notification.create(notifications)
-  }
+/*
+cercare su Member tutti i gruppi relativi al chiamante della funzione
+cercare tutte le Activities realtive ai gruppi appena trovati
+dopo aver trovate le Activities cercare tutti i membri dei gruppi relativi a quell'activities(con tanto di studio timeslot)
+
+*/
+async function newCovidAlertNotfication (user_id) {
+  // const object = await Group.findOne({ group_id })
+  // const subject = await Profile.findOne({ user_id })
+  // const members = await Member.find({ group_id, user_id: { $ne: user_id }, group_accepted: true, user_accepted: true }).distinct('user_id')
+  // const users = await User.find({ user_id: { $in: members } })
+  const group = Member.find({ user_id })
+  console.log(group)
+  // if (subject && object) {
+  //   const notifications = []
+  //   members.forEach(member => {
+  //     notifications.push({
+  //       owner_type: 'user',
+  //       owner_id: member,
+  //       type: 'covid-alert',
+  //       code: 1,
+  //       read: false,
+  //       subject: `${subject.given_name} ${subject.family_name}`,
+  //       object: `${object.name}`
+  //     })
+  //   })
+  //   await Notification.create(notifications)
+  //}
 };
 
-async function newReplyNotification (group_id, user_id) {
+async function newReplyNotification(group_id, user_id) {
   const object = await Group.findOne({ group_id })
   const subject = await Profile.findOne({ user_id })
   const members = await Member.find({ group_id, user_id: { $ne: user_id }, group_accepted: true, user_accepted: true }).distinct('user_id')
@@ -166,7 +173,7 @@ async function newReplyNotification (group_id, user_id) {
   }
 };
 
-async function editGroupNotification (group_id, user_id, changes) {
+async function editGroupNotification(group_id, user_id, changes) {
   const group = await Group.findOne({ group_id })
   const settings = await Settings.findOne({ group_id })
   const profile = await Profile.findOne({ user_id })
@@ -229,7 +236,7 @@ async function editGroupNotification (group_id, user_id, changes) {
   }
 };
 
-async function removeMemberNotification (member_id, group_id) {
+async function removeMemberNotification(member_id, group_id) {
   const subject = await Profile.findOne({ user_id: member_id })
   const object = await Group.findOne({ group_id })
   const members = await Member.find({ group_id, group_accepted: true, user_accepted: true })
@@ -258,7 +265,7 @@ async function removeMemberNotification (member_id, group_id) {
   console.log('Remove member Notification created')
 };
 
-async function timeslotRequirementsNotification (timeslotName, participants, groupId, activityId, timeslotId) {
+async function timeslotRequirementsNotification(timeslotName, participants, groupId, activityId, timeslotId) {
   const devices = await Device.find({ user_id: { $in: participants } })
   const users = await User.find({ user_id: { $in: participants } })
   const notifications = []
@@ -287,7 +294,7 @@ async function timeslotRequirementsNotification (timeslotName, participants, gro
   await sendPushNotifications(messages)
 }
 
-async function timeslotMajorChangeNotification (timeslotName, participants, groupId, activityId, timeslotId) {
+async function timeslotMajorChangeNotification(timeslotName, participants, groupId, activityId, timeslotId) {
   const devices = await Device.find({ user_id: { $in: participants } })
   const users = await User.find({ user_id: { $in: participants } })
   const notifications = []
@@ -316,7 +323,7 @@ async function timeslotMajorChangeNotification (timeslotName, participants, grou
   await sendPushNotifications(messages)
 }
 
-async function timeslotAdminChangesNotification (timeslotName, changes, userId, groupId, activityId, timeslotId) {
+async function timeslotAdminChangesNotification(timeslotName, changes, userId, groupId, activityId, timeslotId) {
   const participants = Object.keys(changes)
   const devices = await Device.find({ user_id: { $in: participants } })
   const users = await User.find({ user_id: { $in: participants } })
@@ -338,9 +345,8 @@ async function timeslotAdminChangesNotification (timeslotName, changes, userId, 
       to: device.device_id,
       sound: 'default',
       title: texts[language]['activities'][6]['header'],
-      body: `${profile.given_name} ${profile.family_name} ${
-        texts[language]['activities'][changes[device.user_id] === 'add' ? 6 : 7]['description']
-      } ${timeslotName}`,
+      body: `${profile.given_name} ${profile.family_name} ${texts[language]['activities'][changes[device.user_id] === 'add' ? 6 : 7]['description']
+        } ${timeslotName}`,
       data: {
         url: `$${process.env.CITYLAB_URI}/groups/${groupId}/activities/${activityId}/timeslots/${timeslotId}`
       }
@@ -349,7 +355,7 @@ async function timeslotAdminChangesNotification (timeslotName, changes, userId, 
   await sendPushNotifications(messages)
 }
 
-async function timeslotStatusChangeNotification (timeslotName, status, participants, groupId, activityId, timeslotId) {
+async function timeslotStatusChangeNotification(timeslotName, status, participants, groupId, activityId, timeslotId) {
   const devices = await Device.find({ user_id: { $in: participants } })
   const users = await User.find({ user_id: { $in: participants } })
   const notifications = users.map(user => ({
@@ -376,13 +382,13 @@ async function timeslotStatusChangeNotification (timeslotName, status, participa
   await sendPushNotifications(messages)
 }
 
-async function deleteActivityNotification (user_id, activityName, timeslots) {
+async function deleteActivityNotification(user_id, activityName, timeslots) {
   const subject = await Profile.findOne({ user_id })
   let userIds = []
   timeslots.map(async (event) => {
     userIds = userIds.concat(JSON.parse(event.extendedProperties.shared.parents))
   })
-  userIds = [ ...new Set(userIds) ].filter(id => id !== user_id)
+  userIds = [...new Set(userIds)].filter(id => id !== user_id)
   const users = await User.find({ user_id: { $in: userIds } })
   const devices = await Device.find({ user_id: { $in: userIds } })
   const notifications = []
@@ -411,7 +417,7 @@ async function deleteActivityNotification (user_id, activityName, timeslots) {
   await sendPushNotifications(messages)
 }
 
-async function deleteTimeslotNotification (user_id, timeslot) {
+async function deleteTimeslotNotification(user_id, timeslot) {
   const subject = await Profile.findOne({ user_id })
   const userIds = timeslot.parents.filter(id => id !== user_id)
   const users = await User.find({ user_id: { $in: userIds } })
@@ -442,7 +448,7 @@ async function deleteTimeslotNotification (user_id, timeslot) {
   await sendPushNotifications(messages)
 }
 
-async function newRequestNotification (user_id, group_id) {
+async function newRequestNotification(user_id, group_id) {
   const admins = await Member.find({ group_id, user_accepted: true, group_accepted: true, admin: true }).distinct('user_id')
   const users = await User.find({ user_id: { $in: admins } })
   const user = await Profile.findOne({ user_id })
@@ -472,7 +478,7 @@ async function newRequestNotification (user_id, group_id) {
   await sendPushNotifications(messages)
 }
 
-async function planStateNotification (planName, participants, state, groupId, planId) {
+async function planStateNotification(planName, participants, state, groupId, planId) {
   const devices = await Device.find({ user_id: { $in: participants } })
   const users = await User.find({ user_id: { $in: participants } })
   const notifications = users.map(user => ({
@@ -499,7 +505,7 @@ async function planStateNotification (planName, participants, state, groupId, pl
   await sendPushNotifications(messages)
 }
 
-function getNotificationDescription (notification, language) {
+function getNotificationDescription(notification, language) {
   const {
     type, code, subject, object
   } = notification
@@ -578,7 +584,7 @@ function getNotificationDescription (notification, language) {
   }
 }
 
-async function sendPushNotifications (messages) {
+async function sendPushNotifications(messages) {
   try {
     const invalidTokens = []
     const notifications = []

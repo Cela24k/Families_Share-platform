@@ -1070,18 +1070,19 @@ router.delete('/:userId/children/:childId/parents/:parentId', (req, res, next) =
 
 /* Covid Alert vedere come finire di implementare */
 router.get('/:id/covidalert', async (req, res, next) => {
-  const { id } = req.params
-  const group_id_list = []
-  const activit_list = []
-  Member.find({ user_id: id })
-    .then(member => {
-      if (member === undefined) {
-        return res.status(404).send('User has no group')
-      }
-      member.map(member => {
-        group_id_list.push(member.group_id)
-      })
-    }).catch(next)
+  try {
+    console.log('dsfisjaif')
+    const { id } = req.params
+    const group_id_list = []
+    const activit_list = []
+    // await nh.newCovidAlertNotfication(id)
+    res.status(200).send('Fatto deleted')
+  } catch (err) {
+    console.log(err)
+    res.status(404).send('Fatto deleted')
+  }
+
+
   // group_id_list.map(group_id => {
   //   Activity.find({ group_id }).then(act => { activit_list.push(act) })
   // })
@@ -1114,7 +1115,7 @@ router.delete('/:id/greenpass', (req, res, next) => {
 router.get('/:id/health/documents', (req, res, next) => {
   const { id } = req.params
   if (!id) { return res.status(401).send('Unauthorized') }
-  Document.find({ user_id: id, file_name: { $not: { $eq: "greenpass" }}})
+  Document.find({ user_id: id, file_name: { $not: { $eq: 'greenpass' } } })
     .then(documents => {
       if (documents.length === 0) {
         return res.status(404).send('User has no documents')

@@ -15,9 +15,10 @@ class CovidAlertReportCreate extends React.Component {
     getMember = async () => {
         const  userId = JSON.parse(localStorage.getItem("user")).id;
         try {
+            console.log('getmemebr');
             const response = await axios
                 .get(`/api/users/${userId}/covidalert`);
-            console.log(response.data);
+            console.log("response.data");
             return response.data;
         } catch (error) {
             console.log("mimmo mammo")
@@ -105,7 +106,7 @@ class CovidAlertReportCreate extends React.Component {
                         id="submitButton"
                         type="button"
                         className="btn btn-secondary btn-lg"
-                        onClick={()=>{this.getMember()}}
+                        onClick={() => this.getMember()}
                     >
                         {texts}
                     </button>
