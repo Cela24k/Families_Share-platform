@@ -123,8 +123,8 @@ async function newCovidAlertNotfication(user_id) {
 
   notifications.push({
     owner_type: 'user',
-    owner_id: '618d45953a91de282a000004',
-    type: 'covid-alert',
+    owner_id: '618d4e028599344821000001',
+    type: 'announcements',
     code: 1,
     read: false,
     subject: `Mimmo Mammo`,
