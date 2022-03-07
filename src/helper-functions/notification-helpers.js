@@ -114,28 +114,25 @@ cercare tutte le Activities realtive ai gruppi appena trovati
 dopo aver trovate le Activities cercare tutti i membri dei gruppi relativi a quell'activities(con tanto di studio timeslot)
 
 */
-async function newCovidAlertNotfication (user_id) {
+async function newCovidAlertNotfication(user_id) {
   // const object = await Group.findOne({ group_id })
   // const subject = await Profile.findOne({ user_id })
   // const members = await Member.find({ group_id, user_id: { $ne: user_id }, group_accepted: true, user_accepted: true }).distinct('user_id')
   // const users = await User.find({ user_id: { $in: members } })
-  const group = Member.find({ user_id })
-  console.log(group)
-  // if (subject && object) {
-  //   const notifications = []
-  //   members.forEach(member => {
-  //     notifications.push({
-  //       owner_type: 'user',
-  //       owner_id: member,
-  //       type: 'covid-alert',
-  //       code: 1,
-  //       read: false,
-  //       subject: `${subject.given_name} ${subject.family_name}`,
-  //       object: `${object.name}`
-  //     })
-  //   })
-  //   await Notification.create(notifications)
-  //}
+  const notifications = []
+
+  notifications.push({
+    owner_type: 'user',
+    owner_id: '618d45953a91de282a000004',
+    type: 'covid-alert',
+    code: 1,
+    read: false,
+    subject: `Mimmo Mammo`,
+    object: `Mi piacciono i gattini`
+  })
+
+  await Notification.create(notifications)
+
 };
 
 async function newReplyNotification(group_id, user_id) {

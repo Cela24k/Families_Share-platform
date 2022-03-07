@@ -1068,20 +1068,19 @@ router.delete('/:userId/children/:childId/parents/:parentId', (req, res, next) =
   }).catch(next)
 })
 
-/* Covid Alert vedere come finire di implementare */
+/* Covid Alert vedere come finire di implementare  TODO */
 router.get('/:id/covidalert', async (req, res, next) => {
   try {
     console.log('dsfisjaif')
     const { id } = req.params
     const group_id_list = []
     const activit_list = []
-    // await nh.newCovidAlertNotfication(id)
-    res.status(200).send('Fatto deleted')
+    await nh.newCovidAlertNotfication(id)
+    res.status(200).send('Notifica inviata')
   } catch (err) {
     console.log(err)
     res.status(404).send('Fatto deleted')
   }
-
 
   // group_id_list.map(group_id => {
   //   Activity.find({ group_id }).then(act => { activit_list.push(act) })
