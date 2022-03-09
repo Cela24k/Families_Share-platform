@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
-import CreateMedicineTimeslotModal from "./CreateMedicineTimeslotModal"; 
+import CreateTimeslotModal from "./CreateTimeslotModal"; 
 import ConfirmDialog from "./ConfirmDialog";
 
 class TimeslotsContainer extends React.Component {
@@ -229,7 +229,7 @@ class TimeslotsContainer extends React.Component {
           title={texts.confirmDialogTitle}
           handleClose={this.handleConfirmDialogClose}
         />
-        <CreateActivityTimeslotModal
+        <CreateTimeslotModal
           handleCancel={this.handleTimeslotModalCancel}
           handleClose={this.handleTimeslotModalClose}
           handleSave={this.handleTimeslotModalSave}

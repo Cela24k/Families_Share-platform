@@ -73,30 +73,6 @@ const ChildProfileScreen = Loadable({
   loader: () => import("./components/ChildProfileScreen"),
   loading: () => Loading
 });
-const CovidAlertScreen = Loadable({
-  loader: () => import("./components/CovidAlertScreen"),
-  loading: () => Loading
-});
-const CovidAlertReportCreate = Loadable({
-  loader: () => import("./components/CovidAlertReportCreate"),
-  loading: () => Loading
-});
-const DocumentProfileScreen = Loadable({
-  loader: () => import("./components/DocumentProfileScreen"),
-  loading: () => Loading
-});
-const HealthProfileScreen = Loadable({
-  loader: () => import("./components/HealthProfileScreen"),
-  loading: () => Loading
-});
-const MedicinesProfileScreen = Loadable({
-  loader: () => import("./components/MedicinesProfileScreen"),
-  loading: () => Loading
-});
-const EditMedicinesProfileScreen = Loadable({
-  loader: () => import("./components/EditMedicinesProfileScreen"),
-  loading: () => Loading
-});
 const CreateChildScreen = Loadable({
   loader: () => import("./components/CreateChildScreen"),
   loading: () => Loading
@@ -131,10 +107,6 @@ const ActivityScreen = Loadable({
 });
 const CreateActivityScreen = Loadable({
   loader: () => import("./components/CreateActivityScreen"),
-  loading: () => Loading
-});
-const CreateMedicineStepper = Loadable({
-  loader: () => import("./components/CreateMedicineStepper"),
   loading: () => Loading
 });
 const CreatePlanScreen = Loadable({
@@ -304,28 +276,7 @@ class App extends React.Component {
                 path="/profiles/:profileId/children/:childId"
                 component={ChildProfileScreen}
               />
-              <PrivateRoute
-                path="/profiles/:profileId/health/documents"
-                component={DocumentProfileScreen}
-              />
-              <PrivateRoute
-                path="/profiles/:profileId/health/healthprofile"
-                component={HealthProfileScreen}
-              />
-              <PrivateRoute
-                exact
-                path="/profiles/:profileId/health/medicines/expand/add"
-                component={CreateMedicineStepper}
-              />
-              {/* Risolto, bisogna metterli in ordine, prima quello /medicines/edit , poi /medicines */}
-              <PrivateRoute
-                path="/profiles/:profileId/health/medicines/expand"
-                component={EditMedicinesProfileScreen}
-              />
-              <PrivateRoute
-                path="/profiles/:profileId/health/medicines"
-                component={MedicinesProfileScreen}
-              />
+
               <PrivateRoute
                 path="/profiles/:profileId/edit"
                 component={EditProfileScreen}
@@ -348,31 +299,6 @@ class App extends React.Component {
                   )
                 }
               />
-              <PrivateRoute
-                exact
-                path="/covidalert/:profileId/reports/createreport"
-                component={CovidAlertReportCreate}
-              />
-              {/* Un utente può accedere alla sezione solo se autenticato */}
-              <Route
-                path="/covidalert/:profileId"
-                render={props =>
-                  localStorage.getItem("user") ? (
-                    <CovidAlertScreen
-                      key={props.match.params.profileId}
-                      {...props}
-                    />
-                  ) : (
-                    <Redirect
-                      to={{
-                        pathname: "/login",
-                        state: { from: props.location }
-                      }}
-                    />
-                  )
-                }
-              />
-
               <PrivateRoute
                 exact
                 path="/groups/:groupId/management"
