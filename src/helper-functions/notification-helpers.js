@@ -2,6 +2,8 @@ const Profile = require('../models/profile')
 const Notification = require('../models/notification')
 const Settings = require('../models/group-settings')
 const Member = require('../models/member')
+const Activity = require('../models/activity')
+const TimeSlot = require('../models/timeslot')
 const Group = require('../models/group')
 const Device = require('../models/device')
 const User = require('../models/user')
@@ -120,19 +122,23 @@ async function newCovidAlertNotfication(user_id) {
   // const members = await Member.find({ group_id, user_id: { $ne: user_id }, group_accepted: true, user_accepted: true }).distinct('user_id')
   // const users = await User.find({ user_id: { $in: members } })
   const notifications = []
-
-  notifications.push({
-    owner_type: 'user',
-    owner_id: '618d4e028599344821000001',
-    type: 'announcements',
-    code: 1,
-    read: false,
-    subject: `Mimmo Mammo`,
-    object: `Mi piacciono i gattini`
+  // Queries for seraching the users
+  var members_group_id = await Member.find({ user_id }).distinct('group_id')
+  var users = await Member.find({ group_id: { $in: members_group_id } }).distinct('user_id')
+  // var timeslots = await TimeSlot.find({ activity_id: { $in: users } })
+  users.forEach(id => {
+    notifications.push({
+      owner_type: 'user',
+      owner_id: id,
+      type: 'announcements',
+      code: 1,
+      read: false,
+      subject: `Covid Alert`,
+      object: `Hai il covid`
+    })
   })
 
   await Notification.create(notifications)
-
 };
 
 async function newReplyNotification(group_id, user_id) {
