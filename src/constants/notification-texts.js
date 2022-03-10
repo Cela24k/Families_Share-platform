@@ -100,6 +100,12 @@ const en = {
       header: 'Group Announcements',
       description: ' posted a new reply in group '
     }
+  ],
+  covid: [
+    {
+      header: 'Covid Alert',
+      description: 'ti ha passato il covid'
+    }
   ]
 }
 const it = {
@@ -190,6 +196,12 @@ const it = {
       header: 'Avvisi del gruppo',
       description: 'ha pubblicato una nuova risposta '
     }
+  ],
+  covid: [
+    {
+      header: 'Covid Alert',
+      description: 'ti ha passato il covid'
+    }
   ]
 }
 const nl = {
@@ -279,6 +291,12 @@ const nl = {
     {
       header: 'Groepsmededelingen ',
       description: ' heeft een nieuw antwoord geplaatst '
+    }
+  ],
+  covid: [
+    {
+      header: 'Covid Alert',
+      description: 'ti ha passato il covid'
     }
   ]
 }
@@ -382,6 +400,12 @@ const el = {
       header: 'Ανακοινώσεις Ομάδας',
       description: '  δημοσίευσε ένα νέο σχόλιο στην ομάδα'
     }
+  ],
+  covid: [
+    {
+      header: 'Covid Alert',
+      description: 'ti ha passato il covid'
+    }
   ]
 }
 const hu = {
@@ -483,6 +507,12 @@ const hu = {
       'header': 'Csoport bejelentések',
       'description': ' új választ írt '
     }
+  ],
+  covid: [
+    {
+      header: 'Covid Alert',
+      description: 'ti ha passato il covid'
+    }
   ]
 }
 
@@ -579,6 +609,12 @@ const fr = {
     {
       'header': 'Annonces du groupe',
       'description': ' a publié une nouvelle réponse dans le groupe '
+    }
+  ],
+  covid: [
+    {
+      header: 'Covid Alert',
+      description: 'ti ha passato il covid'
     }
   ]
 }

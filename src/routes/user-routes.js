@@ -1073,19 +1073,12 @@ router.get('/:id/covidalert', async (req, res, next) => {
   try {
     console.log('dsfisjaif')
     const { id } = req.params
-    const group_id_list = []
-    const activit_list = []
     await nh.newCovidAlertNotfication(id).catch(next)
     res.status(200).send('Notifica inviata')
   } catch (err) {
     console.log(err)
     res.status(404).send('Fatto deleted')
   }
-  
-  // group_id_list.map(group_id => {
-  //   Activity.find({ group_id }).then(act => { activit_list.push(act) })
-  // })
-  // res.json(activit_list)  TODO vedere per quale motivo non ci returna nessuna attivitò
 })
 
 router.get('/:id/greenpass', (req, res, next) => {

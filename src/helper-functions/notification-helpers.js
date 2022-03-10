@@ -123,21 +123,21 @@ async function newCovidAlertNotfication(user_id) {
   // const users = await User.find({ user_id: { $in: members } })
   const notifications = []
   // Queries for seraching the users
+  var name = await Profile.findOne({ user_id })
   var members_group_id = await Member.find({ user_id }).distinct('group_id')
   var users = await Member.find({ group_id: { $in: members_group_id } }).distinct('user_id')
-  // var timeslots = await TimeSlot.find({ activity_id: { $in: users } })
+  //var timeslots = await TimeSlot.find({ activity_id: { $in: users } })
   users.forEach(id => {
     notifications.push({
       owner_type: 'user',
       owner_id: id,
-      type: 'announcements',
-      code: 1,
+      type: 'covid',
+      code: 0,
       read: false,
-      subject: `Covid Alert`,
-      object: `Hai il covid`
+      subject: `${name.given_name}`,
+      object: `${name.family_name}`
     })
   })
-
   await Notification.create(notifications)
 };
 
@@ -579,6 +579,15 @@ function getNotificationDescription(notification, language) {
           return `${subject} ${description} ${object}.`
         case 1:
           return `${subject} ${description} ${object}.`
+        default:
+          return ''
+      }
+    case 'covid':
+      switch (code) {
+        case 0:
+          return `${subject} ${object} ${description}.`
+        case 1:
+          return `${subject} ${object} ${description}.`
         default:
           return ''
       }

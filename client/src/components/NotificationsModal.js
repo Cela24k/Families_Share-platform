@@ -92,7 +92,7 @@ class NotificationsModal extends React.Component {
             <div className="col-9-10">
               <h1 style={{ fontSize: "1.4rem" }}>{texts.myNotifications}</h1>
             </div>
-            <div clasName="col-1-10">
+            <div className="col-1-10">
               <button
                 className="transparentButton"
                 type="button"
