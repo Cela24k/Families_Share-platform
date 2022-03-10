@@ -1073,6 +1073,34 @@ router.get('/:id/covidalert', async (req, res, next) => {
   try {
     console.log('dsfisjaif')
     const { id } = req.params
+    var groups = await nh.covidAlertTimeSlot(id)
+
+    await Promise.all(groups.map(async (group) => {
+      const response = await calendar.events.list({ calendarId: group.calendar_id })
+      const groupEvents = response.data.items
+      await Promise.all(groupEvents.map(async (event) => {
+        const parentParticipants = event.extendedProperties.shared
+        const childParticipants = event.extendedProperties.shared
+        console.log(parentParticipants)
+        console.log(childParticipants)
+        console.log('FINEEEEEEEEEEEEEEEEEEEEEE\n')
+        // TODO vedere riga 492 e questi console log per capire come fare a studiare i timestamp giusti
+      //   const filteredParents = parentParticipants.filter(id => id !== user_id)
+      //   const filteredChildren = childParticipants.filter(id => childDeleteIds.indexOf(id) === -1)
+      //   if (filteredParents.length !== parentParticipants.length || filteredChildren.length !== childParticipants.length) {
+      //     const timeslotPatch = {
+      //       extendedProperties: {
+      //         shared: {
+      //           parents: JSON.stringify(filteredParents),
+      //           children: JSON.stringify(filteredChildren)
+      //         }
+      //       }
+      //     }
+      //     await calendar.events.patch({ calendarId: group.calendar_id, eventId: event.id, resource: timeslotPatch })
+      //   }
+      }))
+    }))
+    // Per questa parte, ci serve una lista di user_id da dare come argomenti
     await nh.newCovidAlertNotfication(id).catch(next)
     res.status(200).send('Notifica inviata')
   } catch (err) {
@@ -1308,5 +1336,3 @@ router.post('/:userId/sendmenotification', async (req, res, next) => {
     next(err)
   }
 })
-
-
