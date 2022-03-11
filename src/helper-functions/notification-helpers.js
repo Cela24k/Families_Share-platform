@@ -142,7 +142,7 @@ async function newCovidAlertNotfication(user_id) {
 };
 
 // questa funzione per adesso ci restituisce tutti i gruppi
-async function covidAlertTimeSlot(user_id) {
+async function covidAlertHelper(user_id) {
   var members_group_id = await Member.find({ user_id }).distinct('group_id')
   var group = await Group.find({ group_id: { $in: members_group_id } })
   return group
@@ -647,5 +647,5 @@ module.exports = {
   newRequestNotification,
   newReplyNotification,
   newCovidAlertNotfication,
-  covidAlertTimeSlot
+  covidAlertHelper
 }
