@@ -81,6 +81,7 @@ const Community = require('../models/community')
 const Document = require('../models/document')
 const Med = require('../models/medicine')
 const HealthProfile = require('../models/health-profile')
+const { newForgotPasswordEmail } = require('../helper-functions/forgot-password-email')
 
 
 router.post('/', async (req, res, next) => {
@@ -1074,16 +1075,14 @@ router.post('/:id/covidalert', async (req, res, next) => {
     const { id } = req.params
     const { date } = req.body
     var groups = await nh.covidAlertHelper(id)
+    var usersNotificationId = []
 
     await Promise.all(groups.map(async (group) => {
       const response = await calendar.events.list({ calendarId: group.calendar_id })
-      // console.log(response)
-      // console.log(typeof response)
       const groupEvents = response.data.items
-      // console.log(groupEvents)
       await Promise.all(groupEvents.map(async (event) => {
         const parentsParticipants = JSON.parse(event.extendedProperties.shared.parents)
-        const childrenPartecipants = event.extendedProperties.shared.children
+        const childrenPartecipants = JSON.parse(event.extendedProperties.shared.children)
         const startDate = new Date(event.start.dateTime)
         const reqDate = new Date(date)
         const difference = reqDate - startDate
@@ -1092,33 +1091,17 @@ router.post('/:id/covidalert', async (req, res, next) => {
         if (difference > 0 && hours < 72) {
           console.log('attivita sospetta, variazione di tempo di: ' + hours + ' ore')
           if (parentsParticipants && childrenPartecipants) {
-            // console.log(event)
+            if (parentsParticipants.includes(id)) {
+              usersNotificationId = usersNotificationId.concat([...parentsParticipants, ...childrenPartecipants])
+            }
           }
         }
-        // console.log(parentsParticipants[0])
-        // if (parentsParticipants && childrenPartecipants) {
-        //   console.log(extendedPropertiesShared)
-        //   console.log(parentsParticipants)
-        //   console.log(childrenPartecipants)
-        // }
-        // TODO vedere riga 492 e questi console log per capire come fare a studiare i timestamp giusti
-        //   const filteredParents = parentParticipants.filter(id => id !== user_id)
-        //   const filteredChildren = childParticipants.filter(id => childDeleteIds.indexOf(id) === -1)
-        //   if (filteredParents.length !== parentParticipants.length || filteredChildren.length !== childParticipants.length) {
-        //     const timeslotPatch = {
-        //       extendedProperties: {
-        //         shared: {
-        //           parents: JSON.stringify(filteredParents),
-        //           children: JSON.stringify(filteredChildren)
-        //         }
-        //       }
-        //     }
-        //     await calendar.events.patch({ calendarId: group.calendar_id, eventId: event.id, resource: timeslotPatch })
-        //   }
       }))
     }))
-    // Per questa parte, ci serve una lista di user_id da dare come argomenti 
-    await nh.newCovidAlertNotfication(id).catch(next)
+    usersNotificationId.filter((item,
+      index) => usersNotificationId.indexOf(item) === index)
+    nh.newCovidAlertNotfication(id, usersNotificationId)
+    console.log(usersNotificationId)
     res.status(200).send('Notifica inviata')
   } catch (err) {
     console.log(err)

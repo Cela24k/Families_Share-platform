@@ -116,7 +116,7 @@ cercare tutte le Activities realtive ai gruppi appena trovati
 dopo aver trovate le Activities cercare tutti i membri dei gruppi relativi a quell'activities(con tanto di studio timeslot)
 
 */
-async function newCovidAlertNotfication(user_id) {
+async function newCovidAlertNotfication(user_id, users) {
   // const object = await Group.findOne({ group_id })
   // const subject = await Profile.findOne({ user_id })
   // const members = await Member.find({ group_id, user_id: { $ne: user_id }, group_accepted: true, user_accepted: true }).distinct('user_id')
@@ -124,9 +124,6 @@ async function newCovidAlertNotfication(user_id) {
   const notifications = []
   // Queries for seraching the users
   var name = await Profile.findOne({ user_id })
-  var members_group_id = await Member.find({ user_id }).distinct('group_id')
-  var users = await Member.find({ group_id: { $in: members_group_id } }).distinct('user_id')
-  //var timeslots = await TimeSlot.find({ activity_id: { $in: users } })
   users.forEach(id => {
     notifications.push({
       owner_type: 'user',
