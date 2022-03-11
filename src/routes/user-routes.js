@@ -1080,32 +1080,46 @@ router.get('/:id/covidalert', async (req, res, next) => {
       // console.log(response)
       // console.log(typeof response)
       const groupEvents = response.data.items
-      console.log(groupEvents)
       // console.log(groupEvents)
       await Promise.all(groupEvents.map(async (event) => {
         const extendedPropertiesShared = event.extendedProperties.shared
         const parentsParticipants = event.extendedProperties.shared.parents
         const childrenPartecipants = event.extendedProperties.shared.children
-        if (parentsParticipants && childrenPartecipants) {
-          console.log(extendedPropertiesShared)
-          console.log(typeof (JSON.parse(parentsParticipants)))
-          console.log(childrenPartecipants)
+        const start = event.start.dateTime
+        const std = new Date(start)
+        
+        // data con cui confrontare l'inizio della attivita
+        const currentDate = new Date()
+        const c = currentDate - std
+
+        if(Math.floor(c / (60e3 * 60)) < 72)
+        {
+          if (parentsParticipants && childrenPartecipants){
+            console.log(event)
+          }
         }
-        console.log('FINEEEEEEEEEEEEEEEEEEEEEE\n')
+
+        // console.log(currentDate.getMilliseconds()- start.)
+
+        if (parentsParticipants && childrenPartecipants) {
+          // console.log(extendedPropertiesShared)
+          // console.log(typeof (JSON.parse(parentsParticipants)))
+          // console.log(childrenPartecipants)
+        }
         // TODO vedere riga 492 e questi console log per capire come fare a studiare i timestamp giusti
-      //   const filteredParents = parentParticipants.filter(id => id !== user_id)
-      //   const filteredChildren = childParticipants.filter(id => childDeleteIds.indexOf(id) === -1)
-      //   if (filteredParents.length !== parentParticipants.length || filteredChildren.length !== childParticipants.length) {
-      //     const timeslotPatch = {
-      //       extendedProperties: {
-      //         shared: {
-      //           parents: JSON.stringify(filteredParents),
-      //           children: JSON.stringify(filteredChildren)
-      //         }
-      //       }
-      //     }
-      //     await calendar.events.patch({ calendarId: group.calendar_id, eventId: event.id, resource: timeslotPatch })
-      //   }
+        //   const filteredParents = parentParticipants.filter(id => id !== user_id)
+        //   const filteredChildren = childParticipants.filter(id => childDeleteIds.indexOf(id) === -1)
+        //   if (filteredParents.length !== parentParticipants.length || filteredChildren.length !== childParticipants.length) {
+        //     const timeslotPatch = {
+        //       extendedProperties: {
+        //         shared: {
+        //           parents: JSON.stringify(filteredParents),
+        //           children: JSON.stringify(filteredChildren)
+        //         }
+        //       }
+        //     }
+        //     await calendar.events.patch({ calendarId: group.calendar_id, eventId: event.id, resource: timeslotPatch })
+        //   }
       }))
     }))
     // Per questa parte, ci serve una lista di user_id da dare come argomenti 
