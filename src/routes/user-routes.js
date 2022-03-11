@@ -1069,11 +1069,13 @@ router.delete('/:userId/children/:childId/parents/:parentId', (req, res, next) =
 })
 
 /* Covid Alert vedere come finire di implementare  TODO */
-router.get('/:id/covidalert', async (req, res, next) => {
+router.post('/:id/covidalert', async (req, res, next) => {
   try {
     console.log('dsfisjaif')
     const { id } = req.params
+    const { date } = req.body
     var groups = await nh.covidAlertHelper(id)
+    console.log(date)
 
     await Promise.all(groups.map(async (group) => {
       const response = await calendar.events.list({ calendarId: group.calendar_id })
@@ -1083,29 +1085,25 @@ router.get('/:id/covidalert', async (req, res, next) => {
       // console.log(groupEvents)
       await Promise.all(groupEvents.map(async (event) => {
         const extendedPropertiesShared = event.extendedProperties.shared
-        const parentsParticipants = event.extendedProperties.shared.parents
+        const parentsParticipants = JSON.parse(event.extendedProperties.shared.parents)
         const childrenPartecipants = event.extendedProperties.shared.children
         const start = event.start.dateTime
         const std = new Date(start)
-        
         // data con cui confrontare l'inizio della attivita
         const currentDate = new Date()
         const c = currentDate - std
 
-        if(Math.floor(c / (60e3 * 60)) < 72)
-        {
-          if (parentsParticipants && childrenPartecipants){
-            console.log(event)
+        if (Math.floor(c / (60e3 * 60)) < 72) {
+          if (parentsParticipants && childrenPartecipants) {
+            // console.log(event)
           }
         }
-
-        // console.log(currentDate.getMilliseconds()- start.)
-
-        if (parentsParticipants && childrenPartecipants) {
-          // console.log(extendedPropertiesShared)
-          // console.log(typeof (JSON.parse(parentsParticipants)))
-          // console.log(childrenPartecipants)
-        }
+        // console.log(parentsParticipants[0])
+        // if (parentsParticipants && childrenPartecipants) {
+        //   console.log(extendedPropertiesShared)
+        //   console.log(parentsParticipants)
+        //   console.log(childrenPartecipants)
+        // }
         // TODO vedere riga 492 e questi console log per capire come fare a studiare i timestamp giusti
         //   const filteredParents = parentParticipants.filter(id => id !== user_id)
         //   const filteredChildren = childParticipants.filter(id => childDeleteIds.indexOf(id) === -1)

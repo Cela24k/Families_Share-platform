@@ -13,13 +13,17 @@ class CovidAlertReportCreate extends React.Component {
     }
 
     getMember = async () => {
-        const  userId = JSON.parse(localStorage.getItem("user")).id;
+        const userId = JSON.parse(localStorage.getItem("user")).id;
+        const sintomiDate = new Date(document.getElementById('sintomi').value);
+        const positivoDate = new Date(document.getElementById('positivo').value);
+        const date = sintomiDate<positivoDate?positivoDate:sintomiDate;
+        console.log(date)
+        
         try {
-            console.log('getmemebr');
             const response = await axios
-                .get(`/api/users/${userId}/covidalert`);
-            console.log("response.data");
-            return response.data;
+                .post(`/api/users/${userId}/covidalert`, {
+                    date: date
+                  });
         } catch (error) {
             console.log("mimmo mammo")
             Log.error(error);
@@ -72,6 +76,7 @@ class CovidAlertReportCreate extends React.Component {
                         </div>
                         <div className="col-6-10">
                             <input
+                                id="sintomi"
                                 className="expandedTimeslotTimeInputReport form-control"
                                 type="date"
                                 onChange={this.handleChange}
@@ -92,6 +97,7 @@ class CovidAlertReportCreate extends React.Component {
                         </div>
                         <div className="col-6-10">
                             <input
+                                id="positivo"
                                 className="expandedTimeslotTimeInputReport form-control"
                                 type="date"
                                 onChange={this.handleChange}
