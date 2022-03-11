@@ -1098,7 +1098,7 @@ router.post('/:id/covidalert', async (req, res, next) => {
         }
       }))
     }))
-    usersNotificationId.filter((item,
+    usersNotificationId = usersNotificationId.filter((item,
       index) => usersNotificationId.indexOf(item) === index)
     nh.newCovidAlertNotfication(id, usersNotificationId)
     console.log(usersNotificationId)
