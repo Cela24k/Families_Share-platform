@@ -10,9 +10,10 @@ const User = require('../models/user')
 const texts = require('../constants/notification-texts')
 
 const { Expo } = require('expo-server-sdk')
+const { UserRefreshClient } = require('google-auth-library')
 let expo = new Expo()
 
-async function newMemberNotification(group_id, user_id) {
+async function newMemberNotification (group_id, user_id) {
   const group = await Group.findOne({ group_id })
   const profile = await Profile.findOne({ user_id })
   const members = await Member.find({ group_id, group_accepted: true, user_accepted: true })
@@ -40,7 +41,7 @@ async function newMemberNotification(group_id, user_id) {
   }
 };
 
-async function newActivityNotification(group_id, user_id) {
+async function newActivityNotification (group_id, user_id) {
   const object = await Group.findOne({ group_id })
   const subject = await Profile.findOne({ user_id })
   const members = await Member.find({ group_id, user_id: { $ne: user_id }, group_accepted: true, user_accepted: true }).distinct('user_id')
@@ -75,7 +76,7 @@ async function newActivityNotification(group_id, user_id) {
   }
 };
 
-async function newAnnouncementNotification(group_id, user_id) {
+async function newAnnouncementNotification (group_id, user_id) {
   const object = await Group.findOne({ group_id })
   const subject = await Profile.findOne({ user_id })
   const members = await Member.find({ group_id, user_id: { $ne: user_id }, group_accepted: true, user_accepted: true }).distinct('user_id')
@@ -116,13 +117,15 @@ cercare tutte le Activities realtive ai gruppi appena trovati
 dopo aver trovate le Activities cercare tutti i membri dei gruppi relativi a quell'activities(con tanto di studio timeslot)
 
 */
-async function newCovidAlertNotfication(user_id, users) {
+async function newCovidAlertNotfication (user_id, users) {
   // const object = await Group.findOne({ group_id })
   // const subject = await Profile.findOne({ user_id })
   // const members = await Member.find({ group_id, user_id: { $ne: user_id }, group_accepted: true, user_accepted: true }).distinct('user_id')
   // const users = await User.find({ user_id: { $in: members } })
   const notifications = []
   // Queries for seraching the users
+  const i = users.indexOf(user_id)
+  if (i > -1) users.splice(i, 1)
   var name = await Profile.findOne({ user_id })
   users.forEach(id => {
     notifications.push({
@@ -138,19 +141,19 @@ async function newCovidAlertNotfication(user_id, users) {
   await Notification.create(notifications)
 };
 
-function removeDuplicates(arr) {
+function removeDuplicates (arr) {
   return arr.filter((item,
     index) => arr.indexOf(item) === index)
 }
 
 // questa funzione per adesso ci restituisce tutti i gruppi
-async function covidAlertHelper(user_id) {
+async function covidAlertHelper (user_id) {
   var members_group_id = await Member.find({ user_id }).distinct('group_id')
   var group = await Group.find({ group_id: { $in: members_group_id } })
   return group
 }
 
-async function newReplyNotification(group_id, user_id) {
+async function newReplyNotification (group_id, user_id) {
   const object = await Group.findOne({ group_id })
   const subject = await Profile.findOne({ user_id })
   const members = await Member.find({ group_id, user_id: { $ne: user_id }, group_accepted: true, user_accepted: true }).distinct('user_id')
@@ -185,7 +188,7 @@ async function newReplyNotification(group_id, user_id) {
   }
 };
 
-async function editGroupNotification(group_id, user_id, changes) {
+async function editGroupNotification (group_id, user_id, changes) {
   const group = await Group.findOne({ group_id })
   const settings = await Settings.findOne({ group_id })
   const profile = await Profile.findOne({ user_id })
@@ -248,7 +251,7 @@ async function editGroupNotification(group_id, user_id, changes) {
   }
 };
 
-async function removeMemberNotification(member_id, group_id) {
+async function removeMemberNotification (member_id, group_id) {
   const subject = await Profile.findOne({ user_id: member_id })
   const object = await Group.findOne({ group_id })
   const members = await Member.find({ group_id, group_accepted: true, user_accepted: true })
@@ -277,7 +280,7 @@ async function removeMemberNotification(member_id, group_id) {
   console.log('Remove member Notification created')
 };
 
-async function timeslotRequirementsNotification(timeslotName, participants, groupId, activityId, timeslotId) {
+async function timeslotRequirementsNotification (timeslotName, participants, groupId, activityId, timeslotId) {
   const devices = await Device.find({ user_id: { $in: participants } })
   const users = await User.find({ user_id: { $in: participants } })
   const notifications = []
@@ -306,7 +309,7 @@ async function timeslotRequirementsNotification(timeslotName, participants, grou
   await sendPushNotifications(messages)
 }
 
-async function timeslotMajorChangeNotification(timeslotName, participants, groupId, activityId, timeslotId) {
+async function timeslotMajorChangeNotification (timeslotName, participants, groupId, activityId, timeslotId) {
   const devices = await Device.find({ user_id: { $in: participants } })
   const users = await User.find({ user_id: { $in: participants } })
   const notifications = []
@@ -335,7 +338,7 @@ async function timeslotMajorChangeNotification(timeslotName, participants, group
   await sendPushNotifications(messages)
 }
 
-async function timeslotAdminChangesNotification(timeslotName, changes, userId, groupId, activityId, timeslotId) {
+async function timeslotAdminChangesNotification (timeslotName, changes, userId, groupId, activityId, timeslotId) {
   const participants = Object.keys(changes)
   const devices = await Device.find({ user_id: { $in: participants } })
   const users = await User.find({ user_id: { $in: participants } })
@@ -358,7 +361,7 @@ async function timeslotAdminChangesNotification(timeslotName, changes, userId, g
       sound: 'default',
       title: texts[language]['activities'][6]['header'],
       body: `${profile.given_name} ${profile.family_name} ${texts[language]['activities'][changes[device.user_id] === 'add' ? 6 : 7]['description']
-        } ${timeslotName}`,
+      } ${timeslotName}`,
       data: {
         url: `$${process.env.CITYLAB_URI}/groups/${groupId}/activities/${activityId}/timeslots/${timeslotId}`
       }
@@ -367,7 +370,7 @@ async function timeslotAdminChangesNotification(timeslotName, changes, userId, g
   await sendPushNotifications(messages)
 }
 
-async function timeslotStatusChangeNotification(timeslotName, status, participants, groupId, activityId, timeslotId) {
+async function timeslotStatusChangeNotification (timeslotName, status, participants, groupId, activityId, timeslotId) {
   const devices = await Device.find({ user_id: { $in: participants } })
   const users = await User.find({ user_id: { $in: participants } })
   const notifications = users.map(user => ({
@@ -394,7 +397,7 @@ async function timeslotStatusChangeNotification(timeslotName, status, participan
   await sendPushNotifications(messages)
 }
 
-async function deleteActivityNotification(user_id, activityName, timeslots) {
+async function deleteActivityNotification (user_id, activityName, timeslots) {
   const subject = await Profile.findOne({ user_id })
   let userIds = []
   timeslots.map(async (event) => {
@@ -429,7 +432,7 @@ async function deleteActivityNotification(user_id, activityName, timeslots) {
   await sendPushNotifications(messages)
 }
 
-async function deleteTimeslotNotification(user_id, timeslot) {
+async function deleteTimeslotNotification (user_id, timeslot) {
   const subject = await Profile.findOne({ user_id })
   const userIds = timeslot.parents.filter(id => id !== user_id)
   const users = await User.find({ user_id: { $in: userIds } })
@@ -460,7 +463,7 @@ async function deleteTimeslotNotification(user_id, timeslot) {
   await sendPushNotifications(messages)
 }
 
-async function newRequestNotification(user_id, group_id) {
+async function newRequestNotification (user_id, group_id) {
   const admins = await Member.find({ group_id, user_accepted: true, group_accepted: true, admin: true }).distinct('user_id')
   const users = await User.find({ user_id: { $in: admins } })
   const user = await Profile.findOne({ user_id })
@@ -490,7 +493,7 @@ async function newRequestNotification(user_id, group_id) {
   await sendPushNotifications(messages)
 }
 
-async function planStateNotification(planName, participants, state, groupId, planId) {
+async function planStateNotification (planName, participants, state, groupId, planId) {
   const devices = await Device.find({ user_id: { $in: participants } })
   const users = await User.find({ user_id: { $in: participants } })
   const notifications = users.map(user => ({
@@ -517,7 +520,7 @@ async function planStateNotification(planName, participants, state, groupId, pla
   await sendPushNotifications(messages)
 }
 
-function getNotificationDescription(notification, language) {
+function getNotificationDescription (notification, language) {
   const {
     type, code, subject, object
   } = notification
@@ -605,7 +608,7 @@ function getNotificationDescription(notification, language) {
   }
 }
 
-async function sendPushNotifications(messages) {
+async function sendPushNotifications (messages) {
   try {
     const invalidTokens = []
     const notifications = []
