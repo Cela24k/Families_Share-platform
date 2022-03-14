@@ -7,6 +7,10 @@ import LoadingSpinner from "./LoadingSpinner";
 import GroupNavbar from "./GroupNavbar";
 import Log from "./Log";
 
+const ExpandedImageModal = Loadable({
+  loader: () => import("./ExpandedImageModal"),
+  loading: () => <div />
+})
 const GroupInfo = Loadable({
   loader: () => import("./GroupInfo"),
   loading: () => <div />
@@ -101,7 +105,7 @@ export default class GroupMainScreen extends React.Component {
   };
 
   render() {
-    const { fetchedGroup, group, userIsAdmin, allowNavigation } = this.state;
+    const { fetchedGroup, group, userIsAdmin, allowNavigation} = this.state;
     const { match } = this.props;
     const { url: currentPath } = match;
     return fetchedGroup ? (

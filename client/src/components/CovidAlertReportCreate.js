@@ -3,36 +3,58 @@ import PropTypes from "prop-types";
 import Log from "./Log";
 import axios from "axios";
 import withLanguage from "./LanguageContext";
-
+import ConfirmDialog from "./ConfirmDialog";
 import Texts from "../Constants/Texts";
 
 class CovidAlertReportCreate extends React.Component {
     constructor(props) {
         super(props);
-
+        this.state = {
+            isModalOpened: false,
+            datePopup: false
+        }
     }
 
     getMember = async () => {
-        const userId = JSON.parse(localStorage.getItem("user")).id;
+        const { history } = this.state
+        const userId = JSON.parse(localStorage.getItem('user')).id;
         const sintomiDate = new Date(document.getElementById('sintomi').value);
         const positivoDate = new Date(document.getElementById('positivo').value);
-        const date = sintomiDate<positivoDate?positivoDate:sintomiDate;
-        console.log(date)
+        const date = sintomiDate!="Invalid Date" ?(positivoDate!="Invalid Date" ?(sintomiDate < positivoDate? positivoDate : sintomiDate): sintomiDate):positivoDate
         
-        try {
-            const response = await axios
-                .post(`/api/users/${userId}/covidalert`, {
-                    date: date
-                  });
-        } catch (error) {
-            console.log("mimmo mammo")
-            Log.error(error);
-            return null;
+        if(date=="Invalid Date")
+        {
+            this.setState({datePopup:true})
         }
+        else{
+            this.setState({datePopup:false})
+            try {
+                const response = await axios
+                    .post(`/api/users/${userId}/covidalert`, {
+                        date: date
+                      });
+                history.goBack();
+            } catch (error) {
+                Log.error(error);
+                return null;
+            }
+        } 
     };
+
+    handleConfirmDialogOpen() {
+        this.setState({isModalOpened: true });
+    };
+
+    handleConfirmDialogClose = choice => {
+        if (choice === "agree") {
+            this.getMember();
+        }
+        this.setState({isModalOpened: false });
+    }
 
     render() {
         const { language, history } = this.props;
+        const { datePopup } = this.state;
         const texts = Texts[language].CovidAlertReportCreate;
         return (
             <div>
@@ -40,6 +62,11 @@ class CovidAlertReportCreate extends React.Component {
                     id="editChildProfileHeaderContainer"
                     style={{ backgroundColor: "#00838f", height: "5rem" }}
                 >
+                <ConfirmDialog
+                    isOpen={this.state.isModalOpened}
+                    title={"texts.confirmDialogTitle"}
+                    handleClose={this.handleConfirmDialogClose}
+                />
                     <div className="row no-gutters" id="profileHeaderOptions">
                         <div className="col-2-10">
                             <button
@@ -107,12 +134,17 @@ class CovidAlertReportCreate extends React.Component {
                         </div>
                     </div>
                 </div>
+                {datePopup ? (
+                    <div style={{color:"red",textAlign:"center",marginTop:"1rem"}}>
+                        Inserire una data adeguata
+                    </div>
+                ) : (<div></div>)}
                 <div className="healthprofileButton">
                     <button
                         id="submitButton"
                         type="button"
                         className="btn btn-secondary btn-lg"
-                        onClick={() => this.getMember()}
+                        onClick={() => this.handleConfirmDialogOpen()}
                     >
                         {texts}
                     </button>
