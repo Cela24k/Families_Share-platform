@@ -1082,8 +1082,10 @@ router.post('/:id/covidalert', async (req, res, next) => {
       const response = await calendar.events.list({ calendarId: group.calendar_id })
       const groupEvents = response.data.items
       await Promise.all(groupEvents.map(async (event) => {
-        const difference = new Date(event.start.dateTime) - new Date(date)
+        const difference = new Date(date) - new Date(event.start.dateTime)
+        console.log(difference)
         const hours = Math.floor(difference / (60e3 * 60))
+        console.log(hours)
 
         if (difference > 0 && hours < 72) {
           const parentsParticipants = JSON.parse(event.extendedProperties.shared.parents)
@@ -1101,9 +1103,10 @@ router.post('/:id/covidalert', async (req, res, next) => {
     // questa parte serve a sanificare la lista di id dai duplicati
     parentNotificationId = nh.removeDuplicates(parentNotificationId)
     childrenNotificationId = nh.removeDuplicates(childrenNotificationId)
-
+    var parent = await nh.getParentFromChildren(childrenNotificationId)
+    parentNotificationId = parentNotificationId.concat(parent)
+    
     nh.newCovidAlertNotfication(id, parentNotificationId)
-    console.log(parentNotificationId)
     res.status(200).send('Notifica inviata')
   } catch (err) {
     console.log(err)
