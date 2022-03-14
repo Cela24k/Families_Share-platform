@@ -1075,33 +1075,35 @@ router.post('/:id/covidalert', async (req, res, next) => {
     const { id } = req.params
     const { date } = req.body
     var groups = await nh.covidAlertHelper(id)
-    var usersNotificationId = []
+    var parentNotificationId = []
+    var childrenNotificationId = []
 
     await Promise.all(groups.map(async (group) => {
       const response = await calendar.events.list({ calendarId: group.calendar_id })
       const groupEvents = response.data.items
       await Promise.all(groupEvents.map(async (event) => {
-        const parentsParticipants = JSON.parse(event.extendedProperties.shared.parents)
-        const childrenPartecipants = JSON.parse(event.extendedProperties.shared.children)
-        const startDate = new Date(event.start.dateTime)
-        const reqDate = new Date(date)
-        const difference = reqDate - startDate
+        const difference = new Date(event.start.dateTime) - new Date(date)
         const hours = Math.floor(difference / (60e3 * 60))
 
         if (difference > 0 && hours < 72) {
+          const parentsParticipants = JSON.parse(event.extendedProperties.shared.parents)
+          const childrenPartecipants = JSON.parse(event.extendedProperties.shared.children)
           console.log('attivita sospetta, variazione di tempo di: ' + hours + ' ore')
-          if (parentsParticipants && childrenPartecipants) {
+          if (parentsParticipants || childrenPartecipants) {
             if (parentsParticipants.includes(id)) {
-              usersNotificationId = usersNotificationId.concat([...parentsParticipants, ...childrenPartecipants])
+              parentNotificationId = parentNotificationId.concat(parentsParticipants)
+              childrenNotificationId = childrenNotificationId.concat(childrenPartecipants)
             }
           }
         }
       }))
     }))
-    usersNotificationId = usersNotificationId.filter((item,
-      index) => usersNotificationId.indexOf(item) === index)
-    nh.newCovidAlertNotfication(id, usersNotificationId)
-    console.log(usersNotificationId)
+    // questa parte serve a sanificare la lista di id dai duplicati
+    parentNotificationId = nh.removeDuplicates(parentNotificationId)
+    childrenNotificationId = nh.removeDuplicates(childrenNotificationId)
+
+    nh.newCovidAlertNotfication(id, parentNotificationId)
+    console.log(parentNotificationId)
     res.status(200).send('Notifica inviata')
   } catch (err) {
     console.log(err)

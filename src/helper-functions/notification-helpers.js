@@ -138,6 +138,11 @@ async function newCovidAlertNotfication(user_id, users) {
   await Notification.create(notifications)
 };
 
+function removeDuplicates(arr) {
+  return arr.filter((item,
+    index) => arr.indexOf(item) === index)
+}
+
 // questa funzione per adesso ci restituisce tutti i gruppi
 async function covidAlertHelper(user_id) {
   var members_group_id = await Member.find({ user_id }).distinct('group_id')
@@ -644,5 +649,6 @@ module.exports = {
   newRequestNotification,
   newReplyNotification,
   newCovidAlertNotfication,
-  covidAlertHelper
+  covidAlertHelper,
+  removeDuplicates
 }
