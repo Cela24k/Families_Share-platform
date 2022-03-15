@@ -104,7 +104,7 @@ const en = {
   covid: [
     {
       header: 'Covid Alert',
-      description: 'ti ha passato il covid'
+      description: 'è stato a contatto con un positivo'
     }
   ]
 }
@@ -200,7 +200,7 @@ const it = {
   covid: [
     {
       header: 'Covid Alert',
-      description: 'ti ha passato il covid'
+      description: 'è stato a contatto con un positivo'
     }
   ]
 }
@@ -296,7 +296,7 @@ const nl = {
   covid: [
     {
       header: 'Covid Alert',
-      description: 'ti ha passato il covid'
+      description: 'è stato a contatto con un positivo'
     }
   ]
 }
@@ -404,7 +404,7 @@ const el = {
   covid: [
     {
       header: 'Covid Alert',
-      description: 'ti ha passato il covid'
+      description: 'è stato a contatto con un positivo'
     }
   ]
 }
@@ -511,7 +511,7 @@ const hu = {
   covid: [
     {
       header: 'Covid Alert',
-      description: 'ti ha passato il covid'
+      description: 'è stato a contatto con un positivo'
     }
   ]
 }
@@ -614,7 +614,7 @@ const fr = {
   covid: [
     {
       header: 'Covid Alert',
-      description: 'ti ha passato il covid'
+      description: 'è stato a contatto con un positivo'
     }
   ]
 }

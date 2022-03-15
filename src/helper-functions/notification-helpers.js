@@ -113,71 +113,34 @@ async function newAnnouncementNotification(group_id, user_id) {
     await sendPushNotifications(messages)
   }
 };
-// Covid alert notification system qui bisogna vedere come inviare la notifica
-/*
-cercare su Member tutti i gruppi relativi al chiamante della funzione
-cercare tutte le Activities realtive ai gruppi appena trovati
-dopo aver trovate le Activities cercare tutti i membri dei gruppi relativi a quell'activities(con tanto di studio timeslot)
-
-*/
+// funzione che prende in input l'id dello user ed una struttura dati non omogenea users, i due possibili tipi di dato sono due: parent_id:number, {parent_id, child_id}. non ritorna nulla ma crea le notifiche di sideeffect
 async function newCovidAlertNotfication(user_id, users) {
-  // const object = await Group.findOne({ group_id })
-  // const subject = await Profile.findOne({ user_id })
-  // const members = await Member.find({ group_id, user_id: { $ne: user_id }, group_accepted: true, user_accepted: true }).distinct('user_id')
-  // const users = await User.find({ user_id: { $in: members } })
   const notifications = []
-  // Queries for seraching the users
+  // rimozione dell'id utente che ha mandato la notifica dalla collezione users
   const i = users.indexOf(user_id)
   if (i > -1) users.splice(i, 1)
-  var name = await getNotificationName(users)
-  console.log(name)
-  users.forEach(function (id, index) {
+  // la funzione map a differenza del foreEach può restituire una promise
+  await Promise.all(users.map(async function (id, index) {
     var id_parent = id.parent_id ? id.parent_id : id
-    console.log(index)
-    // var nameNotification = name[index].given_name
-    // var surnameNotification = name[index].surnameNotification
-    // notifications.push({
-    //   owner_type: 'user',
-    //   owner_id: id_parent,
-    //   type: 'covid',
-    //   code: 0,
-    //   read: false,
-    //   subject: nameNotification,
-    //   object: surnameNotification
-    // })
-  })
-  // await Notification.create(notifications)
+    var name = id.parent_id ? await Child.findOne({ child_id: id.child_id }) : await Profile.findOne({ user_id: id_parent })
+    notifications.push({
+      owner_type: 'user',
+      owner_id: id_parent,
+      type: 'covid',
+      code: 0,
+      read: false,
+      subject: `${name.given_name}`,
+      object: `${name.family_name}`
+    })
+  }))
+  await Notification.create(notifications)
 };
-
-async function getNotificationName(users) {
-  var child_id = []
-  var user_id = []
-  var names = []
-  users.forEach(function (item,index) {
-    if (item.child_id) {
-      child_id.push(item.child_id)
-    } else {
-      user_id.push(item)
-    }
-    console.log(index)
-  })
-  var childProfile = await Child.find({ child_id: { $in: child_id } })
-  var parentProfile = await Profile.find({ user_id: { $in: user_id } })
-  parentProfile.forEach(function (parent) {
-    names.push({ given_name: parent.given_name, family_name: parent.family_name })
-  })
-  childProfile.forEach(function (child) {
-    names.push({ given_name: child.given_name, family_name: child.family_name })
-  })
-  console.log()
-  return names
-}
 
 function removeDuplicates(arr) {
   return arr.filter((item,
     index) => arr.indexOf(item) === index)
 }
-
+// data una lista di child_id, trova il parent associato a quel bambino
 async function getParentFromChildren(children) {
   var parent = await Parent.find({ child_id: { $in: children } })
   var parentChild = []
@@ -185,8 +148,8 @@ async function getParentFromChildren(children) {
   return parentChild
 }
 
-// questa funzione per adesso ci restituisce tutti i gruppi
-async function covidAlertHelper(user_id) {
+// questa funzione per adesso ci restituisce tutti i gruppi in cui si trova uno user
+async function getUserGroup(user_id) {
   var members_group_id = await Member.find({ user_id }).distinct('group_id')
   var group = await Group.find({ group_id: { $in: members_group_id } })
   return group
@@ -691,7 +654,7 @@ module.exports = {
   newRequestNotification,
   newReplyNotification,
   newCovidAlertNotfication,
-  covidAlertHelper,
+  getUserGroup,
   removeDuplicates,
   getParentFromChildren
 }

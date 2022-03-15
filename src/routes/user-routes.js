@@ -1074,7 +1074,7 @@ router.post('/:id/covidalert', async (req, res, next) => {
   try {
     const { id } = req.params
     const { date } = req.body
-    var groups = await nh.covidAlertHelper(id)
+    var groups = await nh.getUserGroup(id)
     var parentNotificationId = []
     var childrenNotificationId = []
 
@@ -1083,14 +1083,11 @@ router.post('/:id/covidalert', async (req, res, next) => {
       const groupEvents = response.data.items
       await Promise.all(groupEvents.map(async (event) => {
         const difference = new Date(date) - new Date(event.start.dateTime)
-        console.log(difference)
         const hours = Math.floor(difference / (60e3 * 60))
-        console.log(hours)
 
         if (difference > 0 && hours < 72) {
           const parentsParticipants = JSON.parse(event.extendedProperties.shared.parents)
           const childrenPartecipants = JSON.parse(event.extendedProperties.shared.children)
-          console.log('attivita sospetta, variazione di tempo di: ' + hours + ' ore')
           if (parentsParticipants || childrenPartecipants) {
             if (parentsParticipants.includes(id)) {
               parentNotificationId = parentNotificationId.concat(parentsParticipants)
@@ -1105,7 +1102,6 @@ router.post('/:id/covidalert', async (req, res, next) => {
     childrenNotificationId = nh.removeDuplicates(childrenNotificationId)
     var parent = await nh.getParentFromChildren(childrenNotificationId)
     parentNotificationId = parentNotificationId.concat(parent)
-    
     nh.newCovidAlertNotfication(id, parentNotificationId)
     res.status(200).send('Notifica inviata')
   } catch (err) {
