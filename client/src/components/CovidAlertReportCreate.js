@@ -80,7 +80,7 @@ class CovidAlertReportCreate extends React.Component {
                             </button>
                         </div>
                         <div className="col-6-10">
-                            <h1 className="verticalCenter">Mimmo</h1>
+                            <h1 className="verticalCenter">Covid Alert</h1>
                         </div>
                         <div className="col-2-10">
                             <button
