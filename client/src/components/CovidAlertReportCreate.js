@@ -46,8 +46,10 @@ class CovidAlertReportCreate extends React.Component {
     };
 
     handleConfirmDialogClose = choice => {
+        const { history } = this.props
         if (choice === "agree") {
             this.getMember();
+            history.goBack();
         }
         this.setState({isModalOpened: false });
     }
@@ -64,7 +66,7 @@ class CovidAlertReportCreate extends React.Component {
                 >
                 <ConfirmDialog
                     isOpen={this.state.isModalOpened}
-                    title={"texts.confirmDialogTitle"}
+                    title={"Inviare segnalazione?"}
                     handleClose={this.handleConfirmDialogClose}
                 />
                     <div className="row no-gutters" id="profileHeaderOptions">
@@ -146,7 +148,7 @@ class CovidAlertReportCreate extends React.Component {
                         className="btn btn-secondary btn-lg"
                         onClick={() => this.handleConfirmDialogOpen()}
                     >
-                        {texts}
+                    Invia segnalazione
                     </button>
                 </div>
 
