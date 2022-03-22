@@ -1071,6 +1071,7 @@ router.delete('/:userId/children/:childId/parents/:parentId', (req, res, next) =
 
 /* Covid Alert vedere come finire di implementare  TODO */
 router.post('/:id/covidalert', async (req, res, next) => {
+  if (req.user_id !== req.params.id) { return res.status(401).send('Unauthorized') }
   try {
     const { id } = req.params
     const { date } = req.body
@@ -1088,6 +1089,7 @@ router.post('/:id/covidalert', async (req, res, next) => {
         if (difference > 0 && hours < 72) {
           const parentsParticipants = JSON.parse(event.extendedProperties.shared.parents)
           const childrenPartecipants = JSON.parse(event.extendedProperties.shared.children)
+          const dateEvent = event.start.dateTime // vedere in che modo riuscirlo ad includere
           if (parentsParticipants || childrenPartecipants) {
             if (parentsParticipants.includes(id)) {
               parentNotificationId = parentNotificationId.concat(parentsParticipants)
@@ -1098,6 +1100,8 @@ router.post('/:id/covidalert', async (req, res, next) => {
       }))
     }))
     // questa parte serve a sanificare la lista di id dai duplicati
+    console.log(parentNotificationId)
+    console.log(childrenNotificationId)
     parentNotificationId = nh.removeDuplicates(parentNotificationId)
     childrenNotificationId = nh.removeDuplicates(childrenNotificationId)
     var parent = await nh.getParentFromChildren(childrenNotificationId)

@@ -9,15 +9,16 @@ import Texts from "../Constants/Texts";
 class CovidAlertReportCreate extends React.Component {
     constructor(props) {
         super(props);
+        const user_id = JSON.parse(localStorage.getItem("user")).id;
         this.state = {
             isModalOpened: false,
-            datePopup: false
+            datePopup: false,
+            userId : user_id
         }
     }
 
     getMember = async () => {
-        const { history } = this.state
-        const userId = JSON.parse(localStorage.getItem('user')).id;
+        const { history, userId } = this.state
         const sintomiDate = new Date(document.getElementById('sintomi').value);
         const positivoDate = new Date(document.getElementById('positivo').value);
         const date = sintomiDate!="Invalid Date" ?(positivoDate!="Invalid Date" ?(sintomiDate < positivoDate? positivoDate : sintomiDate): sintomiDate):positivoDate
@@ -31,7 +32,8 @@ class CovidAlertReportCreate extends React.Component {
             try {
                 const response = await axios
                     .post(`/api/users/${userId}/covidalert`, {
-                        date: date
+                        date: date,
+                        user_id : userId
                       });
                 history.goBack();
             } catch (error) {
