@@ -21,7 +21,7 @@ const medSchema = new mongoose.Schema(
 
     },
     dates: {
-      slectedDay: {
+      selectedDay: {
         day: {
           type: String,
           required: true

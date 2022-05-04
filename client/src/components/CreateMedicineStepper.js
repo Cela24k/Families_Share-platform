@@ -195,7 +195,7 @@ class CreateMedicineStepper extends React.Component {
       timeslots,
     )
     this.setState({ creating: true });
-    console.log(typeof dates.selectedDays[0])
+    console.log(events)
   }
 
   formatDataToMeds = (information, dates, timeslots, userId) => {
