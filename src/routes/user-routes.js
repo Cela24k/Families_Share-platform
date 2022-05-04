@@ -1100,8 +1100,6 @@ router.post('/:id/covidalert', async (req, res, next) => {
       }))
     }))
     // questa parte serve a sanificare la lista di id dai duplicati
-    console.log(parentNotificationId)
-    console.log(childrenNotificationId)
     parentNotificationId = nh.removeDuplicates(parentNotificationId)
     childrenNotificationId = nh.removeDuplicates(childrenNotificationId)
     var parent = await nh.getParentFromChildren(childrenNotificationId)
