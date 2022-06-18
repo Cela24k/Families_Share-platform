@@ -36,21 +36,7 @@ class ProfileHealth extends React.Component {
             </div>
           </div>
         </div>
-        <div className="row no-gutters  profileInfoContainer">
-          <div className="col-2-10">
-            <i className="fas fa-solid fa-capsules center" />
-          </div>
-          <div className="col-8-10">
-            <div
-              role="button"
-              className="verticalCenter"
-              onClick={() => history.push(`${pathname}/medicines`)}
-            >
-              <h1>{texts.medicineTitle}</h1>
-              <h2>{texts.medicineSubTitle}</h2>
-            </div>
-          </div>
-        </div>
+
         <div className="row no-gutters  profileInfoContainer">
           <div className="col-2-10">
             <i className="fas fa-solid fa-user center" />

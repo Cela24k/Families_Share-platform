@@ -67,8 +67,7 @@ class CovidAlertGreenPass extends React.Component {
 	render() {
 		const { myProfile, profileId, loadedGP } = this.state;
 		const { greenPass, classes } = this.props;
-		
-		console.log(loadedGP)
+
 
 		if (greenPass !== null) {
 			fetch(greenPass.file_data)
@@ -86,14 +85,14 @@ class CovidAlertGreenPass extends React.Component {
 					<div style={divStyle} >
 						<img id="output" width="350"></img>
 						<Fab
-								color="primary"
-								aria-label="Add"
-								className={classes.add}
-								onClick={this.handleDelete}
-							> 
-								<i className="fas fa-trash fa-1x" />
-							
-							</Fab>
+							color="primary"
+							aria-label="Add"
+							className={classes.add}
+							onClick={this.handleDelete}
+						>
+							<i className="fas fa-trash fa-1x" />
+
+						</Fab>
 					</div>
 				) : (
 					<div style={loadedGP ? divStyle : divStyle2}>
